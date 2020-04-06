@@ -684,21 +684,21 @@ gen_norway_map_counties <- function(x_year_end, insert = FALSE, split = FALSE) {
     spdf_fortified <- rbind(spdf_fortified, extra)
   }
 
-  if(split) {
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long := (long-mean(long))*0.60+mean(long)-17]
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat := (lat-mean(lat))*0.70+mean(lat)-5.5]
+  if (split) {
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), long := (long - mean(long)) * 0.60 + mean(long) - 17]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), lat := (lat - mean(lat)) * 0.70 + mean(lat) - 5.5]
 
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long_center := mean(long)]
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat_center := mean(lat)]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), long_center := mean(long)]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), lat_center := mean(lat)]
 
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long_diff := long - long_center]
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat_diff := lat - lat_center]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), long_diff := long - long_center]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), lat_diff := lat - lat_center]
 
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long_diff := long_diff * cos(-0.05*pi) + lat_diff * sin(-0.05*pi)]
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat_diff := -1 * long_diff * sin(-0.05*pi) + lat_diff * cos(-0.05*pi)]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), long_diff := long_diff * cos(-0.05 * pi) + lat_diff * sin(-0.05 * pi)]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), lat_diff := -1 * long_diff * sin(-0.05 * pi) + lat_diff * cos(-0.05 * pi)]
 
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long := long_diff + long_center]
-    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat := lat_diff + lat_center]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), long := long_diff + long_center]
+    spdf_fortified[location_code %in% c("county18", "county19", "county20", "county54"), lat := lat_diff + lat_center]
 
     spdf_fortified[, long_center := NULL]
     spdf_fortified[, lat_center := NULL]
@@ -713,7 +713,7 @@ gen_norway_map_counties <- function(x_year_end, insert = FALSE, split = FALSE) {
   return(invisible(spdf_fortified))
 }
 
-gen_norway_map_municips <- function(x_year_end, insert = FALSE, split=FALSE) {
+gen_norway_map_municips <- function(x_year_end, insert = FALSE, split = FALSE) {
   stopifnot(x_year_end %in% c("2019", "2020"))
 
   . <- NULL
@@ -776,15 +776,15 @@ gen_norway_map_municips <- function(x_year_end, insert = FALSE, split=FALSE) {
     spdf_fortified <- rbind(spdf_fortified, extra)
   }
 
-  if(split) {
+  if (split) {
     locations <- c(
       stringr::str_subset(spdf_fortified$location_code, "municip18"),
       stringr::str_subset(spdf_fortified$location_code, "municip19"),
       stringr::str_subset(spdf_fortified$location_code, "municip20"),
       stringr::str_subset(spdf_fortified$location_code, "municip54")
     )
-    spdf_fortified[location_code %in% locations, long := (long-mean(long))*0.60+mean(long)-17]
-    spdf_fortified[location_code %in% locations, lat := (lat-mean(lat))*0.70+mean(lat)-5.5]
+    spdf_fortified[location_code %in% locations, long := (long - mean(long)) * 0.60 + mean(long) - 17]
+    spdf_fortified[location_code %in% locations, lat := (lat - mean(lat)) * 0.70 + mean(lat) - 5.5]
 
     spdf_fortified[location_code %in% locations, long_center := mean(long)]
     spdf_fortified[location_code %in% locations, lat_center := mean(lat)]
@@ -792,8 +792,8 @@ gen_norway_map_municips <- function(x_year_end, insert = FALSE, split=FALSE) {
     spdf_fortified[location_code %in% locations, long_diff := long - long_center]
     spdf_fortified[location_code %in% locations, lat_diff := lat - lat_center]
 
-    spdf_fortified[location_code %in% locations, long_diff := long_diff * cos(-0.05*pi) + lat_diff * sin(-0.05*pi)]
-    spdf_fortified[location_code %in% locations, lat_diff := -1 * long_diff * sin(-0.05*pi) + lat_diff * cos(-0.05*pi)]
+    spdf_fortified[location_code %in% locations, long_diff := long_diff * cos(-0.05 * pi) + lat_diff * sin(-0.05 * pi)]
+    spdf_fortified[location_code %in% locations, lat_diff := -1 * long_diff * sin(-0.05 * pi) + lat_diff * cos(-0.05 * pi)]
 
     spdf_fortified[location_code %in% locations, long := long_diff + long_center]
     spdf_fortified[location_code %in% locations, lat := lat_diff + lat_center]

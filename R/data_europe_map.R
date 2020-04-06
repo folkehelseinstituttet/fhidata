@@ -173,7 +173,7 @@ gen_europe_map_nuts <- function(nuts_level) {
   location_name <- NULL
   location_name_english <- NULL
 
-  if(nuts_level==0){
+  if (nuts_level == 0) {
     spdf <- sf::read_sf(
       system.file(
         "extdata",
@@ -183,7 +183,7 @@ gen_europe_map_nuts <- function(nuts_level) {
       ),
       as_tibble = T
     )
-  } else if(nuts_level==1){
+  } else if (nuts_level == 1) {
     spdf <- sf::read_sf(
       system.file(
         "extdata",
@@ -193,7 +193,7 @@ gen_europe_map_nuts <- function(nuts_level) {
       ),
       as_tibble = T
     )
-  } else if(nuts_level==2){
+  } else if (nuts_level == 2) {
     spdf <- sf::read_sf(
       system.file(
         "extdata",
@@ -203,7 +203,7 @@ gen_europe_map_nuts <- function(nuts_level) {
       ),
       as_tibble = T
     )
-  } else if(nuts_level==3){
+  } else if (nuts_level == 3) {
     spdf <- sf::read_sf(
       system.file(
         "extdata",
@@ -216,12 +216,12 @@ gen_europe_map_nuts <- function(nuts_level) {
   }
   nrow(spdf)
   names(spdf)
-  nam <- data.table(spdf[, c("NUTS_ID", "NUTS_NAME","CNTR_CODE")])
+  nam <- data.table(spdf[, c("NUTS_ID", "NUTS_NAME", "CNTR_CODE")])
   nam[, geometry := NULL]
-  setnames(nam,"NUTS_ID","nuts3")
+  setnames(nam, "NUTS_ID", "nuts3")
 
   spdf_simple <- sf::as_Spatial(spdf)
-  if(nuts_level==0){
+  if (nuts_level == 0) {
     spdf_simple <- rmapshaper::ms_simplify(spdf_simple, keep = 0.75)
   } else {
     spdf_simple <- rmapshaper::ms_simplify(spdf_simple, keep = 0.5)
@@ -235,12 +235,12 @@ gen_europe_map_nuts <- function(nuts_level) {
   spdf_fortified[, hole := NULL]
   spdf_fortified[, piece := NULL]
 
-  if(nuts_level==0){
-    setnames(spdf_fortified,"nuts3","nuts0")
-  } else if(nuts_level==1){
-    setnames(spdf_fortified,"nuts3","nuts1")
-  } else if(nuts_level==2){
-    setnames(spdf_fortified,"nuts3","nuts2")
+  if (nuts_level == 0) {
+    setnames(spdf_fortified, "nuts3", "nuts0")
+  } else if (nuts_level == 1) {
+    setnames(spdf_fortified, "nuts3", "nuts1")
+  } else if (nuts_level == 2) {
+    setnames(spdf_fortified, "nuts3", "nuts2")
   }
 
   return(invisible(spdf_fortified))
