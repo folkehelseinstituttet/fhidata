@@ -1,3 +1,62 @@
+###### 2020 SPLIT
+#' Split map of Norwegian Counties (2020 borders)
+#'
+#' We conveniently package map datasets for Norwegian counties
+#' (taken from Geonorge) that can be used in ggplot2 without needing any geo
+#' libraries. This data is licensed under Creative Commons BY 4.0 (CC BY 4.0).
+#'
+#' @format
+#' \describe{
+#' \item{long}{Location code.}
+#' \item{lat}{Location name.}
+#' \item{order}{The order that this line should be plotted in.}
+#' \item{group}{Needs to be used as 'group' aesthetic in ggplot2.}
+#' \item{location_code}{Location code (county code).}
+#' }
+#' @source \url{https://kartkatalog.geonorge.no/metadata/norske-fylker-og-kommuner-illustrasjonsdata-2020-(klippet-etter-kyst)/7408853f-eb7d-48dd-bb6c-80c7e80f7392}
+#' @examples
+#' library(ggplot2)
+#' q <- ggplot(mapping = aes(x = long, y = lat, group = group, fill = location_code))
+#' q <- q + geom_polygon(
+#'   data = fhidata::norway_map_split_counties_b2020,
+#'   color = "black",
+#'   fill = "white",
+#'   size = 0.2
+#' )
+#' q <- q + theme_void()
+#' q <- q + coord_quickmap()
+#' q
+"norway_map_split_counties_b2020"
+
+#' Split map of Norwegian Municipalities (2020 borders)
+#'
+#' We conveniently package map datasets for Norwegian municipalities
+#' (taken from Geonorge) that can be used in ggplot2 without needing any geo
+#' libraries. This data is licensed under Creative Commons BY 4.0 (CC BY 4.0).
+#'
+#' @format
+#' \describe{
+#' \item{long}{Location code.}
+#' \item{lat}{Location name.}
+#' \item{order}{The order that this line should be plotted in.}
+#' \item{group}{Needs to be used as 'group' aesthetic in ggplot2.}
+#' \item{location_code}{Location code (municipality code).}
+#' }
+#' @source \url{https://kartkatalog.geonorge.no/metadata/norske-fylker-og-kommuner-illustrasjonsdata-2020-(klippet-etter-kyst)/7408853f-eb7d-48dd-bb6c-80c7e80f7392}
+#' @examples
+#' library(ggplot2)
+#' q <- ggplot(mapping = aes(x = long, y = lat, group = group))
+#' q <- q + geom_polygon(
+#'   data = fhidata::norway_map_split_municips_b2020,
+#'   color = "black",
+#'   fill = "white",
+#'   size = 0.2
+#' )
+#' q <- q + theme_void()
+#' q <- q + coord_quickmap()
+#' q
+"norway_map_split_municips_b2020"
+
 ###### 2020 WITHOUT INSERTS
 
 #' Maps of Norwegian Counties (2020 borders)
@@ -563,7 +622,8 @@ gen_norway_map_insert_title_position <- function(x_year_end) {
 }
 
 # insert for oslo/akershus?
-gen_norway_map_counties <- function(x_year_end, insert = FALSE) {
+# split the country in 2?
+gen_norway_map_counties <- function(x_year_end, insert = FALSE, split = FALSE) {
   stopifnot(x_year_end %in% c("2017", "2019", "2020"))
 
   . <- NULL
@@ -624,6 +684,28 @@ gen_norway_map_counties <- function(x_year_end, insert = FALSE) {
     spdf_fortified <- rbind(spdf_fortified, extra)
   }
 
+  if(split) {
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long := (long-mean(long))*0.60+mean(long)-17]
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat := (lat-mean(lat))*0.70+mean(lat)-5.5]
+
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long_center := mean(long)]
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat_center := mean(lat)]
+
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long_diff := long - long_center]
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat_diff := lat - lat_center]
+
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long_diff := long_diff * cos(-0.05*pi) + lat_diff * sin(-0.05*pi)]
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat_diff := -1 * long_diff * sin(-0.05*pi) + lat_diff * cos(-0.05*pi)]
+
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), long := long_diff + long_center]
+    spdf_fortified[location_code %in% c("county18","county19","county20", "county54"), lat := lat_diff + lat_center]
+
+    spdf_fortified[, long_center := NULL]
+    spdf_fortified[, lat_center := NULL]
+    spdf_fortified[, long_diff := NULL]
+    spdf_fortified[, lat_diff := NULL]
+  }
+
   spdf_fortified[, hole := NULL]
   spdf_fortified[, piece := NULL]
   spdf_fortified[, id := NULL]
@@ -631,7 +713,7 @@ gen_norway_map_counties <- function(x_year_end, insert = FALSE) {
   return(invisible(spdf_fortified))
 }
 
-gen_norway_map_municips <- function(x_year_end, insert = FALSE) {
+gen_norway_map_municips <- function(x_year_end, insert = FALSE, split=FALSE) {
   stopifnot(x_year_end %in% c("2019", "2020"))
 
   . <- NULL
@@ -692,6 +774,34 @@ gen_norway_map_municips <- function(x_year_end, insert = FALSE) {
     extra[, group := paste0("x", group)]
 
     spdf_fortified <- rbind(spdf_fortified, extra)
+  }
+
+  if(split) {
+    locations <- c(
+      stringr::str_subset(spdf_fortified$location_code, "municip18"),
+      stringr::str_subset(spdf_fortified$location_code, "municip19"),
+      stringr::str_subset(spdf_fortified$location_code, "municip20"),
+      stringr::str_subset(spdf_fortified$location_code, "municip54")
+    )
+    spdf_fortified[location_code %in% locations, long := (long-mean(long))*0.60+mean(long)-17]
+    spdf_fortified[location_code %in% locations, lat := (lat-mean(lat))*0.70+mean(lat)-5.5]
+
+    spdf_fortified[location_code %in% locations, long_center := mean(long)]
+    spdf_fortified[location_code %in% locations, lat_center := mean(lat)]
+
+    spdf_fortified[location_code %in% locations, long_diff := long - long_center]
+    spdf_fortified[location_code %in% locations, lat_diff := lat - lat_center]
+
+    spdf_fortified[location_code %in% locations, long_diff := long_diff * cos(-0.05*pi) + lat_diff * sin(-0.05*pi)]
+    spdf_fortified[location_code %in% locations, lat_diff := -1 * long_diff * sin(-0.05*pi) + lat_diff * cos(-0.05*pi)]
+
+    spdf_fortified[location_code %in% locations, long := long_diff + long_center]
+    spdf_fortified[location_code %in% locations, lat := lat_diff + lat_center]
+
+    spdf_fortified[, long_center := NULL]
+    spdf_fortified[, lat_center := NULL]
+    spdf_fortified[, long_diff := NULL]
+    spdf_fortified[, lat_diff := NULL]
   }
 
   spdf_fortified[, hole := NULL]

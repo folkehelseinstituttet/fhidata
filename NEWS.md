@@ -1,3 +1,12 @@
+# fhidata 2020.4.6
+
+- europe_map_nuts0
+- europe_map_nuts1
+- europe_map_nuts2
+- europe_map_nuts3
+- norway_map_split_counties_b2020
+- norway_map_split_municips_b2020
+
 # fhidata 2020.3.15
 
 - *_merging files now run 10 years into the future

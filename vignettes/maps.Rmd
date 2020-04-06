@@ -63,6 +63,105 @@ q <- q + labs(caption="\u00A9 EuroGeographics for the administrative boundaries"
 q
 ```
 
+# European Maps
+
+```{r fig.height=7, fig.width=7}
+library(ggplot2)
+q <- ggplot(mapping = aes(x = long, y = lat, group = group))
+q <- q + geom_polygon(data = fhidata::europe_map_nuts0, color = "black", fill = "white", size = 0.2)
+q <- q + theme_void()
+q <- q + coord_map(
+  projection = "cylequalarea",
+  xlim = c(-25, 50),
+  ylim = c(31, 75),
+  orientation = c(90, 0, 0),
+  parameters = list(lat0 = 90)
+)
+q <- q + labs(title="NUTS0")
+q <- q + labs(caption = "\u00A9 EuroGeographics for the administrative boundaries")
+q
+```
+
+```{r fig.height=7, fig.width=7}
+library(ggplot2)
+q <- ggplot(mapping = aes(x = long, y = lat, group = group))
+q <- q + geom_polygon(data = fhidata::europe_map_nuts1, color = "black", fill = "white", size = 0.2)
+q <- q + theme_void()
+q <- q + coord_map(
+  projection = "cylequalarea",
+  xlim = c(-25, 50),
+  ylim = c(31, 75),
+  orientation = c(90, 0, 0),
+  parameters = list(lat0 = 90)
+)
+q <- q + labs(title="NUTS1")
+q <- q + labs(caption = "\u00A9 EuroGeographics for the administrative boundaries")
+q
+```
+
+```{r fig.height=7, fig.width=7}
+library(ggplot2)
+q <- ggplot(mapping = aes(x = long, y = lat, group = group))
+q <- q + geom_polygon(data = fhidata::europe_map_nuts2, color = "black", fill = "white", size = 0.2)
+q <- q + theme_void()
+q <- q + coord_map(
+  projection = "cylequalarea",
+  xlim = c(-25, 50),
+  ylim = c(31, 75),
+  orientation = c(90, 0, 0),
+  parameters = list(lat0 = 90)
+)
+q <- q + labs(title="NUTS2")
+q <- q + labs(caption = "\u00A9 EuroGeographics for the administrative boundaries")
+q
+```
+
+```{r fig.height=7, fig.width=7}
+library(ggplot2)
+q <- ggplot(mapping = aes(x = long, y = lat, group = group))
+q <- q + geom_polygon(data = fhidata::europe_map_nuts3, color = "black", fill = "white", size = 0.2)
+q <- q + theme_void()
+q <- q + coord_map(
+  projection = "cylequalarea",
+  xlim = c(-25, 50),
+  ylim = c(31, 75),
+  orientation = c(90, 0, 0),
+  parameters = list(lat0 = 90)
+)
+q <- q + labs(title="NUTS3")
+q <- q + labs(caption = "\u00A9 EuroGeographics for the administrative boundaries")
+q
+```
+
+## Split Maps Without Inserts
+
+```{r fig.height=7, fig.width=7}
+library(ggplot2)
+library(data.table)
+
+pd <- fhidata::norway_map_split_counties_b2020
+
+q <- ggplot()
+q <- q + geom_polygon(data = pd, aes( x = long, y = lat, group = group, fill=location_code), color="black", size=0.1)
+q <- q + theme_void()
+q <- q + coord_quickmap()
+q <- q + labs(title = "Split map of norwegian counties with 2020 borders and no insert")
+q
+```
+
+```{r fig.height=7, fig.width=7}
+library(ggplot2)
+library(data.table)
+
+pd <- fhidata::norway_map_split_municips_b2020
+
+q <- ggplot()
+q <- q + geom_polygon(data = pd, aes( x = long, y = lat, group = group), color="black", fill="white", size=0.1)
+q <- q + theme_void()
+q <- q + coord_quickmap()
+q <- q + labs(title = "Split map of norwegian municipalities with 2020 borders and no insert")
+q
+```
 
 ## County Maps Without Inserts
 
