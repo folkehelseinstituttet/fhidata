@@ -4,12 +4,14 @@
 \name{norway_municip_merging_b2019}
 \alias{norway_municip_merging_b2019}
 \title{Municipality redistricting Norway (2019 borders).}
-\format{\describe{
+\format{
+\describe{
 \item{municip_code_current}{The municipality code per today.}
 \item{municip_code_original}{The municipality code as of 'year'.}
 \item{year}{The year corresponding to 'municip_code_original'.}
 \item{weighting}{The weighting that needs to be applied.}
-}}
+}
+}
 \source{
 \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 }

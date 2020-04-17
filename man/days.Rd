@@ -4,7 +4,8 @@
 \name{days}
 \alias{days}
 \title{Dates of different days within isoweekyears}
-\format{\describe{
+\format{
+\describe{
 \item{year}{Isoyear.}
 \item{yrwk}{Isoweek-isoyear.}
 \item{mon}{Date of Monday.}
@@ -14,7 +15,8 @@
 \item{fri}{Date of Friday.}
 \item{sat}{Date of Saturday.}
 \item{sun}{Date of Sunday.}
-}}
+}
+}
 \usage{
 days
 }

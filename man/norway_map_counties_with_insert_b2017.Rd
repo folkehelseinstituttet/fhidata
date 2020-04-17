@@ -4,13 +4,15 @@
 \name{norway_map_counties_with_insert_b2017}
 \alias{norway_map_counties_with_insert_b2017}
 \title{Maps of Norwegian counties with inserts (2017 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{long}{Location code.}
 \item{lat}{Location name.}
 \item{order}{The order that this line should be plotted in.}
 \item{group}{Needs to be used as 'group' aesthetic in ggplot2.}
 \item{location_code}{Location code (county code).}
-}}
+}
+}
 \source{
 \url{https://kartkatalog.geonorge.no/metadata/uuid/cb02ab77-d3e6-4500-8a92-ea67367e7734}
 }

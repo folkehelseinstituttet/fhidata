@@ -4,11 +4,13 @@
 \name{norway_map_counties_label_positions_b2017}
 \alias{norway_map_counties_label_positions_b2017}
 \title{Label Positions for Norwegian Counties (2017 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{location_code}{Location code (county code).}
 \item{long}{Location code.}
 \item{lat}{Location name.}
-}}
+}
+}
 \usage{
 norway_map_counties_label_positions_b2017
 }

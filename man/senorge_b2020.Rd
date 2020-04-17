@@ -4,12 +4,14 @@
 \name{senorge_b2020}
 \alias{senorge_b2020}
 \title{1x1km grids to Norwegian municipalities (2020 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{row}{The row of the [X,Y,time] matrix.}
 \item{col}{The column of the [X,Y,time] matrix.}
 \item{location_code}{Municipality code that this 1x1km grid belongs to.}
 \item{year}{The year that location_code corresponds to.}
-}}
+}
+}
 \source{
 \url{http://thredds.met.no/thredds/catalog/senorge/seNorge_2018/Archive/catalog.html}
 }

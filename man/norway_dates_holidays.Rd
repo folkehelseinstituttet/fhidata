@@ -4,10 +4,12 @@
 \name{norway_dates_holidays}
 \alias{norway_dates_holidays}
 \title{Dates of Norwegian holidays}
-\format{\describe{
+\format{
+\describe{
 \item{date}{Date.}
 \item{is_holiday}{Is it a holiday?}
-}}
+}
+}
 \usage{
 norway_dates_holidays
 }

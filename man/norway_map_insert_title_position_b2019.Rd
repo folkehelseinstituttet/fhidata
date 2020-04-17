@@ -4,10 +4,12 @@
 \name{norway_map_insert_title_position_b2019}
 \alias{norway_map_insert_title_position_b2019}
 \title{Title Positions for Inserts (2019 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{long}{Location code.}
 \item{lat}{Location name.}
-}}
+}
+}
 \usage{
 norway_map_insert_title_position_b2019
 }

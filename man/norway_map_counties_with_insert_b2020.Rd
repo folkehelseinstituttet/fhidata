@@ -4,13 +4,15 @@
 \name{norway_map_counties_with_insert_b2020}
 \alias{norway_map_counties_with_insert_b2020}
 \title{Maps of Norwegian counties with insert (2020 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{long}{Location code.}
 \item{lat}{Location name.}
 \item{order}{The order that this line should be plotted in.}
 \item{group}{Needs to be used as 'group' aesthetic in ggplot2.}
 \item{location_code}{Location code (county code).}
-}}
+}
+}
 \source{
 \url{https://kartkatalog.geonorge.no/metadata/norske-fylker-og-kommuner-illustrasjonsdata-2020-(klippet-etter-kyst)/7408853f-eb7d-48dd-bb6c-80c7e80f7392}
 }

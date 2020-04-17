@@ -4,14 +4,16 @@
 \name{norway_childhood_vax_b2020}
 \alias{norway_childhood_vax_b2020}
 \title{Childhood vaccination rates in Norway (2020 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{year}{The middle year of a 5 year range (e.g. 2011 is the average of data from 2009-2013).}
 \item{location_code}{The location code.}
 \item{age}{The population age.}
 \item{vax}{The vaccine.}
 \item{proportion}{Proportion of people who are vaccinated.}
 \item{imputed}{FALSE if real data. TRUE if it is the national average.}
-}}
+}
+}
 \source{
 \url{http://khs.fhi.no/webview/}
 }

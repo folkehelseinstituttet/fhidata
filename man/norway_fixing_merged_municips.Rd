@@ -4,14 +4,16 @@
 \name{norway_fixing_merged_municips}
 \alias{norway_fixing_merged_municips}
 \title{Fixing data that has already been redistricted.}
-\format{\describe{
+\format{
+\describe{
 \item{municip_code_current}{The municipality code per today.}
 \item{municip_code_original}{The municipality code as of 'year'.}
 \item{year}{The year corresponding to 'municip_code_original'.}
 \item{border_start}{The year that the data has currently been redistricted to.}
 \item{border_end}{The year of the desired final redistricting.}
 \item{weighting}{The weighting that needs to be applied.}
-}}
+}
+}
 \source{
 \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 }

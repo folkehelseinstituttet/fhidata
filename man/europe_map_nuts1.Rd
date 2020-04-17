@@ -4,7 +4,8 @@
 \name{europe_map_nuts1}
 \alias{europe_map_nuts1}
 \title{European Map (NUTS1)}
-\format{\describe{
+\format{
+\describe{
 \item{long}{Longitude.}
 \item{lat}{Latitude.}
 \item{order}{The order that this line should be plotted in.}
@@ -12,7 +13,8 @@
 \item{nuts1}{2 character NUTS1 code, describing administrative regions defined by Eurostat/GISCO.}
 \item{location name}{Location name}
 \item{country_code}{2 character NUTS0 code, describing the country}
-}}
+}
+}
 \source{
 \url{https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts}
 }
@@ -43,7 +45,7 @@ q <- q + coord_map(
   orientation = c(90, 0, 0),
   parameters = list(lat0 = 90)
 )
-q <- q + labs(caption = "\\u00A9 EuroGeographics for the administrative boundaries")
+q <- q + labs(caption = "\u00A9 EuroGeographics for the administrative boundaries")
 q
 }
 \keyword{datasets}

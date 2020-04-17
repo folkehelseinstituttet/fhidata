@@ -4,12 +4,14 @@
 \name{norway_county_merging_b2020}
 \alias{norway_county_merging_b2020}
 \title{County redistricting in Norway (2020 borders).}
-\format{\describe{
+\format{
+\describe{
 \item{county_code_current}{The county code per today.}
 \item{county_code_original}{The county code as of 'year'.}
 \item{year}{The year corresponding to 'county_code_original'.}
 \item{weighting}{The weighting that needs to be applied.}
-}}
+}
+}
 \source{
 \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 }

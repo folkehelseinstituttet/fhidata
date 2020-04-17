@@ -4,10 +4,12 @@
 \name{norway_map_insert_title_position_b2017}
 \alias{norway_map_insert_title_position_b2017}
 \title{Title Positions for Inserts (2017 borders)}
-\format{\describe{
+\format{
+\describe{
 \item{long}{Location code.}
 \item{lat}{Location name.}
-}}
+}
+}
 \usage{
 norway_map_insert_title_position_b2017
 }

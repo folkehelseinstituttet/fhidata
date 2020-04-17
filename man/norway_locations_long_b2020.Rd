@@ -4,10 +4,12 @@
 \name{norway_locations_long_b2020}
 \alias{norway_locations_long_b2020}
 \title{Names of areas in Norway that existed in 2020.}
-\format{\describe{
+\format{
+\describe{
 \item{location_code}{Location code.}
 \item{location_name}{Location name.}
-}}
+}
+}
 \source{
 \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 }

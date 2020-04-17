@@ -4,7 +4,8 @@
 \name{world_map}
 \alias{world_map}
 \title{World Map}
-\format{\describe{
+\format{
+\describe{
 \item{long}{Longitude.}
 \item{lat}{Latitude.}
 \item{order}{The order that this line should be plotted in.}
@@ -20,7 +21,8 @@ Navassa Island, Scarborough Reef, Senkaku Islands, Bassa Da India, Abyei,
 Bir Tawil)
 }
 }
-}}
+}
+}
 \source{
 \url{https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/countries}
 }
@@ -65,7 +67,7 @@ q <- q + coord_map(
   orientation = c(90, 0, 0),
   parameters = list(lat0 = 90)
 )
-q <- q + labs(caption = "\\u00A9 EuroGeographics for the administrative boundaries")
+q <- q + labs(caption = "\u00A9 EuroGeographics for the administrative boundaries")
 q
 }
 \keyword{datasets}

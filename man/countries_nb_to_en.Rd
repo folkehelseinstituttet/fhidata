@@ -4,10 +4,12 @@
 \name{countries_nb_to_en}
 \alias{countries_nb_to_en}
 \title{Country names}
-\format{\describe{
+\format{
+\describe{
 \item{nb}{Country name in Norwegian bokmal.}
 \item{en}{Country name in English.}
-}}
+}
+}
 \source{
 \url{http://stat-computing.org/dataexpo/2006/}
 }
