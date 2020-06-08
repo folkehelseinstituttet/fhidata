@@ -366,8 +366,7 @@ gen_norway_county_merging <- function(x_year_end, x_year_start = 2000) {
 
 
 # Creates the norway_county_merging (fylkesammenslaaing) data.table
-gen_norway_ward_merging <- function(x_year_end, x_year_start = 2005, include_extra_vars=F) {
-
+gen_norway_ward_merging <- function(x_year_end, x_year_start = 2005, include_extra_vars = F) {
   masterData <- data.table(readxl::read_excel(
     system.file("extdata", "norway_locations_ward.xlsx", package = "fhidata"),
     col_types = c(
@@ -485,7 +484,3 @@ gen_norway_ward_merging <- function(x_year_end, x_year_start = 2005, include_ext
 
   return(invisible(skeleton))
 }
-
-
-
-
