@@ -45,6 +45,7 @@
 
 # Creates the population dataset
 # https://www.ssb.no/en/statbank/table/07459/tableViewLayout1/
+# https://www.ssb.no/en/statbank/table/10826/ for wards
 #' @import data.table
 gen_norway_population <- function(x_year_end, original = FALSE) {
 

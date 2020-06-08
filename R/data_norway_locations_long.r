@@ -24,10 +24,12 @@ gen_norway_locations_long <- function(x_year_end) {
   a2 <- data.table(location_code = "norge", location_name = "Norge")
   b <- gen_norway_locations(x_year_end = x_year_end)[, c("municip_code", "municip_name")]
   c <- gen_norway_locations(x_year_end = x_year_end)[, c("county_code", "county_name")]
+  d <- gen_norway_locations_ward(x_year_end = x_year_end)[, c("ward_code", "ward_name")]
   setnames(b, c("location_code", "location_name"))
   setnames(c, c("location_code", "location_name"))
+  setnames(d, c("location_code", "location_name"))
 
-  retval <- unique(rbind(a1, a2, b, c))
+  retval <- unique(rbind(a1, a2, b, c, d))
 
   return(retval)
 }

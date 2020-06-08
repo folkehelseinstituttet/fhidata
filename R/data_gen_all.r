@@ -1,12 +1,17 @@
 # Creates the norway_locations, norway_municip_merging, and norway_population data.table
 # @param base_loc Folder where data will be saved
 gen_data_all <- function(base_loc) {
+  # base_loc = file.path(getwd(),"data")
   old_wd <- getwd()
   on.exit(setwd(old_wd))
   setwd(base_loc)
 
   days <- gen_days()
   save(days, file = file.path(base_loc, "days.rda"), compress = "bzip2")
+
+  # norway_ward_merging
+  norway_ward_merging_b2020 <- gen_norway_ward_merging(x_year_end = 2020)
+  save(norway_ward_merging_b2020, file = file.path(base_loc, "norway_ward_merging_b2020.rda"), compress = "bzip2")
 
   # norway_fixing_merged_municips
   norway_fixing_merged_municips <- gen_norway_fixing_merged_municips(x_year_end = 2020)
@@ -25,6 +30,10 @@ gen_data_all <- function(base_loc) {
 
   norway_county_merging_b2019 <- gen_norway_county_merging(x_year_end = 2019)
   save(norway_county_merging_b2019, file = file.path(base_loc, "norway_county_merging_b2019.rda"), compress = "bzip2")
+
+  # norway_locations_ward
+  norway_locations_ward_b2020 <- gen_norway_locations_ward(x_year_end = 2020)
+  save(norway_locations_ward_b2020, file = file.path(base_loc, "norway_locations_ward_b2020.rda"), compress = "bzip2")
 
   # norway_locations
   norway_locations_b2020 <- gen_norway_locations(x_year_end = 2020)
