@@ -8,6 +8,7 @@
 \describe{
 \item{location_code}{Location code.}
 \item{location_name}{Location name.}
+\item{granularity_geo}{nation, county, municip, ward}
 }
 }
 \source{
