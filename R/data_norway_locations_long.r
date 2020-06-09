@@ -23,13 +23,13 @@
 # Creates the norway_locations data.table
 gen_norway_locations_long <- function(x_year_end) {
   a <- data.table(location_code = "norge", location_name = "Norge")
-  a[,granularity_geo := "nation"]
+  a[, granularity_geo := "nation"]
   b <- gen_norway_locations(x_year_end = x_year_end)[, c("municip_code", "municip_name")]
-  b[,granularity_geo := "municip"]
+  b[, granularity_geo := "municip"]
   c <- gen_norway_locations(x_year_end = x_year_end)[, c("county_code", "county_name")]
-  c[,granularity_geo := "county"]
+  c[, granularity_geo := "county"]
   d <- gen_norway_locations_ward(x_year_end = x_year_end)[, c("ward_code", "ward_name")]
-  d[,granularity_geo := "ward"]
+  d[, granularity_geo := "ward"]
   setnames(b, c("location_code", "location_name", "granularity_geo"))
   setnames(c, c("location_code", "location_name", "granularity_geo"))
   setnames(d, c("location_code", "location_name", "granularity_geo"))
