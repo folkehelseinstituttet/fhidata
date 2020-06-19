@@ -64,7 +64,6 @@ gen_data_all <- function(base_loc) {
   save(norway_childhood_vax_b2020, file = file.path(base_loc, "norway_childhood_vax_b2020.rda"), compress = "xz")
 
   # other
-
   countries_nb_to_en <- gen_countries_nb_to_en()
   save(countries_nb_to_en, file = file.path(base_loc, "countries_nb_to_en.rda"))
 
@@ -86,6 +85,32 @@ gen_data_all <- function(base_loc) {
   save(norway_map_insert_title_position_b2019, file = file.path(base_loc, "norway_map_insert_title_position_b2019.rda"), compress = "xz")
   norway_map_insert_title_position_b2020 <- gen_norway_map_insert_title_position(x_year_end = 2020)
   save(norway_map_insert_title_position_b2020, file = file.path(base_loc, "norway_map_insert_title_position_b2020.rda"), compress = "xz")
+
+  # nordic data - locations long
+  denmark_locations_long_b2020 <- gen_data_denmark_locations_long(x_year_end = 2020)
+  save(denmark_locations_long_b2020, file = file.path(base_loc, "denmark_locations_long_b2020.rda"), compress = "xz")
+
+  sweden_locations_long_b2020 <- gen_data_sweden_locations_long(x_year_end = 2020)
+  save(sweden_locations_long_b2020, file = file.path(base_loc, "sweden_locations_long_b2020.rda"), compress = "xz")
+
+  finland_locations_long_b2020 <- gen_data_finland_locations_long(x_year_end = 2020)
+  save(finland_locations_long_b2020, file = file.path(base_loc, "finland_locations_long_b2020.rda"), compress = "xz")
+
+  iceland_locations_long_b2020 <- gen_data_iceland_locations_long(x_year_end = 2020)
+  save(iceland_locations_long_b2020, file = file.path(base_loc, "iceland_locations_long_b2020.rda"), compress = "xz")
+
+  # nordic data - population
+  population_denmark_b2020 <- gen_data_denmark_population(x_year_end = 2020)
+  save(population_denmark_b2020, file = file.path(base_loc, "population_denmark_b2020.rda"), compress = "xz")
+
+  population_sweden_b2020 <- gen_data_sweden_population(x_year_end = 2020)
+  save(population_sweden_b2020, file = file.path(base_loc, "population_sweden_b2020.rda"), compress = "xz")
+
+  population_finland_b2020 <- gen_data_finland_population(x_year_end = 2020)
+  save(population_finland_b2020, file = file.path(base_loc, "population_finland_b2020.rda"), compress = "xz")
+
+  population_iceland_b2020 <- gen_data_iceland_population(x_year_end = 2020)
+  save(population_iceland_b2020, file = file.path(base_loc, "population_iceland_b2020.rda"), compress = "xz")
 
   # world_map <- gen_world_map()
   # save(world_map, file=file.path("/git","fhidata","data","world_map.rda"), compress = "xz")

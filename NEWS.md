@@ -1,3 +1,15 @@
+# fhidata 2020.6.19
+
+- Swedish unicode letters (se)
+- denmark_locations_long_b2020
+- sweden_locations_long_b2020
+- finland_locations_long_b2020
+- iceland_locations_long_b2020
+- population_denmark_b2020
+- population_sweden_b2020
+- population_finland_b2020
+- population_iceland_b2020
+
 # fhidata 2020.4.6
 
 - europe_map_nuts0
