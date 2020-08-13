@@ -8,6 +8,7 @@
 \describe{
 \item{location_code}{Location code.}
 \item{location_name}{Location name.}
+\item{location_order}{The preferred presentation order}
 \item{granularity_geo}{nation, county, municip, ward}
 }
 }

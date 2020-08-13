@@ -4,6 +4,7 @@
 #' \describe{
 #' \item{location_code}{Location code.}
 #' \item{location_name}{Location name.}
+#' \item{location_order}{The preferred presentation order}
 #' \item{granularity_geo}{nation, county, municip, ward}
 #' }
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
@@ -15,6 +16,7 @@
 #' \describe{
 #' \item{location_code}{Location code.}
 #' \item{location_name}{Location name.}
+#' \item{location_order}{The preferred presentation order}
 #' \item{granularity_geo}{nation, county, municip, ward}
 #' }
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
@@ -31,10 +33,15 @@ gen_norway_locations_long <- function(x_year_end) {
   d <- gen_norway_locations_ward(x_year_end = x_year_end)[, c("ward_code", "ward_name")]
   d[, granularity_geo := "ward"]
   setnames(b, c("location_code", "location_name", "granularity_geo"))
+  setorder(b, location_code)
   setnames(c, c("location_code", "location_name", "granularity_geo"))
+  setorder(c, location_code)
   setnames(d, c("location_code", "location_name", "granularity_geo"))
+  setorder(d, location_code)
 
   retval <- unique(rbind(a, b, c, d))
+  retval[, location_order := 1:.N]
+  setcolorder(d, c("location_code", "location_name", "location_order", "granularity_geo"))
 
   return(retval)
 }
