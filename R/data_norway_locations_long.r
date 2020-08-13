@@ -41,7 +41,7 @@ gen_norway_locations_long <- function(x_year_end) {
 
   retval <- unique(rbind(a, b, c, d))
   retval[, location_order := 1:.N]
-  setcolorder(d, c("location_code", "location_name", "location_order", "granularity_geo"))
+  setcolorder(retval, c("location_code", "location_name", "location_order", "granularity_geo"))
 
   return(retval)
 }
