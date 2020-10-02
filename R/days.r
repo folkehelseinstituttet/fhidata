@@ -29,7 +29,7 @@ gen_days <- function() {
   sun <- NULL
 
   days <- data.table(day = seq.Date(as.IDate("1990-01-01"), as.IDate("2040-01-01"), by = "days"))
-  days[, year := format.Date(day, format = "%G")]
+  days[, year := as.integer(format.Date(day, format = "%G"))]
   days[, yrwk := format.Date(day, format = "%G-%V")]
   days <- days[, .(mon = as.IDate(min(day))), by = .(year, yrwk)]
   days[, tue := mon + 1]
