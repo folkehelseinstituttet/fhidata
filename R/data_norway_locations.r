@@ -8,6 +8,8 @@
 #' \item{county_name}{County name.}
 #' \item{region_code}{Region code.}
 #' \item{region_name}{Region name.}
+#' \item{faregion_code}{Food authority region code.}
+#' \item{faregion_name}{Food authority region name.}
 #' }
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 "norway_locations_b2020"
@@ -22,6 +24,8 @@
 #' \item{county_name}{County name.}
 #' \item{region_code}{Region code.}
 #' \item{region_name}{Region name.}
+#' \item{faregion_code}{Food authority region code.}
+#' \item{faregion_name}{Food authority region name.}
 #' }
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 "norway_locations_b2019"
@@ -47,15 +51,23 @@ gen_norway_locations <- function(x_year_end) {
   #
 
   norway_locations <- gen_norway_municip_merging(x_year_end = x_year_end, include_extra_vars = T)
-  unique(norway_locations[, c("municip_code_current", "municip_name", "county_code", "county_name")])
+
+  unique(norway_locations[, c("municip_code_current", "municip_name",
+                              "county_code", "county_name",
+                              'faregion_name','faregion_code')])
+
   norway_locations <- norway_locations[year == max(year), c(
     "municip_code_current",
     "municip_name",
     "county_code",
     "county_name",
     "region_code",
-    "region_name"
+    "region_name",
+    'faregion_name',
+    'faregion_code'
   )]
+
+
   norway_locations <- unique(norway_locations)
   setnames(norway_locations, "municip_code_current", "municip_code")
 

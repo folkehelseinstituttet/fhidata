@@ -12,6 +12,8 @@
 \item{county_name}{County name.}
 \item{region_code}{Region code.}
 \item{region_name}{Region name.}
+\item{faregion_code}{Food authority region code.}
+\item{faregion_name}{Food authority region name.}
 }
 }
 \source{

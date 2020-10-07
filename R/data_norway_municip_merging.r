@@ -2,7 +2,7 @@
 #'
 #' This dataset is used to transfer "original" municipality level datasets to the 2020 borders.
 #'
-#' Last updated 2019-11-24
+#' Last updated 2020-10-07
 #'
 #' @format
 #' \describe{
@@ -102,9 +102,9 @@
 
 # Creates the norway_municip_merging (kommunesammenslaaing) data.table
 gen_norway_municip_merging <- function(
-                                       x_year_end,
-                                       x_year_start = 2000,
-                                       include_extra_vars = FALSE) {
+  x_year_end,
+  x_year_start = 2000,
+  include_extra_vars = FALSE) {
   # variables used in data.table functions in this function
   year_start <- NULL
   municip_code <- NULL
@@ -117,12 +117,15 @@ gen_norway_municip_merging <- function(
   municip_code_end <- NULL
   county_name <- NULL
   region_name <- NULL
+  faregion_name <- NULL
+  faregion_code <- NULL
   realEnd <- NULL
   weighting <- NULL
   municip_code_end_new <- NULL
   weighting_new <- NULL
   # end
 
+  # masterData <- data.table(readxl::read_excel(paste0(data_path_raw, "norway_locations.xlsx")))
   masterData <- data.table(readxl::read_excel(system.file("extdata", "norway_locations.xlsx", package = "fhidata")))
   masterData[is.na(weighting), weighting := 1]
 
@@ -186,7 +189,9 @@ gen_norway_municip_merging <- function(
     "county_code",
     "county_name",
     "region_code",
-    "region_name"
+    "region_name",
+    'faregion_name',
+    'faregion_code'
   )])
 
   skeleton[, year_end := NULL]
@@ -195,6 +200,9 @@ gen_norway_municip_merging <- function(
   skeleton[, county_name := NULL]
   skeleton[, region_code := NULL]
   skeleton[, region_name := NULL]
+  skeleton[, faregion_code := NULL]
+  skeleton[, faregion_name := NULL]
+
 
   skeleton <- merge(
     skeleton,
@@ -217,7 +225,10 @@ gen_norway_municip_merging <- function(
       "county_code",
       "county_name",
       "region_code",
-      "region_name"
+      "region_name",
+      'faregion_name',
+      'faregion_code'
+
     )
   )
 
@@ -227,6 +238,8 @@ gen_norway_municip_merging <- function(
     skeleton[, county_name := NULL]
     skeleton[, region_code := NULL]
     skeleton[, region_name := NULL]
+    skeleton[, faregion_code := NULL]
+    skeleton[, faregion_name := NULL]
   }
 
   extra_years <- max(skeleton$year) + c(1:10)
@@ -238,6 +251,8 @@ gen_norway_municip_merging <- function(
 
   return(invisible(skeleton))
 }
+
+
 
 gen_norway_fixing_merged_municips <- function(x_year_end, include_extra_vars = FALSE) {
   border_end <- NULL

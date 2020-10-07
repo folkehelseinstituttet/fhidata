@@ -1,5 +1,6 @@
 # Creates the norway_locations, norway_municip_merging, and norway_population data.table
 # @param base_loc Folder where data will be saved
+
 gen_data_all <- function(base_loc) {
   # base_loc = file.path(getwd(),"data")
   old_wd <- getwd()
