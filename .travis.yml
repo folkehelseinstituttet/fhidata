@@ -1,4 +1,5 @@
 language: r
+cache:packages
 
 repos:
   CRAN: https://cloud.r-project.org
@@ -39,7 +40,6 @@ r_packages:
 - zoo
 - crayon
 - fs
-- utils
 
 before_install:
 - bash travis/make.sh
