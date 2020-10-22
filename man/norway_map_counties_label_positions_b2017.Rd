@@ -7,8 +7,8 @@
 \format{
 \describe{
 \item{location_code}{Location code (county code).}
-\item{long}{Location code.}
-\item{lat}{Location name.}
+\item{long}{Longitude.}
+\item{lat}{Latitude.}
 }
 }
 \usage{

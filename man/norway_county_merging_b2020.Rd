@@ -22,6 +22,6 @@ norway_county_merging_b2020
 This dataset is used to transfer "original" municipality level datasets to the 2020 borders.
 }
 \details{
-Last updated 2019-11-24
+Last updated 2020-10-07
 }
 \keyword{datasets}

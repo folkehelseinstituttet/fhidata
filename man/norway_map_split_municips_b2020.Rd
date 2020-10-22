@@ -6,8 +6,8 @@
 \title{Split map of Norwegian Municipalities (2020 borders)}
 \format{
 \describe{
-\item{long}{Location code.}
-\item{lat}{Location name.}
+\item{long}{Longitude.}
+\item{lat}{Latitude.}
 \item{order}{The order that this line should be plotted in.}
 \item{group}{Needs to be used as 'group' aesthetic in ggplot2.}
 \item{location_code}{Location code (municipality code).}
