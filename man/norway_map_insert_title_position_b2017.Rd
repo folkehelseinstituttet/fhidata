@@ -6,8 +6,8 @@
 \title{Title Positions for Inserts (2017 borders)}
 \format{
 \describe{
-\item{long}{Location code.}
-\item{lat}{Location name.}
+\item{long}{Longitude.}
+\item{lat}{Latitude.}
 }
 }
 \usage{
