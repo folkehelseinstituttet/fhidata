@@ -2,6 +2,7 @@
 # @param base_loc Folder where data will be saved
 
 gen_data_all <- function(base_loc) {
+  # gen_data_all(file.path(getwd(),"data"))
   # base_loc = file.path(getwd(),"data")
   old_wd <- getwd()
   on.exit(setwd(old_wd))

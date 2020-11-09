@@ -12,7 +12,8 @@
 #' \describe{
 #' \item{year}{Year.}
 #' \item{location_code}{The location code.}
-#' \item{level}{National/County/Municipality.}
+#' \item{granularity_geo}{National/County/Municipality/BAregion.}
+#' \item{level}{National/County/Municipality/BAregion.}
 #' \item{age}{1 year ages from 0 to 105.}
 #' \item{pop}{Number of people.}
 #' \item{imputed}{FALSE if real data. TRUE if it is the last real data point carried forward.}
@@ -34,6 +35,7 @@
 #' \describe{
 #' \item{year}{Year.}
 #' \item{location_code}{The location code.}
+#' \item{granularity_geo}{National/County/Municipality.}
 #' \item{level}{National/County/Municipality.}
 #' \item{age}{1 year ages from 0 to 105.}
 #' \item{pop}{Number of people.}
@@ -203,6 +205,7 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
 
   pop[, level := "municip"]
 
+  # making county pop data ----
   counties <- merge(
     pop,
     gen_norway_locations(x_year_end = x_year_end)[, c("municip_code", "county_code")],
@@ -228,6 +231,25 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   )]
   counties[, level := "county"]
 
+  # making baregion pop data ----
+  if(x_year_end==2020){
+    baregions <- merge(
+      pop,
+      gen_norway_locations(x_year_end = x_year_end)[, c("municip_code", "baregion_code")],
+      by = "municip_code"
+    )
+
+    baregions <- baregions[!is.na(baregion_code), .(
+      pop = sum(pop)
+    ), keyby = .(
+      year,
+      municip_code = baregion_code,
+      age,
+      imputed
+    )]
+    baregions[, level := "baregion"]
+  }
+
   # pull in full norwegian data
   norway <- data.table(utils::read.csv(url("https://data.ssb.no/api/v0/dataset/59322.csv?lang=en"), stringsAsFactors = FALSE))
   norway <- norway[sex == "0 Both sexes"]
@@ -247,12 +269,18 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     norway <- rbind(norway, popx)
   }
 
-  pop <- rbind(norway, counties, pop)
+  if(x_year_end==2020){
+    pop <- rbind(norway, counties, pop, baregions)
+  } else {
+    pop <- rbind(norway, counties, pop)
+  }
 
-  final_order <- c("year", "municip_code", "level", "age", "pop", "imputed")
+  pop[, granularity_geo := level]
+  final_order <- c("year", "municip_code", "granularity_geo", "level", "age", "pop", "imputed")
   setorderv(pop, final_order)
   setcolorder(pop, final_order)
   setnames(pop, "municip_code", "location_code")
+
 
   return(invisible(pop))
 }

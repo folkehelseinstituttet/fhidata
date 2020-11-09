@@ -10,8 +10,11 @@
 #' \item{region_name}{Region name.}
 #' \item{faregion_code}{Food authority region code.}
 #' \item{faregion_name}{Food authority region name.}
+#' \item{baregion_code}{Bo- og arbeids region code.}
+#' \item{baregion_name}{Bo- og arbeids region name.}
 #' }
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
+#' @source \url{https://www.regjeringen.no/no/dokumenter/inndeling-av-kommuner-i-bo--og-arbeidsmarkedsregioner/id2662614/}
 "norway_locations_b2020"
 
 #' Names of areas in Norway that existed in 2019.
@@ -63,13 +66,53 @@ gen_norway_locations <- function(x_year_end) {
     "county_name",
     "region_code",
     "region_name",
-    'faregion_name',
-    'faregion_code'
+    'faregion_code',
+    'faregion_name'
   )]
 
 
   norway_locations <- unique(norway_locations)
   setnames(norway_locations, "municip_code_current", "municip_code")
+
+  # if x_year_end = 2020 then include baregions (bo- og arbeidsregioner)
+  if(x_year_end == 2020){
+    ba <- data.table(readxl::read_excel(system.file("extdata", "baregioner_2020.xlsx", package = "fhidata")))
+    setnames(
+      ba,
+      1:2,
+      c(
+        "municip",
+        "ba"
+      )
+    )
+    ba[, municip_code := paste0(
+      "municip",
+      formatC(as.numeric(
+        stringr::str_extract(municip, "^[0-9]+")),
+        width=4,
+        flag=0
+      ))
+    ]
+    ba[, baregion_code := paste0(
+      "baregion",
+      formatC(as.numeric(
+        stringr::str_extract(ba, "^[0-9]+")),
+        width=3,
+        flag=0
+      ))
+    ]
+    ba[, baregion_name := stringr::str_remove_all(ba, "^[0-9]+ ")]
+    norway_locations[
+      ba,
+      on="municip_code",
+      baregion_code := baregion_code
+    ]
+    norway_locations[
+      ba,
+      on="municip_code",
+      baregion_name := baregion_name
+    ]
+  }
 
   return(norway_locations)
 }

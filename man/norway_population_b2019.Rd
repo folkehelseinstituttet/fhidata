@@ -8,6 +8,7 @@
 \describe{
 \item{year}{Year.}
 \item{location_code}{The location code.}
+\item{granularity_geo}{National/County/Municipality.}
 \item{level}{National/County/Municipality.}
 \item{age}{1 year ages from 0 to 105.}
 \item{pop}{Number of people.}

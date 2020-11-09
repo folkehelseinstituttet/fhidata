@@ -8,7 +8,8 @@
 \describe{
 \item{year}{Year.}
 \item{location_code}{The location code.}
-\item{level}{National/County/Municipality.}
+\item{granularity_geo}{National/County/Municipality/BAregion.}
+\item{level}{National/County/Municipality/BAregion.}
 \item{age}{1 year ages from 0 to 105.}
 \item{pop}{Number of people.}
 \item{imputed}{FALSE if real data. TRUE if it is the last real data point carried forward.}
