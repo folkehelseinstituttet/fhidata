@@ -1,9 +1,9 @@
 # fhidata 2020.11.11
 
-- norway_locations_long_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) and the column `ward_belongs_to`
-- norway_locations_ward_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) 
-- norway_population_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) 
-- norway_ward_merging_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) 
+- norway_locations_long_b2020 now includes wardoslo, wardbergen, wardtrondheim, wardstavanger
+- norway_locations_ward_b2020 now includes wardoslo, wardbergen, wardtrondheim, wardstavanger
+- norway_population_b2020 now includes wardoslo, wardbergen, wardtrondheim, wardstavanger
+- norway_ward_merging_b2020 now includes wardoslo, wardbergen, wardtrondheim, wardstavanger
 
 # fhidata 2020.6.19
 

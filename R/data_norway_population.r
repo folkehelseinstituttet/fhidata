@@ -89,8 +89,19 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   pop <- rbindlist(pop)
   pop[, region := stringr::str_remove(region, "^K-")]
   pop[, municip_code := sprintf("municip%s", stringr::str_extract(region, "^[0-9][0-9][0-9][0-9]"))]
-  pop[, ward_code := sprintf("ward%s", stringr::str_extract(region, "^[0-9][0-9][0-9][0-9][0-9][0-9]"))]
-  pop[ward_code!="wardNA", municip_code := ward_code]
+  # correctly identify ward/bydels
+  pop[, ward_code := sprintf("%s", stringr::str_extract(region, "^[0-9][0-9][0-9][0-9][0-9][0-9]"))]
+  pop[, ward_prefix := ""]
+  pop[ward_code!="NA" & municip_code %in% c("municip0301"), ward_prefix := "wardoslo"]
+  pop[ward_code!="NA" & municip_code %in% c("municip1201", "municip4601"), ward_prefix := "wardbergen"]
+  pop[ward_code!="NA" & municip_code %in% c("municip1103"), ward_prefix := "wardstavanger"]
+  pop[ward_code!="NA" & municip_code %in% c("municip1601", "municip5001"), ward_prefix := "wardtrondheim"]
+  popx <- pop[ward_prefix=="wardoslo"]
+  popx[,ward_prefix:="ward"]
+  pop <- rbind(pop,popx)
+  pop[,ward_code := paste0(ward_prefix,ward_code)]
+  pop[ward_code!="NA", municip_code := ward_code]
+
   pop[, year := as.numeric(stringr::str_extract(variable, "[0-9][0-9][0-9][0-9]$"))]
   pop[, agenum := as.numeric(stringr::str_extract(age, "^[0-9]*"))]
   pop[, age := NULL]
@@ -209,8 +220,7 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     pop <- rbind(pop, copiedYears)
   }
 
-  pop[, level := "municip"]
-  pop[stringr::str_detect(municip_code, "^ward"), level := "ward"]
+  pop[, level := stringr::str_extract(municip_code, "^[a-z]+")]
 
   # making county pop data ----
   counties <- merge(

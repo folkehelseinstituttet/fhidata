@@ -9,8 +9,7 @@
 \item{location_code}{Location code.}
 \item{location_name}{Location name.}
 \item{location_order}{The preferred presentation order}
-\item{granularity_geo}{nation, county, municip, ward, baregion}
-\item{ward_belongs_to}{oslo, stavanger, bergen, trondheim}
+\item{granularity_geo}{nation, county, municip, wardoslo, wardbergen, wardstavanger, wardtrondheim, baregion}
 }
 }
 \source{

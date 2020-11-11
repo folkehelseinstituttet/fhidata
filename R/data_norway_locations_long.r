@@ -5,8 +5,7 @@
 #' \item{location_code}{Location code.}
 #' \item{location_name}{Location name.}
 #' \item{location_order}{The preferred presentation order}
-#' \item{granularity_geo}{nation, county, municip, ward, baregion}
-#' \item{ward_belongs_to}{oslo, stavanger, bergen, trondheim}
+#' \item{granularity_geo}{nation, county, municip, wardoslo, wardbergen, wardstavanger, wardtrondheim, baregion}
 #' }
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 "norway_locations_long_b2020"
@@ -32,25 +31,13 @@ gen_norway_locations_long <- function(x_year_end) {
   c <- gen_norway_locations(x_year_end = x_year_end)[, c("municip_code", "municip_name")]
   c[, granularity_geo := "municip"]
   d <- gen_norway_locations_ward(x_year_end = x_year_end)[, c("ward_code", "ward_name")]
-  d[, granularity_geo := "ward"]
+  d[, granularity_geo := stringr::str_extract(ward_code,"^[a-z]+")]
   setnames(b, c("location_code", "location_name", "granularity_geo"))
   setorder(b, location_code)
   setnames(c, c("location_code", "location_name", "granularity_geo"))
   setorder(c, location_code)
   setnames(d, c("location_code", "location_name", "granularity_geo"))
   setorder(d, location_code)
-  # add ward_belongs_to
-  d[
-    gen_norway_locations_ward(x_year_end = x_year_end)[
-      ,
-      .(
-        location_code = ward_code,
-        ward_belongs_to=stringr::str_to_lower(municip_name)
-      )
-    ],
-    on = "location_code",
-    ward_belongs_to := ward_belongs_to
-  ]
 
   retval <- unique(rbind(a, b, c, d, fill = T))
 
