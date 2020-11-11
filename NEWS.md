@@ -1,3 +1,10 @@
+# fhidata 2020.11.11
+
+- norway_locations_long_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) and the column `ward_belongs_to`
+- norway_locations_ward_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) 
+- norway_population_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) 
+- norway_ward_merging_b2020 now includes all wards (Oslo, Bergen, Trondheim, Stavanger) 
+
 # fhidata 2020.6.19
 
 - Swedish unicode letters (se)

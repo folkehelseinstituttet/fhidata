@@ -78,16 +78,19 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     "Personer2010-2014.csv",
     "Personer2015-2018.csv",
     "Personer2019.csv",
-    "Personer2020.csv"
+    "Personer2020.csv",
+    "Personerward2001-2020.csv"
   )
   pop <- vector("list", length = length(popFiles))
   for (i in seq_along(pop)) {
-    pop[[i]] <- fread(system.file("extdata", popFiles[i], package = "fhidata"), encoding = "UTF-8")
+    pop[[i]] <- fread(system.file("rawdata", "population", popFiles[i], package = "fhidata"), encoding = "UTF-8")
     pop[[i]] <- melt.data.table(pop[[i]], id.vars = c("region", "age"))
   }
   pop <- rbindlist(pop)
   pop[, region := stringr::str_remove(region, "^K-")]
   pop[, municip_code := sprintf("municip%s", stringr::str_extract(region, "^[0-9][0-9][0-9][0-9]"))]
+  pop[, ward_code := sprintf("ward%s", stringr::str_extract(region, "^[0-9][0-9][0-9][0-9][0-9][0-9]"))]
+  pop[ward_code!="wardNA", municip_code := ward_code]
   pop[, year := as.numeric(stringr::str_extract(variable, "[0-9][0-9][0-9][0-9]$"))]
   pop[, agenum := as.numeric(stringr::str_extract(age, "^[0-9]*"))]
   pop[, age := NULL]
@@ -174,7 +177,10 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   }
 
   # kommunesammenslaing
-  norway_merging <- gen_norway_municip_merging(x_year_end = x_year_end)
+  merging_1 <- gen_norway_municip_merging(x_year_end = x_year_end)
+  merging_2 <- gen_norway_ward_merging(x_year_end = x_year_end)
+  setnames(merging_2, names(merging_1))
+  norway_merging <- rbind(merging_1, merging_2)
   pop <- merge(
     pop,
     norway_merging[, c("year", "municip_code_current", "municip_code_original")],
@@ -204,6 +210,7 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   }
 
   pop[, level := "municip"]
+  pop[stringr::str_detect(municip_code, "^ward"), level := "ward"]
 
   # making county pop data ----
   counties <- merge(
@@ -213,11 +220,11 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   )
 
   check_ref_to_new(
-    xref = unique(pop$municip_code),
+    xref = unique(pop[level=="municip"]$municip_code),
     xnew = unique(counties$municip_code)
   )
 
-  if (nrow(counties) != nrow(pop)) {
+  if (nrow(counties) != nrow(pop[level=="municip"])) {
     stop("nrow(counties) != nrow(pop)")
   }
 

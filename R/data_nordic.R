@@ -103,7 +103,7 @@
 gen_data_denmark_locations_long <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "locations_denmark_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "locations", "locations_denmark_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -111,7 +111,7 @@ gen_data_denmark_locations_long <- function(x_year_end) {
 gen_data_sweden_locations_long <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "locations_sweden_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "locations", "locations_sweden_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -119,7 +119,7 @@ gen_data_sweden_locations_long <- function(x_year_end) {
 gen_data_finland_locations_long <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "locations_finland_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "locations", "locations_finland_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -127,7 +127,7 @@ gen_data_finland_locations_long <- function(x_year_end) {
 gen_data_iceland_locations_long <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "locations_iceland_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "locations", "locations_iceland_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -137,7 +137,7 @@ gen_data_iceland_locations_long <- function(x_year_end) {
 gen_data_denmark_population <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "population_denmark_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "population", "population_denmark_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -145,7 +145,7 @@ gen_data_denmark_population <- function(x_year_end) {
 gen_data_sweden_population <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "population_sweden_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "population", "population_sweden_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -153,7 +153,7 @@ gen_data_sweden_population <- function(x_year_end) {
 gen_data_finland_population <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "population_finland_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "population", "population_finland_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }
@@ -161,7 +161,7 @@ gen_data_finland_population <- function(x_year_end) {
 gen_data_iceland_population <- function(x_year_end) {
   stopifnot(x_year_end == 2020)
 
-  d <- readxl::read_excel(system.file("extdata", "population_iceland_b2020.xlsx", package = "fhidata"))
+  d <- readxl::read_excel(system.file("rawdata", "population", "population_iceland_b2020.xlsx", package = "fhidata"))
   setDT(d)
   return(d)
 }

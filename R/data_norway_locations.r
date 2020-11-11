@@ -76,7 +76,7 @@ gen_norway_locations <- function(x_year_end) {
 
   # if x_year_end = 2020 then include baregions (bo- og arbeidsregioner)
   if(x_year_end == 2020){
-    ba <- data.table(readxl::read_excel(system.file("extdata", "baregioner_2020.xlsx", package = "fhidata")))
+    ba <- data.table(readxl::read_excel(system.file("rawdata", "locations", "baregioner_2020.xlsx", package = "fhidata")))
     setnames(
       ba,
       1:2,

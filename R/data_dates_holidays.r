@@ -17,7 +17,7 @@ gen_norway_dates_holidays <- function() {
   #
 
   info <- readxl::read_excel(
-    system.file("extdata", "dates_holidays.xlsx", package = "fhidata")
+    system.file("rawdata", "dates_holidays.xlsx", package = "fhidata")
   )
   info$date <- as.Date(info$date)
   setDT(info)

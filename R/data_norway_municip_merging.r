@@ -126,7 +126,7 @@ gen_norway_municip_merging <- function(
   # end
 
   # masterData <- data.table(readxl::read_excel(paste0(data_path_raw, "norway_locations.xlsx")))
-  masterData <- data.table(readxl::read_excel(system.file("extdata", "norway_locations.xlsx", package = "fhidata")))
+  masterData <- data.table(readxl::read_excel(system.file("rawdata", "locations", "norway_locations.xlsx", package = "fhidata")))
   masterData[is.na(weighting), weighting := 1]
 
   masterData[year_start <= x_year_start, year_start := x_year_start]
@@ -383,7 +383,7 @@ gen_norway_county_merging <- function(x_year_end, x_year_start = 2000) {
 # Creates the norway_county_merging (fylkesammenslaaing) data.table
 gen_norway_ward_merging <- function(x_year_end, x_year_start = 2005, include_extra_vars = F) {
   masterData <- data.table(readxl::read_excel(
-    system.file("extdata", "norway_locations_ward.xlsx", package = "fhidata"),
+    system.file("rawdata", "locations", "norway_locations_ward.xlsx", package = "fhidata"),
     col_types = c(
       "numeric",
       "numeric",
