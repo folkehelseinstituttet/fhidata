@@ -1,3 +1,7 @@
+# fhidata 2020.11.25
+
+- norway_locations_long_b2020 now includes the column `location_name_description`
+
 # fhidata 2020.11.11
 
 - norway_locations_long_b2020 now includes wardoslo, wardbergen, wardtrondheim, wardstavanger

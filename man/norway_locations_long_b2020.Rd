@@ -8,6 +8,7 @@
 \describe{
 \item{location_code}{Location code.}
 \item{location_name}{Location name.}
+\item{location_name_description}{Location name with additional description.}
 \item{location_order}{The preferred presentation order}
 \item{granularity_geo}{nation, county, municip, wardoslo, wardbergen, wardstavanger, wardtrondheim, baregion}
 }
