@@ -101,11 +101,8 @@ gen_data_all <- function(base_loc) {
 
 
   # icpc_code ----
-  icpc2_code_nb_2020 <- gen_data_icpc2_code_nb()
-  save(icpc2_code_nb_2020, file = file.path(base_loc, "icpc2_code_nb_2020.rda"), compress = "xz")
-
-  icpc2_code_en_2018 <- gen_data_icpc2_code_en()
-  save(icpc2_code_en_2018, file = file.path(base_loc, "icpc2_code_en_2018.rda"), compress = "xz")
+  icpc2_code <- gen_data_icpc2_code()
+  save(icpc2_code, file = file.path(base_loc, "icpc2_code.rda"), compress = "xz")
 
 
   # world_map <- gen_world_map()
