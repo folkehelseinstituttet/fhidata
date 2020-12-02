@@ -100,6 +100,14 @@ gen_data_all <- function(base_loc) {
   save(norway_map_insert_title_position_b2020, file = file.path(base_loc, "norway_map_insert_title_position_b2020.rda"), compress = "xz")
 
 
+  # icpc_code ----
+  icpc2_code_nb_2020 <- gen_data_icpc2_code_nb()
+  save(icpc2_code_nb_2020, file = file.path(base_loc, "icpc2_code_nb_2020.rda"), compress = "xz")
+
+  icpc2_code_en_2018 <- gen_data_icpc2_code_en()
+  save(icpc2_code_en_2018, file = file.path(base_loc, "icpc2_code_en_2018.rda"), compress = "xz")
+
+
   # world_map <- gen_world_map()
   # save(world_map, file=file.path("/git","fhidata","data","world_map.rda"), compress = "xz")
 
