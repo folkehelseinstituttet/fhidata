@@ -17,24 +17,26 @@ gen_data_icpc2_code <- function(description_only = T) {
 
   # load norwegian data
   d_nb <- readxl::read_excel(system.file("rawdata","icpc2_code", "icpc2_code_nb_2020.xlsx", package = "fhidata"))
-  colnames(d_nb) <- c('Code', 'short_title_nb', 'title')
+  setDT(d_nb)
+  setnames(d_nb, c('code', 'short_title_nb', 'long_title_nb'))
 
   # load english data
   d_en <- readxl::read_excel(system.file("rawdata", "icpc2_code", "icpc2_code_en_2018.xlsx", package = "fhidata"))
+  setDT(d_en)
+  setnames(d_en, 1:3, c('code', 'short_title_en', 'long_title_en'))
 
   # join these two
-  d_wide <- dplyr::left_join(d_nb, d_en, by = 'Code')
+  d_wide <- merge(d_nb, d_en, by="code", all=T)
 
   if(description_only == F){
     d <- d_wide
   }
-  d <- dplyr::select(d_wide, c('Code', 'short_title_nb', 'shortTitle'))
+
+  d <- d_wide[, c('code', 'short_title_nb', 'short_title_en')]
 
   # rename
-  colnames(d) <- c('code', 'title_nb', 'title_en')
+  setnames(d, c('code', 'title_nb', 'title_en'))
 
-
-  setDT(d)
   return(d)
 }
 
