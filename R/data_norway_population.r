@@ -73,6 +73,9 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   x <- NULL
   # end
 
+
+
+  # municip and ward ----
   popFiles <- c(
     "Personer2005-2009.csv",
     "Personer2010-2014.csv",
@@ -106,6 +109,7 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   pop[, agenum := as.numeric(stringr::str_extract(age, "^[0-9]*"))]
   pop[, age := NULL]
   setnames(pop, "agenum", "age")
+
 
   pop <- pop[municip_code != "municipNA"]
   pop <- pop[, .(
@@ -183,11 +187,15 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   pop <- rbind(pop, pop2)
   pop[, imputed := FALSE]
 
+
+
+
   if (original) {
     return(pop)
   }
 
-  # kommunesammenslaing
+  # kommunesammenslaing ----
+  # x_year_end <- 2020
   merging_1 <- gen_norway_municip_merging(x_year_end = x_year_end)
   merging_2 <- gen_norway_ward_merging(x_year_end = x_year_end)
   setnames(merging_2, names(merging_1))
@@ -207,7 +215,9 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     )
   ]
 
-  # imputing the future
+  # so far 2005 to 2020
+  # year, municip_code, age, imputed, pop
+  # imputing the future (2 years+)
   missingYears <- max(pop$year):(lubridate::year(lubridate::today()) + 2)
   if (length(missingYears) > 1) {
     copiedYears <- vector("list", length = length(missingYears) - 1)
@@ -267,7 +277,7 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     baregions[, level := "baregion"]
   }
 
-  # pull in full norwegian data
+  # pull in full norwegian data ----
   norway <- data.table(utils::read.csv(url("https://data.ssb.no/api/v0/dataset/59322.csv?lang=en"), stringsAsFactors = FALSE))
   norway <- norway[sex == "0 Both sexes"]
   norway[, sex := NULL]
@@ -286,16 +296,63 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     norway <- rbind(norway, popx)
   }
 
+
   if(x_year_end==2020){
     pop <- rbind(norway, counties, pop, baregions)
   } else {
     pop <- rbind(norway, counties, pop)
   }
 
+
+
+  # county21 (svalbard) ----
+  # age: -99
+  pop_county21_raw <- readxl::read_excel(system.file("rawdata", "population", "Personer_svalbard_1990-2020.xlsx", package = "fhidata"))
+
+  pop_county21 <- tidyr::pivot_longer(pop_county21_raw,
+                                      cols = tidyr::everything(),
+                                      names_to= 'year',
+                                      values_to = 'pop')
+  setDT(pop_county21)
+  pop_county21[, municip_code := 'county21']
+  pop_county21[, level := 'countynotmainland']
+
+
+  # take out municip_2100
+  # NOTE: HAVE NOT INCLUDED spitsbergen, bjornoya, hopen for before 2018
+  pop_municip2100 <- pop_county21[year >= 2019]
+  pop_municip2100[, municip_code := 'municip2100']
+  pop_municip2100[, level := 'municipnotmainland']
+
+  # ukjent ----
+  # age: -99
+  # pop: NA
+  pop_county_unknown <- data.table(year = unique(pop$year),
+                                   pop = NA_real_,
+                                   municip_code = 'county99',
+                                   level = 'countymissing')
+
+  pop_municip_unknown <- data.table(year = unique(pop$year),
+                                   pop = NA_real_,
+                                   municip_code = 'municip9999',
+                                   level = 'municipmissing')
+
+
+  popx <- rbind(pop_county21, pop_municip2100, pop_county_unknown, pop_municip_unknown)
+  popx[, age := -99]
+  popx[, imputed := F]
+  popx[, granularity_geo := level]
+
+
+  # final ----
   pop[, granularity_geo := level]
   final_order <- c("year", "municip_code", "granularity_geo", "level", "age", "pop", "imputed")
   setorderv(pop, final_order)
   setcolorder(pop, final_order)
+  setcolorder(popx, final_order)
+
+  # finally bind these two
+  pop <- rbind(pop, popx)
   setnames(pop, "municip_code", "location_code")
 
 
