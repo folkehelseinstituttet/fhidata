@@ -1,12 +1,14 @@
 #' Population in Norway (2020 borders).
 #'
 #' We conveniently package population data taken from Statistics Norway.
-#' This data is licensed under the Norwegian Licence for
+#' This data is licensed under the Norwegian License for
 #' Open Government Data (NLOD) 2.0.
 #'
-#' This dataset contains national/county/municipality level population data
-#' for every age (0 to 105 years old) from 2006. The counties and
-#' municipalities are updated for the 2020 borders.
+#' This dataset contains national/county/municipality/ward (city district) level population data
+#' for every age (0 to 105 years old). The national level data is from year 1846, while all the
+#' other levels have data from 2005.
+#'
+#' The counties and municipalities are updated for the 2020 borders.
 #'
 #' @format
 #' \describe{
@@ -24,12 +26,14 @@
 #' Population in Norway (2019 borders).
 #'
 #' We conveniently package population data taken from Statistics Norway.
-#' This data is licensed under the Norwegian Licence for
+#' This data is licensed under the Norwegian License for
 #' Open Government Data (NLOD) 2.0.
 #'
-#' This dataset contains national/county/municipality level population data
-#' for every age (0 to 105 years old) from 2006. The counties and
-#' municipalities are updated for the 2019 borders.
+#' This dataset contains national/county/municipality/ward (city district) level population data
+#' for every age (0 to 105 years old). The national level data is from year 1846, while all the
+#' other levels have data from 2005.
+#'
+#' The county and municipalities are updated for the 2019 borders.
 #'
 #' @format
 #' \describe{
@@ -51,6 +55,7 @@
 #' @import data.table
 gen_norway_population <- function(x_year_end, original = FALSE) {
 
+  # x_year_end <- 2020
   # variables used in data.table functions in this function
   . <- NULL
   value <- NULL
@@ -303,26 +308,50 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     pop <- rbind(norway, counties, pop)
   }
 
-
-
-  # county21 (svalbard) ----
+  # county21 + municip2100 (svalbard) ----
   # age: -99
-  pop_county21_raw <- readxl::read_excel(system.file("rawdata", "population", "Personer_svalbard_1990-2020.xlsx", package = "fhidata"))
+  pop_svalbard_raw <- readxl::read_excel(system.file("rawdata", "population", "Personer_svalbard_1990-2020.xlsx", package = "fhidata"))
+  # county21: all 4 rows
+  # mucnip2100: everything apart from barentsburg
+  pop_sv <- data.frame(t(pop_svalbard_raw[, -1]))
+  years <- rownames(pop_sv)
+  colnames(pop_sv) <- c('Longyearbyen_nyalesund1', 'Longyearbyen_nyalesund2', 'Barentsburg', 'Hornsund')
 
-  pop_county21 <- tidyr::pivot_longer(pop_county21_raw,
-                                      cols = tidyr::everything(),
-                                      names_to= 'year',
-                                      values_to = 'pop')
-  setDT(pop_county21)
+  setDT(pop_sv)
+  pop_sv[, county21 := rowSums(.SD, na.rm=T), .SDcols=colnames(pop_sv)]
+  pop_sv[, municip2100 := rowSums(.SD, na.rm=T), .SDcols=colnames(pop_sv)[c(1,2,4)]]
+
+  pop_sv[, year := as.numeric(years)]
+  pop_sv[, imputed := F]
+
+  # add missing years
+  if (length(missingYears) > 1) {
+    copiedYears <- vector("list", length = length(missingYears) - 1)
+    for (i in seq_along(copiedYears)) {
+      copiedYears[[i]] <- pop_sv[year == missingYears[1]]
+      copiedYears[[i]][, year := year + i]
+    }
+    copiedYears <- rbindlist(copiedYears)
+    copiedYears[, imputed := TRUE]
+    pop_sv <- rbind(pop_sv, copiedYears)
+  }
+
+
+  # separate county, municip
+  pop_county21 <- pop_sv[, .(year, pop = county21, imputed)]
   pop_county21[, municip_code := 'county21']
   pop_county21[, level := 'countynotmainland']
 
-
-  # take out municip_2100
-  # NOTE: HAVE NOT INCLUDED spitsbergen, bjornoya, hopen for before 2018
-  pop_municip2100 <- pop_county21[year >= 2019]
+  pop_municip2100 <- pop_sv[, .(year, pop = municip2100, imputed)]
   pop_municip2100[, municip_code := 'municip2100']
   pop_municip2100[, level := 'municipnotmainland']
+
+  # match year: from 2005 to 2022
+  pop_county21 <- pop_county21[year>=2005]
+  pop_municip2100 <- pop_municip2100[year>=2005]
+
+
+
 
   # ukjent ----
   # age: -99
@@ -330,18 +359,21 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   pop_county_unknown <- data.table(year = unique(pop$year),
                                    pop = NA_real_,
                                    municip_code = 'county99',
-                                   level = 'countymissing')
+                                   level = 'countymissing',
+                                   imputed = F)
 
   pop_municip_unknown <- data.table(year = unique(pop$year),
                                    pop = NA_real_,
                                    municip_code = 'municip9999',
-                                   level = 'municipmissing')
+                                   level = 'municipmissing',
+                                   imputed = F)
 
 
+  # combine svalbard and unknown, set age, force imputed T for greater than this year
   popx <- rbind(pop_county21, pop_municip2100, pop_county_unknown, pop_municip_unknown)
   popx[, age := -99]
-  popx[, imputed := F]
   popx[, granularity_geo := level]
+  popx[year>lubridate::year(lubridate::today()), imputed := T]
 
 
   # final ----

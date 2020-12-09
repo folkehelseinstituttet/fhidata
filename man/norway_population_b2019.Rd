@@ -23,12 +23,14 @@ norway_population_b2019
 }
 \description{
 We conveniently package population data taken from Statistics Norway.
-This data is licensed under the Norwegian Licence for
+This data is licensed under the Norwegian License for
 Open Government Data (NLOD) 2.0.
 }
 \details{
-This dataset contains national/county/municipality level population data
-for every age (0 to 105 years old) from 2006. The counties and
-municipalities are updated for the 2019 borders.
+This dataset contains national/county/municipality/ward (city district) level population data
+for every age (0 to 105 years old). The national level data is from year 1846, while all the
+other levels have data from 2005.
+
+The county and municipalities are updated for the 2019 borders.
 }
 \keyword{datasets}
