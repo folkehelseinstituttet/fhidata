@@ -45,13 +45,14 @@
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 "norway_locations_ward_b2020"
 
+
+
 # Creates the norway_locations data.table
 gen_norway_locations <- function(x_year_end) {
 
   # variables used by data.table
   is_current <- NULL
   year_end <- NULL
-  #
 
   norway_locations <- gen_norway_municip_merging(x_year_end = x_year_end, include_extra_vars = T)
 
@@ -112,6 +113,15 @@ gen_norway_locations <- function(x_year_end) {
       on="municip_code",
       baregion_name := baregion_name
     ]
+
+    # attach back baregion_code and baregion_name
+
+    norway_locations[municip_code == 'municip2100', baregion_code := 'baregion0']
+    norway_locations[municip_code == 'municip2100', baregion_name := 'Utenfor fastlands-Norge']
+
+    norway_locations[municip_code == 'municip9999', baregion_code := 'baregion9']
+    norway_locations[municip_code == 'municip9999', baregion_name := 'Ukjent region']
+
   }
 
   return(norway_locations)
