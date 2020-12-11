@@ -37,8 +37,8 @@ gen_norway_locations_long <- function(x_year_end) {
   # county
   b <- gen_norway_locations(x_year_end = x_year_end)[, c("county_code", "county_name")]
   b[, granularity_geo := "county"]
-  b[county_code == 'county21', granularity_geo := 'countynotmainland']
-  b[county_code == 'county99', granularity_geo := 'countymissing']
+  # b[county_code == 'county21', granularity_geo := 'countynotmainland']
+  # b[county_code == 'county99', granularity_geo := 'countymissing']
 
 
   # municip
@@ -49,7 +49,7 @@ gen_norway_locations_long <- function(x_year_end) {
                          'municip2131',
                          'municip2100'),
     granularity_geo := 'municipnotmainland']
-  c[municip_code == 'municip9999', granularity_geo := 'municipmissing']
+  # c[municip_code == 'municip9999', granularity_geo := 'municipmissing']
 
   # ward
   d <- gen_norway_locations_ward(x_year_end = x_year_end)[, c("ward_code", "ward_name")]
@@ -66,8 +66,8 @@ gen_norway_locations_long <- function(x_year_end) {
   # baregion
   f <- unique(na.omit(gen_norway_locations(x_year_end = x_year_end)[, c("baregion_code", "baregion_name")]))
   f[, granularity_geo := "baregion"]
-  f[baregion_code == 'baregion0', granularity_geo := 'baregionnotmainland']
-  f[baregion_code == 'baregion9', granularity_geo := 'baregionmissing']
+  # f[baregion_code == 'baregion0', granularity_geo := 'baregionnotmainland']
+  # f[baregion_code == 'baregion9', granularity_geo := 'baregionmissing']
 
   setnames(f, c("location_code", "location_name", "granularity_geo"))
   setorder(f, location_code)
@@ -81,10 +81,10 @@ gen_norway_locations_long <- function(x_year_end) {
   retval[granularity_geo== "baregion", location_name_description := paste0(location_name, " (BA-region)")]
 
   # location name description for missing and svalbard
-  retval[location_code == 'county21' & granularity_geo == 'countynotmainland', location_name_description:= 'Utenfor fastlands-Norge (fylke)']
-  retval[location_code == 'county99' & granularity_geo == 'countymissing', location_name_description:= 'Ukjent region (fylke)']
-  retval[location_code == 'baregion0' & granularity_geo == 'baregionnotmainland', location_name_description:= 'Utenfor fastlands-Norge (BA-region)']
-  retval[location_code == 'baregion9' & granularity_geo == 'baregionmissing', location_name_description:= 'Ukjent region (BA-region)']
+  # retval[location_code == 'county21' & granularity_geo == 'countynotmainland', location_name_description:= 'Utenfor fastlands-Norge (fylke)']
+  # retval[location_code == 'county99' & granularity_geo == 'countymissing', location_name_description:= 'Ukjent region (fylke)']
+  # retval[location_code == 'baregion0' & granularity_geo == 'baregionnotmainland', location_name_description:= 'Utenfor fastlands-Norge (BA-region)']
+  # retval[location_code == 'baregion9' & granularity_geo == 'baregionmissing', location_name_description:= 'Ukjent region (BA-region)']
 
 
   retval[, location_order := 1:.N]

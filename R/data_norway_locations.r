@@ -33,7 +33,41 @@
 #' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
 "norway_locations_b2019"
 
-#' Names of areas in Norway that existed in 2020.
+#' Names of areas in Norway (not mainland, i.e. Svalbard).
+#'
+#' @format
+#' \describe{
+#' \item{municip_code}{Municipality code.}
+#' \item{municip_name}{Municipality name.}
+#' \item{county_code}{County code.}
+#' \item{county_name}{County name.}
+#' \item{region_code}{Region code.}
+#' \item{region_name}{Region name.}
+#' \item{faregion_code}{Food authority region code.}
+#' \item{faregion_name}{Food authority region name.}
+#' }
+#' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
+"norway_locations_notmainland_b2020"
+
+
+#' Names of areas in Norway (missing).
+#'
+#' @format
+#' \describe{
+#' \item{municip_code}{Municipality code.}
+#' \item{municip_name}{Municipality name.}
+#' \item{county_code}{County code.}
+#' \item{county_name}{County name.}
+#' \item{region_code}{Region code.}
+#' \item{region_name}{Region name.}
+#' \item{faregion_code}{Food authority region code.}
+#' \item{faregion_name}{Food authority region name.}
+#' }
+#' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
+"norway_locations_missing_b2020"
+
+
+#' Names of wards (bydel, city district) in Norway that existed in 2020.
 #'
 #' @format
 #' \describe{
@@ -75,6 +109,9 @@ gen_norway_locations <- function(x_year_end) {
   norway_locations <- unique(norway_locations)
   setnames(norway_locations, "municip_code_current", "municip_code")
 
+  # remove svalbard and missing
+  norway_locations <- norway_locations[!municip_code %in% c('municip2100', 'municip9999')]
+
   # if x_year_end = 2020 then include baregions (bo- og arbeidsregioner)
   if(x_year_end == 2020){
     ba <- data.table(readxl::read_excel(system.file("rawdata", "locations", "baregioner_2020.xlsx", package = "fhidata")))
@@ -114,18 +151,84 @@ gen_norway_locations <- function(x_year_end) {
       baregion_name := baregion_name
     ]
 
-    # attach back baregion_code and baregion_name
-
-    norway_locations[municip_code == 'municip2100', baregion_code := 'baregion0']
-    norway_locations[municip_code == 'municip2100', baregion_name := 'Utenfor fastlands-Norge']
-
-    norway_locations[municip_code == 'municip9999', baregion_code := 'baregion9']
-    norway_locations[municip_code == 'municip9999', baregion_name := 'Ukjent region']
 
   }
 
   return(norway_locations)
 }
+
+
+gen_norway_locations_notmainland <- function(x_year_end){
+
+  norway_locations <- gen_norway_municip_merging(x_year_end = x_year_end, include_extra_vars = T)
+  unique(norway_locations[, c("municip_code_current", "municip_name",
+                              "county_code", "county_name",
+                              'faregion_name','faregion_code')])
+
+  norway_locations <- norway_locations[year == max(year), c(
+    "municip_code_current",
+    "municip_name",
+    "county_code",
+    "county_name",
+    "region_code",
+    "region_name",
+    'faregion_code',
+    'faregion_name'
+  )]
+
+  norway_locations <- unique(norway_locations)
+  setnames(norway_locations, "municip_code_current", "municip_code")
+
+  # take svalbard
+  notmainland_locations <- norway_locations[municip_code == 'municip2100']
+
+  notmainland_locations[, baregion_code := NA_character_]
+  notmainland_locations[, baregion_name := NA_character_]
+
+  return(notmainland_locations)
+}
+
+
+
+
+gen_norway_locations_missing <- function(x_year_end){
+
+  norway_locations <- gen_norway_municip_merging(x_year_end = x_year_end, include_extra_vars = T)
+  unique(norway_locations[, c("municip_code_current", "municip_name",
+                              "county_code", "county_name",
+                              'faregion_name','faregion_code')])
+
+  norway_locations <- norway_locations[year == max(year), c(
+    "municip_code_current",
+    "municip_name",
+    "county_code",
+    "county_name",
+    "region_code",
+    "region_name",
+    'faregion_code',
+    'faregion_name'
+  )]
+
+  norway_locations <- unique(norway_locations)
+  setnames(norway_locations, "municip_code_current", "municip_code")
+
+  # take missing
+  missing_locations <- norway_locations[municip_code == 'municip9999']
+
+  missing_locations[, baregion_code := NA_character_]
+  missing_locations[, baregion_name := NA_character_]
+
+  return(missing_locations)
+}
+
+
+
+
+
+
+
+
+
 
 # Creates the norway_locations data.table
 gen_norway_locations_ward <- function(x_year_end) {

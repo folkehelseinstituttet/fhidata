@@ -45,6 +45,18 @@ gen_data_all <- function(base_loc) {
   cat('norway locations done\n')
   save(norway_locations_b2020, file = file.path(base_loc, "norway_locations_b2020.rda"), compress = "bzip2")
 
+  # norway_locations_notmainland
+  norway_locations_notmainland_b2020 <- gen_norway_locations_notmainland(x_year_end = 2020)
+  cat('norway locations not mainland done\n')
+  save(norway_locations_notmainland_b2020, file = file.path(base_loc, "norway_locations_notmainland_b2020_b2020.rda"), compress = "bzip2")
+
+
+  # norway_locations_missing
+  norway_locations_missing_b2020 <- gen_norway_locations_missing(x_year_end = 2020)
+  cat('norway locations missing done\n')
+  save(norway_locations_missing_b2020, file = file.path(base_loc, "norway_locations_missing_b2020.rda"), compress = "bzip2")
+
+
   # norway_locations_long
   norway_locations_long_b2020 <- gen_norway_locations_long(x_year_end = 2020)
   cat('norway locations long done\n')

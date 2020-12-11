@@ -340,11 +340,11 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   # separate county, municip
   pop_county21 <- pop_sv[, .(year, pop = county21, imputed)]
   pop_county21[, municip_code := 'county21']
-  pop_county21[, level := 'countynotmainland']
+  pop_county21[, level := 'notmainlandcounty']
 
   pop_municip2100 <- pop_sv[, .(year, pop = municip2100, imputed)]
   pop_municip2100[, municip_code := 'municip2100']
-  pop_municip2100[, level := 'municipnotmainland']
+  pop_municip2100[, level := 'notmainlandmunicip']
 
   # match year: from 2005 to 2022
   pop_county21 <- pop_county21[year>=2005]
@@ -359,13 +359,13 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   pop_county_unknown <- data.table(year = unique(pop$year),
                                    pop = NA_real_,
                                    municip_code = 'county99',
-                                   level = 'countymissing',
+                                   level = 'missingcounty',
                                    imputed = F)
 
   pop_municip_unknown <- data.table(year = unique(pop$year),
                                    pop = NA_real_,
                                    municip_code = 'municip9999',
-                                   level = 'municipmissing',
+                                   level = 'missingmunicip',
                                    imputed = F)
 
 
