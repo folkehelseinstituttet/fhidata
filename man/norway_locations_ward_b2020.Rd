@@ -3,7 +3,7 @@
 \docType{data}
 \name{norway_locations_ward_b2020}
 \alias{norway_locations_ward_b2020}
-\title{Names of areas in Norway that existed in 2020.}
+\title{Names of wards (bydel, city district) in Norway that existed in 2020.}
 \format{
 \describe{
 \item{ward_code}{Ward (bydel) code.}
@@ -19,6 +19,6 @@
 norway_locations_ward_b2020
 }
 \description{
-Names of areas in Norway that existed in 2020.
+Names of wards (bydel, city district) in Norway that existed in 2020.
 }
 \keyword{datasets}
