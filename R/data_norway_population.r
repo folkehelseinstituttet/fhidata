@@ -308,21 +308,22 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
     pop <- rbind(norway, counties, pop)
   }
 
-  # county21 + municip2100 (svalbard) ----
+  #  svalbard + jan mayen ----
   # age: -99
   pop_svalbard_raw <- readxl::read_excel(system.file("rawdata", "population", "Personer_svalbard_1990-2020.xlsx", package = "fhidata"))
   # county21: all 4 rows
-  # mucnip2100: everything apart from barentsburg
+  # municip: everything apart from barentsburg
   pop_sv <- data.frame(t(pop_svalbard_raw[, -1]))
   years <- rownames(pop_sv)
   colnames(pop_sv) <- c('Longyearbyen_nyalesund1', 'Longyearbyen_nyalesund2', 'Barentsburg', 'Hornsund')
 
   setDT(pop_sv)
-  pop_sv[, county21 := rowSums(.SD, na.rm=T), .SDcols=colnames(pop_sv)]
-  pop_sv[, municip2100 := rowSums(.SD, na.rm=T), .SDcols=colnames(pop_sv)[c(1,2,4)]]
-
+  pop_sv[, notmainlandcounty21 := rowSums(.SD, na.rm=T), .SDcols=colnames(pop_sv)]
+  pop_sv[, notmainlandmunicip2100 := rowSums(.SD, na.rm=T), .SDcols=colnames(pop_sv)[c(1,2,4)]]
   pop_sv[, year := as.numeric(years)]
   pop_sv[, imputed := F]
+
+
 
   # add missing years
   if (length(missingYears) > 1) {
@@ -337,18 +338,37 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   }
 
 
-  # separate county, municip
-  pop_county21 <- pop_sv[, .(year, pop = county21, imputed)]
-  pop_county21[, municip_code := 'county21']
-  pop_county21[, level := 'notmainlandcounty']
+  # jan mayen (county22)
+  pop_jm <- data.table(year = unique(c(as.numeric(years), missingYears)),
+                       notmainlandmunicip2200 = 26,
+                       notmainlandcounty22 = 26,
+                       imputed = F)
+  pop_jm[year>lubridate::year(lubridate::today()), imputed := T]
 
-  pop_municip2100 <- pop_sv[, .(year, pop = municip2100, imputed)]
-  pop_municip2100[, municip_code := 'municip2100']
-  pop_municip2100[, level := 'notmainlandmunicip']
+
+  # separate county, municip
+  pop_notmainlandcounty21 <- pop_sv[, .(year, pop = notmainlandcounty21, imputed)]
+  pop_notmainlandcounty21[, municip_code := 'notmainlandcounty21']
+  pop_notmainlandcounty21[, level := 'notmainlandcounty']
+
+  pop_notmainlandmunicip2100 <- pop_sv[, .(year, pop = notmainlandmunicip2100, imputed)]
+  pop_notmainlandmunicip2100[, municip_code := 'notmainlandmunicip2100']
+  pop_notmainlandmunicip2100[, level := 'notmainlandmunicip']
+
+  pop_notmainlandcounty22 <- pop_jm[, .(year, pop = notmainlandcounty22, imputed)]
+  pop_notmainlandcounty22[, municip_code := 'notmainlandcounty22']
+  pop_notmainlandcounty22[, level := 'notmainlandcounty']
+
+  pop_notmainlandmunicip2200 <- pop_jm[, .(year, pop = notmainlandmunicip2200, imputed)]
+  pop_notmainlandmunicip2200[, municip_code := 'notmainlandmunicip2200']
+  pop_notmainlandmunicip2200[, level := 'notmainlandmunicip']
 
   # match year: from 2005 to 2022
-  pop_county21 <- pop_county21[year>=2005]
-  pop_municip2100 <- pop_municip2100[year>=2005]
+  pop_notmainlandcounty21 <- pop_notmainlandcounty21[year>=2005]
+  pop_notmainlandmunicip2100 <- pop_notmainlandmunicip2100[year>=2005]
+  pop_notmainlandcounty22 <- pop_notmainlandcounty22[year>=2005]
+  pop_notmainlandmunicip2200 <- pop_notmainlandmunicip2200[year>=2005]
+
 
 
 
@@ -358,19 +378,24 @@ gen_norway_population <- function(x_year_end, original = FALSE) {
   # pop: NA
   pop_county_unknown <- data.table(year = unique(pop$year),
                                    pop = NA_real_,
-                                   municip_code = 'county99',
+                                   municip_code = 'missingcounty99',
                                    level = 'missingcounty',
                                    imputed = F)
 
   pop_municip_unknown <- data.table(year = unique(pop$year),
                                    pop = NA_real_,
-                                   municip_code = 'municip9999',
+                                   municip_code = 'missingmunicip9999',
                                    level = 'missingmunicip',
                                    imputed = F)
 
 
   # combine svalbard and unknown, set age, force imputed T for greater than this year
-  popx <- rbind(pop_county21, pop_municip2100, pop_county_unknown, pop_municip_unknown)
+  popx <- rbind(pop_notmainlandcounty21,
+                pop_notmainlandmunicip2100,
+                pop_notmainlandcounty22,
+                pop_notmainlandmunicip2200,
+                pop_county_unknown,
+                pop_municip_unknown)
   popx[, age := -99]
   popx[, granularity_geo := level]
   popx[year>lubridate::year(lubridate::today()), imputed := T]
