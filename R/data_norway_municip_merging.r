@@ -127,6 +127,7 @@ gen_norway_municip_merging <- function(
 
   # masterData <- data.table(readxl::read_excel(paste0(data_path_raw, "norway_locations.xlsx")))
   masterData <- data.table(readxl::read_excel(system.file("rawdata", "locations", "norway_locations.xlsx", package = "fhidata")))
+  masterData <- masterData[!county_code %in% c("missingcounty99", "notmainlandcounty21", "notmainlandcounty22")]
   masterData[is.na(weighting), weighting := 1]
 
   masterData[year_start <= x_year_start, year_start := x_year_start]
@@ -251,8 +252,6 @@ gen_norway_municip_merging <- function(
 
   return(invisible(skeleton))
 }
-
-
 
 gen_norway_fixing_merged_municips <- function(x_year_end, include_extra_vars = FALSE) {
   border_end <- NULL
