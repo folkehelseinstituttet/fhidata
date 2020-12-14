@@ -37,19 +37,26 @@ gen_norway_locations_long <- function(x_year_end) {
   # county
   b <- gen_norway_locations(x_year_end = x_year_end)[, c("county_code", "county_name")]
   b[, granularity_geo := "county"]
-  # b[county_code == 'county21', granularity_geo := 'countynotmainland']
-  # b[county_code == 'county99', granularity_geo := 'countymissing']
-
+  b1 <- gen_norway_locations_notmainland(x_year_end = x_year_end)[, c("county_code", "county_name")]
+  b1[county_code == "notmainlandcounty21", granularity_geo := "notmainlandcounty"]
+  b1[county_code == "notmainlandcounty22", granularity_geo := "notmainlandcounty"]
+  b2 <- gen_norway_locations_missing(x_year_end = x_year_end)[, c("county_code", "county_name")]
+  b2[county_code == "missingcounty99", granularity_geo := "missingcounty"]
+  b <- rbind(b, b1, b2)
 
   # municip
   c <- gen_norway_locations(x_year_end = x_year_end)[, c("municip_code", "municip_name")]
   c[, granularity_geo := "municip"]
-  c[municip_code %in% c('municip2111',
-                         'municip2121',
-                         'municip2131',
-                         'municip2100'),
-    granularity_geo := 'municipnotmainland']
-  # c[municip_code == 'municip9999', granularity_geo := 'municipmissing']
+  c1 <- gen_norway_locations_notmainland(x_year_end = x_year_end)[, c("municip_code", "municip_name")]
+  c1[municip_code %in% c("notmainlandmunicip2111",
+                        "notmainlandmunicip2121",
+                        "notmainlandmunicip2131",
+                        "notmainlandmunicip2100",
+                        "notmainlandmunicip2200"),
+    granularity_geo := "notmainlandmunicip"]
+  c2 <- gen_norway_locations_missing(x_year_end = x_year_end)[, c("municip_code", "municip_name")]
+  c2[municip_code == 'missingmunicip9999', granularity_geo := 'missingmunicip']
+  c <- rbind(c, c1, c2)
 
   # ward
   d <- gen_norway_locations_ward(x_year_end = x_year_end)[, c("ward_code", "ward_name")]
@@ -66,8 +73,6 @@ gen_norway_locations_long <- function(x_year_end) {
   # baregion
   f <- unique(na.omit(gen_norway_locations(x_year_end = x_year_end)[, c("baregion_code", "baregion_name")]))
   f[, granularity_geo := "baregion"]
-  # f[baregion_code == 'baregion0', granularity_geo := 'baregionnotmainland']
-  # f[baregion_code == 'baregion9', granularity_geo := 'baregionmissing']
 
   setnames(f, c("location_code", "location_name", "granularity_geo"))
   setorder(f, location_code)
@@ -80,12 +85,13 @@ gen_norway_locations_long <- function(x_year_end) {
   retval[all_ward, on = "location_code==ward_code", location_name_description := paste0(location_name, " (bydel i ", municip_name,")")]
   retval[granularity_geo== "baregion", location_name_description := paste0(location_name, " (BA-region)")]
 
-  # location name description for missing and svalbard
-  # retval[location_code == 'county21' & granularity_geo == 'countynotmainland', location_name_description:= 'Utenfor fastlands-Norge (fylke)']
-  # retval[location_code == 'county99' & granularity_geo == 'countymissing', location_name_description:= 'Ukjent region (fylke)']
-  # retval[location_code == 'baregion0' & granularity_geo == 'baregionnotmainland', location_name_description:= 'Utenfor fastlands-Norge (BA-region)']
-  # retval[location_code == 'baregion9' & granularity_geo == 'baregionmissing', location_name_description:= 'Ukjent region (BA-region)']
-
+  # location name description for missing and svalbard, jan mayen
+  retval[location_code == "notmainlandcounty21", location_name_description := "Utenfor fastlands-Norge (Svalbard)"]
+  retval[location_code == "notmainlandcounty22", location_name_description := "Utenfor fastlands-Norge (Jan Mayen)"]
+  retval[location_code == "notmainlandmunicip2100", location_name_description := "Utenfor fastlands-Norge (Svalbard)"]
+  retval[location_code == "notmainlandmunicip2200", location_name_description := "Utenfor fastlands-Norge (Jan Mayen)"]
+  retval[location_code == "missingcounty99", location_name_description := "Ukjent fykle"]
+  retval[location_code == "missingmunicip9999", location_name_description := "Ukjent kommune"]
 
   retval[, location_order := 1:.N]
   setcolorder(
@@ -101,3 +107,5 @@ gen_norway_locations_long <- function(x_year_end) {
 
   return(retval)
 }
+
+

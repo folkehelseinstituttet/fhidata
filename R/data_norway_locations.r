@@ -80,7 +80,6 @@
 "norway_locations_ward_b2020"
 
 
-
 # Creates the norway_locations data.table
 gen_norway_locations <- function(x_year_end) {
 
@@ -110,7 +109,9 @@ gen_norway_locations <- function(x_year_end) {
   setnames(norway_locations, "municip_code_current", "municip_code")
 
   # remove svalbard and missing
-  norway_locations <- norway_locations[!municip_code %in% c('municip2100', 'municip9999')]
+  norway_locations <- norway_locations[!municip_code %in% c("notmainlandmunicip2100",
+                                                            "notmainlandmunicip2200",
+                                                            "missingmunicip9999")]
 
   # if x_year_end = 2020 then include baregions (bo- og arbeidsregioner)
   if(x_year_end == 2020){
@@ -179,8 +180,9 @@ gen_norway_locations_notmainland <- function(x_year_end){
   norway_locations <- unique(norway_locations)
   setnames(norway_locations, "municip_code_current", "municip_code")
 
-  # take svalbard
-  notmainland_locations <- norway_locations[municip_code == 'municip2100']
+  # take svalbard + jan mayen
+  notmainland_locations <- norway_locations[municip_code %in% c("notmainlandmunicip2100",
+                                                                "notmainlandmunicip2200")]
 
   notmainland_locations[, baregion_code := NA_character_]
   notmainland_locations[, baregion_name := NA_character_]
@@ -213,19 +215,13 @@ gen_norway_locations_missing <- function(x_year_end){
   setnames(norway_locations, "municip_code_current", "municip_code")
 
   # take missing
-  missing_locations <- norway_locations[municip_code == 'municip9999']
+  missing_locations <- norway_locations[municip_code == "missingmunicip9999"]
 
   missing_locations[, baregion_code := NA_character_]
   missing_locations[, baregion_name := NA_character_]
 
   return(missing_locations)
 }
-
-
-
-
-
-
 
 
 
