@@ -185,7 +185,7 @@ gen_norway_locations <- function(x_year_end) {
 # x_year_end <- 2020
 gen_norway_locations_notmainland <- function(x_year_end){
 
-  norway_locations <- gen_norway_municip_merging(x_year_end = x_year_end, include_extra_vars = T)
+  norway_locations <- gen_norway_notmainlandmunicip_merging(x_year_end = x_year_end, include_extra_vars = T)
   unique(norway_locations[, c("municip_code_current", "municip_name",
                               "county_code", "county_name",
                               'faregion_name','faregion_code')])
@@ -219,7 +219,7 @@ gen_norway_locations_notmainland <- function(x_year_end){
 
 gen_norway_locations_missing <- function(x_year_end){
 
-  norway_locations <- gen_norway_municip_merging(x_year_end = x_year_end, include_extra_vars = T)
+  norway_locations <- gen_norway_missingmunicip_merging(x_year_end = x_year_end, include_extra_vars = T)
   unique(norway_locations[, c("municip_code_current", "municip_name",
                               "county_code", "county_name",
                               'faregion_name','faregion_code')])
