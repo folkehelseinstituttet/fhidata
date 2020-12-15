@@ -35,15 +35,45 @@ gen_data_all <- function(base_loc) {
   cat('norway county merging done\n')
   save(norway_county_merging_b2020, file = file.path(base_loc, "norway_county_merging_b2020.rda"), compress = "bzip2")
 
-  # norway_locations_ward
-  norway_locations_ward_b2020 <- gen_norway_locations_ward(x_year_end = 2020)
-  cat('norway locations ward done\n')
-  save(norway_locations_ward_b2020, file = file.path(base_loc, "norway_locations_ward_b2020.rda"), compress = "bzip2")
+
+  # norway_missingcounty_merging
+  norway_missingcounty_merging_b2020 <- gen_norway_missingcounty_merging(x_year_end = 2020)
+  cat('norway merged county(missing) 2020 done\n')
+  save(norway_missingcounty_merging_b2020, file = file.path(base_loc, "norway_missingcounty_merging_b2020.rda"), compress = "bzip2")
+
+
+  # norway_missingmunicip_merging
+  norway_missingmunicip_merging_b2020 <- gen_norway_missingmunicip_merging(x_year_end = 2020)
+  cat('norway merged municips(missing) 2020 done\n')
+  save(norway_missingmunicip_merging_b2020, file = file.path(base_loc, "norway_missingmunicip_merging_b2020.rda"), compress = "bzip2")
+
+
+  # norway_notmainlandcounty_merging
+  norway_notmainlandcounty_merging_b2020 <- gen_norway_notmainlandcounty_merging(x_year_end = 2020)
+  cat('norway merged county(not mainland) 2020 done\n')
+  save(norway_notmainlandcounty_merging_b2020, file = file.path(base_loc, "norway_notmainlandcounty_merging_b2020.rda"), compress = "bzip2")
+
+  # norway_notmainlandmunicip_merging
+  norway_notmainlandmunicip_merging_b2020 <- gen_norway_notmainlandmunicip_merging(x_year_end = 2020)
+  cat('norway merged county(not mainland) 2020 done\n')
+  save(norway_notmainlandmunicip_merging_b2020, file = file.path(base_loc, "norway_notmainlandmunicip_merging_b2020.rda"), compress = "bzip2")
+
 
   # norway_locations
   norway_locations_b2020 <- gen_norway_locations(x_year_end = 2020)
   cat('norway locations done\n')
   save(norway_locations_b2020, file = file.path(base_loc, "norway_locations_b2020.rda"), compress = "bzip2")
+
+  # norway_locations_ward
+  norway_locations_ward_b2020 <- gen_norway_locations_ward(x_year_end = 2020)
+  cat('norway locations ward done\n')
+  save(norway_locations_ward_b2020, file = file.path(base_loc, "norway_locations_ward_b2020.rda"), compress = "bzip2")
+
+  # norway_locations_municip_b2020 (the same as norway_locations_b2020)
+  norway_locations_municip_b2020 <- gen_norway_locations_municip(x_year_end = 2020)
+  cat('norway locations municip done\n')
+  save(norway_locations_municip_b2020, file = file.path(base_loc, "norway_locations_municip_b2020.rda"), compress = "bzip2")
+
 
   # norway_locations_notmainland
   norway_locations_notmainland_b2020 <- gen_norway_locations_notmainland(x_year_end = 2020)
