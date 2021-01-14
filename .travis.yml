@@ -27,6 +27,7 @@ addons:
       - libjson-c-dev
 
 r_packages:
+- usethis
 - drat
 #- pkgdown
 - lintr
