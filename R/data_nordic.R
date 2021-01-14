@@ -139,6 +139,9 @@ gen_data_denmark_population <- function(x_year_end) {
 
   d <- readxl::read_excel(system.file("rawdata", "population", "population_denmark_b2020.xlsx", package = "fhidata"))
   setDT(d)
+  d1 <- copy(d)
+  d1[, year := 2021]
+  d <- rbind(d,d1)
   return(d)
 }
 
@@ -147,6 +150,9 @@ gen_data_sweden_population <- function(x_year_end) {
 
   d <- readxl::read_excel(system.file("rawdata", "population", "population_sweden_b2020.xlsx", package = "fhidata"))
   setDT(d)
+  d1 <- copy(d)
+  d1[, year := 2021]
+  d <- rbind(d,d1)
   return(d)
 }
 
@@ -155,6 +161,9 @@ gen_data_finland_population <- function(x_year_end) {
 
   d <- readxl::read_excel(system.file("rawdata", "population", "population_finland_b2020.xlsx", package = "fhidata"))
   setDT(d)
+  d1 <- copy(d)
+  d1[, year := 2021]
+  d <- rbind(d,d1)
   return(d)
 }
 
@@ -163,5 +172,8 @@ gen_data_iceland_population <- function(x_year_end) {
 
   d <- readxl::read_excel(system.file("rawdata", "population", "population_iceland_b2020.xlsx", package = "fhidata"))
   setDT(d)
+  d1 <- copy(d)
+  d1[, year := 2021]
+  d <- rbind(d,d1)
   return(d)
 }
