@@ -14,7 +14,7 @@ addons:
       - sourceline: 'ppa:opencpu/jq'
       - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
     packages:
-      - libgit2-devel
+      - libgit2-dev
       - libudunits2-dev
       - libprotobuf-dev
       - protobuf-compiler
