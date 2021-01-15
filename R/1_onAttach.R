@@ -1,0 +1,9 @@
+.onAttach <- function(libname, pkgname) {
+  .onAttach <- function(libname, pkgname) {
+    packageStartupMessage(paste0(
+      "\033[32m","fhidata ","\033[39m",
+      "\033[30m",utils::packageDescription("fhidata")$Version,"\033[39m",
+      "\033[35m"," https://folkehelseinstituttet.github.io/fhidata","\033[39m"
+    ))
+  }
+}

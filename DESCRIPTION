@@ -1,6 +1,6 @@
 Package: fhidata
 Title: Structural Data for Norway
-Version: 2020.11.11
+Version: 2021.1.15
 Authors@R: 
     c(person("Richard", "White",
              email = "w@rwhite.no",
