@@ -38,6 +38,13 @@ pipeline {
         """
       }
     }
+    stage('git push') {
+      steps {
+        sh """
+          make git_push
+        """
+      }
+    }
     stage('drat update') {
       steps {
         sh """

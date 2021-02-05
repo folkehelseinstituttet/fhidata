@@ -61,6 +61,14 @@ check:
 		echo "NO ERRORs"
 	fi
 
+# this happens outside of docker
+.ONESHELL:
+git_push:
+	git add -A
+	git commit -am "Jenkins $(PKGNAME) $(PKGVERS)" #Committing the changes
+	git push origin master #pushes to master branch
+
+
 install: install_deps build
 	R CMD INSTALL $(PKGNAME)_$(PKGVERS).tar.gz
 
