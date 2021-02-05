@@ -64,6 +64,7 @@ check:
 # this happens outside of docker
 .ONESHELL:
 git_push:
+	rm -rf docs
 	git add -A
 	git commit -am "Jenkins $(PKGNAME) $(PKGVERS)" #Committing the changes
 	git push origin HEAD:master # origin master #pushes to master branch
