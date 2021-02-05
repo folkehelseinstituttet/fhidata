@@ -66,7 +66,7 @@ check:
 git_push:
 	git add -A
 	git commit -am "Jenkins $(PKGNAME) $(PKGVERS)" #Committing the changes
-	git push # origin master #pushes to master branch
+	git push origin HEAD:master # origin master #pushes to master branch
 
 
 install: install_deps build
