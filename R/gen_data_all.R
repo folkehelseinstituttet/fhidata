@@ -51,5 +51,7 @@ gen_data_all <- function(base_loc) {
   norway_population_by_age_sex_b2020 <- gen_norway_population_by_age_sex(2020, norway_locations_municip_b2020)
   save(norway_population_by_age_sex_b2020, file = file.path(base_loc, paste0("norway_population_by_age_sex_b2020",".rda")), compress = "xz")
 
-
+  # norway_population_by_age_b2020
+  norway_population_by_age_b2020 <- gen_norway_population_by_age(2020)
+  save(norway_population_by_age_b2020, file = file.path(base_loc, paste0("norway_population_by_age_b2020",".rda")), compress = "xz")
 }
