@@ -35,7 +35,7 @@
 norway_population_by_age_sex_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
   stopifnot(is.list(cats))
 
-  d <- copy(norway_population_by_age_sex_b2020)
+  d <- copy(fhidata::norway_population_by_age_sex_b2020)
   for(i in seq_along(cats)){
     vals <- cats[[i]]
     name <- names(cats)[[i]]
