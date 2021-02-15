@@ -54,4 +54,63 @@ gen_data_all <- function(base_loc) {
   # norway_population_by_age_b2020
   norway_population_by_age_b2020 <- gen_norway_population_by_age(2020)
   save(norway_population_by_age_b2020, file = file.path(base_loc, paste0("norway_population_by_age_b2020",".rda")), compress = "xz")
+
+  # norway_locations_names_b2020
+
+  # norway_locations_hierarchy_municip_b2020
+  # norway_locations_hierarchy_ward_b2020
+  # norway_locations_hierarchy_notmainland_b2020
+
+  # norway_locations_redistricting_county_b2020
+  norway_locations_redistricting_county_b2020 <- gen_norway_locations_redistricting_county(2020)
+  save(norway_locations_redistricting_county_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_county_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_municip_b2020
+  norway_locations_redistricting_municip_b2020 <- gen_norway_locations_redistricting_municip(2020)
+  save(norway_locations_redistricting_municip_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_municip_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_ward_b2020
+  norway_locations_redistricting_ward_b2020 <- gen_norway_locations_redistricting_ward(2020)
+  save(norway_locations_redistricting_ward_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_ward_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_notmainlandcounty_b2020
+  norway_locations_redistricting_notmainlandcounty_b2020 <- gen_norway_locations_redistricting_notmainlandcounty(2020)
+  save(norway_locations_redistricting_notmainlandcounty_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_notmainlandcounty_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_notmainlandmunicip_b2020
+  norway_locations_redistricting_notmainlandmunicip_b2020 <- gen_norway_locations_redistricting_notmainlandmunicip(2020)
+  save(norway_locations_redistricting_notmainlandmunicip_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_notmainlandmunicip_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_missingcounty_b2020
+  norway_locations_redistricting_missingcounty_b2020 <- gen_norway_locations_redistricting_missingcounty(2020)
+  save(norway_locations_redistricting_missingcounty_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_missingcounty_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_missingmunicip_b2020
+  norway_locations_redistricting_missingmunicip_b2020 <- gen_norway_locations_redistricting_missingmunicip(2020)
+  save(norway_locations_redistricting_missingmunicip_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_missingmunicip_b2020",".rda")), compress = "xz")
+
+  # norway_locations_redistricting_all_b2020
+  norway_locations_redistricting_all_b2020 <- rbind(
+    data.table(
+      location_code_current = "norge",
+      location_code_original = "norge",
+      year = 1975:(lubridate::year(lubridate::today())+10),
+      weighting = 1
+    ),
+    norway_locations_redistricting_county_b2020,
+    norway_locations_redistricting_municip_b2020,
+    norway_locations_redistricting_ward_b2020,
+    norway_locations_redistricting_notmainlandcounty_b2020,
+    norway_locations_redistricting_notmainlandmunicip_b2020,
+    norway_locations_redistricting_missingcounty_b2020,
+    norway_locations_redistricting_missingmunicip_b2020
+  )
+  norway_locations_redistricting_all_b2020[, granularity_geo := get_granularity_geo(location_code_current)]
+  save(norway_locations_redistricting_all_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_all_b2020",".rda")), compress = "xz")
+
 }
+
+
+
+
+
