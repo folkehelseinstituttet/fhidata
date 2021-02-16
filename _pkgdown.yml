@@ -44,7 +44,9 @@ reference:
   - iceland_population_by_age_b2020
 - subtitle: Datasets that can be accessed via a function
   desc: >
-    These datasets should be accessed via the functions
+    These datasets should be accessed via the functions.
+    i.e. you should not use these datasets directly unless
+    you know what you are doing and have a specific purpose in mind.
 - contents:
   - norway_locations_redistricting_b2020
   - norway_population_by_age_b2020
@@ -82,7 +84,7 @@ reference:
   - norway_locations_long_b2019
   - norway_locations_long_b2020
   - norway_missingcounty_merging_b2020
-  - norway_missing_municip_merging_b2020
+  - norway_missingmunicip_merging_b2020
   - norway_municip_merging_b2019
   - norway_municip_merging_b2020
   - norway_notmainlandcounty_merging_b2020
