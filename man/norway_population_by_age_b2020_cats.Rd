@@ -8,8 +8,6 @@ norway_population_by_age_b2020_cats(cats = list(c(1:10), c(11:20)))
 }
 \arguments{
 \item{cats}{A list containing vectors that you want to categorize}
-
-\item{border}{The border year}
 }
 \description{
 A function that easily categorizes the populations for you

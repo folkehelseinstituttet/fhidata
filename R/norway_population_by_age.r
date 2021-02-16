@@ -26,7 +26,6 @@
 #'
 #' A function that easily categorizes the populations for you
 #' @param cats A list containing vectors that you want to categorize
-#' @param border The border year
 #' @examples
 #' norway_population_by_age_b2020_cats(cats = list(c(1:10), c(11:20)))
 #' norway_population_by_age_b2020_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
