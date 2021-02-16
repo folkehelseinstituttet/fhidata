@@ -6,8 +6,8 @@ gen_data_all <- function(base_loc) {
   # base_loc = file.path(getwd(),"data")
 
   # gen_world_dates_isoyearweek ----
-  gen_world_dates_isoyearweek <- gen_days()
-  save(gen_world_dates_isoyearweek, file = file.path(base_loc, "gen_world_dates_isoyearweek.rda"), compress = "xz")
+  world_dates_isoyearweek <- gen_days()
+  save(world_dates_isoyearweek, file = file.path(base_loc, paste0("world_dates_isoyearweek",".rda")), compress = "xz")
 
   # norway_dates_holidays ----
   norway_dates_holidays <- gen_norway_dates_holidays()

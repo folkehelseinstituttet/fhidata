@@ -12,7 +12,7 @@
 #' \item{sat}{Date of Saturday.}
 #' \item{sun}{Date of Sunday.}
 #' }
-"gen_world_dates_isoyearweek"
+"world_dates_isoyearweek"
 
 # Creates the norway_locations data.table
 gen_world_dates_isoyearweek <- function() {
