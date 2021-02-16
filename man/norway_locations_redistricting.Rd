@@ -13,5 +13,5 @@ norway_locations_redistricting(border = fhidata::config$border)
 All redistricting in Norway (programable borders).
 }
 \examples{
-norway_locations_redistricting_all()
+norway_locations_redistricting()
 }
