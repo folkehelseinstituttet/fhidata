@@ -18,7 +18,7 @@
 #'
 #' @param border The border year
 #' @examples
-#' norway_locations_redistricting_all()
+#' norway_locations_redistricting()
 #' @export
 norway_locations_redistricting <- function(border = fhidata::config$border){
   stopifnot(border==2020)
