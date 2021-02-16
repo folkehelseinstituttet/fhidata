@@ -1,18 +1,3 @@
-#' Ward (bydel) redistricting in Norway (2020 borders).
-#'
-#' This dataset is used to transfer "original" ward level datasets to the 2020 borders.
-#'
-#' Last updated 2020-06-08
-#'
-#' @format
-#' \describe{
-#' \item{ward_code_current}{The ward code per today.}
-#' \item{ward_code_original}{The ward code as of 'year'.}
-#' \item{year}{The year corresponding to 'ward_code_original'.}
-#' \item{weighting}{The weighting that needs to be applied.}
-#' }
-#' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
-"norway_locations_redistricting_ward_b2020"
 
 # Creates the norway_county_merging (fylkesammenslaaing) data.table
 gen_norway_locations_redistricting_ward_internal <- function(x_year_end, x_year_start = 2005, include_extra_vars = F) {

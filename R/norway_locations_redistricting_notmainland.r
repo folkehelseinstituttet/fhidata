@@ -1,38 +1,4 @@
 
-#' County redistricting in Norway (2020 borders).
-#'
-#' This dataset is used to transfer "original" municipality level datasets to the 2020 borders.
-#'
-#' Last updated 2020-10-07
-#'
-#' @format
-#' \describe{
-#' \item{location_code_current}{The county code per today.}
-#' \item{location_code_original}{The county code as of 'year'.}
-#' \item{year}{The year corresponding to 'county_code_original'.}
-#' \item{weighting}{The weighting that needs to be applied.}
-#' }
-#' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
-"norway_locations_redistricting_notmainlandcounty_b2020"
-
-
-#' Municipality redistricting in Norway (2020 borders).
-#'
-#' This dataset is used to transfer "original" municipality level datasets to the 2020 borders.
-#'
-#' Last updated 2019-11-24
-#'
-#' @format
-#' \describe{
-#' \item{location_code_current}{The municipality code per today.}
-#' \item{location_code_original}{The municipality code as of 'year'.}
-#' \item{year}{The year corresponding to 'municip_code_original'.}
-#' \item{weighting}{The weighting that needs to be applied.}
-#' }
-#' @source \url{https://no.wikipedia.org/wiki/Liste_over_norske_kommunenummer}
-"norway_locations_redistricting_notmainlandmunicip_b2020"
-
-
 
 # Creates the norway_municip_merging (kommunesammenslaaing) data.table
 gen_norway_locations_redistricting_notmainlandmunicip_internal <- function(

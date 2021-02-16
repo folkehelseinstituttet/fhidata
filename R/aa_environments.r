@@ -15,3 +15,16 @@ se$OE <- "\u00D6"
 se$oe <- "\u00F6"
 se$AE <- "\u00C4"
 se$ae <- "\u00E4"
+
+#' Config
+#' @export
+config <- new.env()
+config$border <- 2020
+
+#' set_config
+#' @param border The year
+#' @export
+set_config <- function(border = 2020){
+  stopifnot(border %in% c(2020))
+  config$border <- border
+}

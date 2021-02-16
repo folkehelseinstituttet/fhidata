@@ -1,4 +1,4 @@
-#' All redistricting in Norway (2020 borders).
+#' Redistricting in Norway (2020 borders).
 #'
 #' This dataset is used to transfer "original" datasets to the 2020 borders.
 #'
@@ -12,4 +12,17 @@
 #' \item{weighting}{The weighting that needs to be applied.}
 #' \item{granularity_geo}{nation/county/municip/wardbergen/wardoslo/wardstavanger/wardtrondheim/notmainlandcounty/notmainlandmunicip/missingcounty}
 #' }
-"norway_locations_redistricting_all_b2020"
+"norway_locations_redistricting_b2020"
+
+#' All redistricting in Norway (programable borders).
+#'
+#' @param border The border year
+#' @examples
+#' norway_locations_redistricting_all()
+#' @export
+norway_locations_redistricting <- function(border = fhidata::config$border){
+  stopifnot(border==2020)
+  if(border==2020){
+    norway_locations_redistricting_b2020
+  }
+}

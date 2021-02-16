@@ -56,6 +56,23 @@ norway_population_by_age_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
   return(d)
 }
 
+#' norway_population_by_age_cats
+#'
+#' A function that easily categorizes the populations for you
+#' @param cats A list containing vectors that you want to categorize
+#' @param border The border year
+#' @examples
+#' norway_population_by_age_cats(cats = list(c(1:10), c(11:20)))
+#' norway_population_by_age_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
+#' norway_population_by_age_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
+#' @export
+norway_population_by_age_cats <- function(cats=list(c(1:10), c(11:20)), border = fhidata::config$border){
+  stopifnot(border == 2020)
+  if(border==2020){
+    norway_population_by_age_b2020_cats(cats = cats)
+  }
+}
+
 # Creates the population dataset
 # https://www.ssb.no/en/statbank/table/07459/tableViewLayout1/
 # https://www.ssb.no/en/statbank/table/10826/ for wards
