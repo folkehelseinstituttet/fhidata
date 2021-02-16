@@ -4,16 +4,27 @@ development:
   mode: auto
 
 reference:
-- title: Recommended functions
-- subtitle: Default
+- title: Recommended functions and datasets
+  desc: >
+    These functions and datasets have been modernized
+    and updated. They should be used.
+- subtitle: Functions to access datasets
+  desc: >
+    These functions access datasets.
 - contents:
-  - set_config
-  - get_granularity_geo
   - norway_population_by_age_cats
   - norway_population_by_age_sex_cats
   - norway_locations_redistricting
-- title: Recommended datasets
-- subtitle: Default
+- subtitle: Utility functions
+  desc: >
+    These are utility functions to help you work
+    with your data and the fhidata package..
+- contents:
+  - set_config
+  - get_granularity_geo
+- subtitle: Datasets that can be accessed directly
+  desc: >
+    These datasets should be accessed directly
 - contents:
   - config
   - nb
@@ -23,9 +34,6 @@ reference:
   - norway_dates_holidays
   - norway_childhood_vax_b2019
   - norway_childhood_vax_b2020
-  - norway_locations_redistricting_b2020
-  - norway_population_by_age_b2020
-  - norway_population_by_age_sex_b2020
   - sweden_locations_names_b2020
   - sweden_population_by_age_b2020
   - denmark_locations_names_b2020
@@ -34,8 +42,18 @@ reference:
   - finland_population_by_age_b2020
   - iceland_locations_names_b2020
   - iceland_population_by_age_b2020
+- subtitle: Datasets that can be accessed via a function
+  desc: >
+    These datasets should be accessed via the functions
+- contents:
+  - norway_locations_redistricting_b2020
+  - norway_population_by_age_b2020
+  - norway_population_by_age_sex_b2020
 - title: Can use temporarily
-- subtitle: Default
+  desc: >
+    These functions and datasets are outdated but
+    there are not any replacements yet. They can
+    be used for now.
 - contents:
   - norway_locations_missing_b2020
   - norway_locations_municip_b2020
@@ -43,8 +61,14 @@ reference:
   - norway_locations_notmainland_b2020
   - countries_nb_to_en
 - title: Should not be used
-- subtitle: Default
+  desc: >
+    These functions and datasets are out of date,
+    and there are replacements available. Look
+    at the "recommended functions and datasets"
+    section and use those functions/datasets instead.
 - contents:
+  - norway_population_by_age_b2020_cats
+  - norway_population_by_age_sex_b2020_cats
   - norway_county_merging_b2020
   - days
   - denmark_locations_long_b2020
