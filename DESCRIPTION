@@ -1,6 +1,6 @@
 Package: fhidata
 Title: Structural Data for Norway
-Version: 2021.2.15
+Version: 2021.2.16
 Authors@R: c(
   person(c("Richard","Aubrey"), "White", email = "hello@rwhite.no", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-6747-1726")
@@ -41,4 +41,4 @@ Suggests: testthat,
     zoo
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
-Date/Publication: 2021-02-15 07:00:27 UTC
+Date/Publication: 2021-02-16 04:15:29 UTC
