@@ -46,23 +46,6 @@ gen_data_all <- function(base_loc) {
   norway_childhood_vax_b2020 <- gen_norway_childhood_vax(x_year_end = 2020)
   save(norway_childhood_vax_b2020, file = file.path(base_loc, paste0("norway_childhood_vax_b2020",".rda")), compress = "xz")
 
-  # norway_population_by_age_sex_b2020
-  load(file.path(base_loc, "norway_locations_municip_b2020.rda"))
-  norway_population_by_age_sex_b2020 <- gen_norway_population_by_age_sex(2020, norway_locations_municip_b2020)
-  save(norway_population_by_age_sex_b2020, file = file.path(base_loc, paste0("norway_population_by_age_sex_b2020",".rda")), compress = "xz")
-
-  # norway_population_by_age_b2020
-  norway_population_by_age_b2020 <- gen_norway_population_by_age(2020)
-  save(norway_population_by_age_b2020, file = file.path(base_loc, paste0("norway_population_by_age_b2020",".rda")), compress = "xz")
-
-  # norway_locations_names_b2020
-
-  # norway_locations_hierarchy_municip_b2020
-  norway_locations_hierarchy_municip_b2020 <-
-  # norway_locations_hierarchy_ward_b2020
-  # norway_locations_hierarchy_notmainland_b2020
-  # norway_locations_hierarchy_missing_b2020
-
   # norway_locations_redistricting_all_b2020
   norway_locations_redistricting_county_b2020 <- gen_norway_locations_redistricting_county(2020)
   norway_locations_redistricting_municip_b2020 <- gen_norway_locations_redistricting_municip(2020)
@@ -93,6 +76,19 @@ gen_data_all <- function(base_loc) {
   # norway_locations_hierarchy_all_b2020
   norway_locations_hierarchy_all_b2020 <- gen_norway_locations_hierarchy_all(2020)
   save(norway_locations_hierarchy_all_b2020, file = file.path(base_loc, paste0("norway_locations_hierarchy_all_b2020",".rda")), compress = "xz")
+
+  # norway_locations_names_b2020
+  norway_locations_names_b2020 <- gen_norway_locations_names(2020)
+  save(norway_locations_names_b2020, file = file.path(base_loc, paste0("norway_locations_names_b2020",".rda")), compress = "xz")
+
+  # norway_population_by_age_sex_b2020
+  load(file.path(base_loc, "norway_locations_municip_b2020.rda"))
+  norway_population_by_age_sex_b2020 <- gen_norway_population_by_age_sex(2020, norway_locations_municip_b2020)
+  save(norway_population_by_age_sex_b2020, file = file.path(base_loc, paste0("norway_population_by_age_sex_b2020",".rda")), compress = "xz")
+
+  # norway_population_by_age_b2020
+  norway_population_by_age_b2020 <- gen_norway_population_by_age(2020)
+  save(norway_population_by_age_b2020, file = file.path(base_loc, paste0("norway_population_by_age_b2020",".rda")), compress = "xz")
 
 }
 

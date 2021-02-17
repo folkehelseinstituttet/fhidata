@@ -184,12 +184,13 @@ gen_norway_locations_hierarchy_all <- function(
 #'
 #' @param from wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty
 #' @param to wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty
+#' @param include_to_name Do you want to include the name of the 'to' location?
 #' @param border The border year
 #' @examples
 #' norway_locations_hierarchy(from="wardoslo", to="county")
 #' norway_locations_hierarchy(from="municip", to="baregion")
 #' @export
-norway_locations_hierarchy <- function(from, to, border = fhidata::config$border){
+norway_locations_hierarchy <- function(from, to, include_to_name = FALSE, border = fhidata::config$border){
   stopifnot(border==2020)
   stopifnot(from %in% c(
     "wardoslo",
@@ -243,11 +244,17 @@ norway_locations_hierarchy <- function(from, to, border = fhidata::config$border
     "wardstavanger"
   )){
     col_to <- "ward_code"
+    col_to_name <- "ward_name"
   } else {
     col_to <- paste0(to,"_code")
+    col_to_name <- paste0(to,"_name")
   }
 
-  d <- d[, c(col_from, col_to), with=F]
+  if(include_to_name){
+    d <- d[, c(col_from, col_to, col_to_name), with=F]
+  } else {
+    d <- d[, c(col_from, col_to), with=F]
+  }
   d <- stats::na.omit(d)
 
   if(from %in% c(
@@ -257,6 +264,7 @@ norway_locations_hierarchy <- function(from, to, border = fhidata::config$border
     "wardstavanger"
   )){
     d <- d[grep(from, get(col_from))]
+    setnames(d, col_from, paste0(from,"_code"))
   }
 
   if(to %in% c(
@@ -266,7 +274,10 @@ norway_locations_hierarchy <- function(from, to, border = fhidata::config$border
     "wardstavanger"
   )){
     d <- d[grep(to, get(col_to))]
+    setnames(d, col_to, paste0(to,"_code"))
   }
+  d <- unique(d)
+
 
   return(d)
 }

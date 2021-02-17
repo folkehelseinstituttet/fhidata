@@ -23,6 +23,7 @@
 norway_locations_redistricting <- function(border = fhidata::config$border){
   stopifnot(border==2020)
   if(border==2020){
-    norway_locations_redistricting_b2020
+    d <- copy(fhidata::norway_locations_redistricting_b2020)
   }
+  return(d)
 }

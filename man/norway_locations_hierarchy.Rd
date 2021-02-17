@@ -4,12 +4,19 @@
 \alias{norway_locations_hierarchy}
 \title{Hierarchies in Norway (programable borders).}
 \usage{
-norway_locations_hierarchy(from, to, border = fhidata::config$border)
+norway_locations_hierarchy(
+  from,
+  to,
+  include_to_name = FALSE,
+  border = fhidata::config$border
+)
 }
 \arguments{
 \item{from}{wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty}
 
 \item{to}{wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty}
+
+\item{include_to_name}{Do you want to include the name of the 'to' location?}
 
 \item{border}{The border year}
 }

@@ -15,6 +15,8 @@ reference:
   - norway_population_by_age_cats
   - norway_population_by_age_sex_cats
   - norway_locations_redistricting
+  - norway_locations_hierarchy
+  - norway_locations_names
 - subtitle: Utility functions
   desc: >
     These are utility functions to help you work
@@ -49,18 +51,16 @@ reference:
     you know what you are doing and have a specific purpose in mind.
 - contents:
   - norway_locations_redistricting_b2020
+  - norway_locations_hierarchy_all_b2020
+  - norway_locations_names_b2020
   - norway_population_by_age_b2020
   - norway_population_by_age_sex_b2020
 - title: Can use temporarily
   desc: >
-    These functions and datasets are outdated but
+    These datasets are outdated but
     there are not any replacements yet. They can
     be used for now.
 - contents:
-  - norway_locations_missing_b2020
-  - norway_locations_municip_b2020
-  - norway_locations_ward_b2020
-  - norway_locations_notmainland_b2020
   - countries_nb_to_en
 - title: Should not be used
   desc: >
@@ -69,6 +69,11 @@ reference:
     at the "recommended functions and datasets"
     section and use those functions/datasets instead.
 - contents:
+  - norway_locations_long_b2020
+  - norway_locations_missing_b2020
+  - norway_locations_municip_b2020
+  - norway_locations_ward_b2020
+  - norway_locations_notmainland_b2020
   - norway_population_by_age_b2020_cats
   - norway_population_by_age_sex_b2020_cats
   - norway_county_merging_b2020
@@ -82,7 +87,6 @@ reference:
   - norway_locations_b2019
   - norway_locations_b2020
   - norway_locations_long_b2019
-  - norway_locations_long_b2020
   - norway_missingcounty_merging_b2020
   - norway_missingmunicip_merging_b2020
   - norway_municip_merging_b2019
