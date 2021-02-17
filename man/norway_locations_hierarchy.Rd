@@ -9,6 +9,8 @@ norway_locations_hierarchy(from, to, border = fhidata::config$border)
 \arguments{
 \item{from}{wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty}
 
+\item{to}{wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty}
+
 \item{border}{The border year}
 }
 \description{

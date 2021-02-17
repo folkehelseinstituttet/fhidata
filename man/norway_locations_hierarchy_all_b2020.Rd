@@ -10,6 +10,8 @@ Last updated 2021-02-15}
 \describe{
 \item{municip_code}{The location code per today.}
 \item{municip_name}{The location code as of 'year'.}
+\item{baregion_code}{The location code per today.}
+\item{baregion_name}{The location code as of 'year'.}
 \item{county_code}{The location code as of 'year'.}
 \item{county_name}{The location code as of 'year'.}
 \item{region_code}{The location code as of 'year'.}

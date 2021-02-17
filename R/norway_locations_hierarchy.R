@@ -6,6 +6,8 @@
 #' \describe{
 #' \item{municip_code}{The location code per today.}
 #' \item{municip_name}{The location code as of 'year'.}
+#' \item{baregion_code}{The location code per today.}
+#' \item{baregion_name}{The location code as of 'year'.}
 #' \item{county_code}{The location code as of 'year'.}
 #' \item{county_name}{The location code as of 'year'.}
 #' \item{region_code}{The location code as of 'year'.}
@@ -181,6 +183,7 @@ gen_norway_locations_hierarchy_all <- function(
 #' Hierarchies in Norway (programable borders).
 #'
 #' @param from wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty
+#' @param to wardoslo, wardbergen, wardtrondheim, wardstavanger, municip, baregion, county, region, faregion, notmainlandmunicip, notmainlandcounty, missingmunicip, missingcounty
 #' @param border The border year
 #' @examples
 #' norway_locations_hierarchy(from="wardoslo", to="county")
