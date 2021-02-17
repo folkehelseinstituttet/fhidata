@@ -3,6 +3,7 @@
 export(config)
 export(get_granularity_geo)
 export(nb)
+export(norway_locations_hierarchy)
 export(norway_locations_redistricting)
 export(norway_population_by_age_b2020_cats)
 export(norway_population_by_age_cats)

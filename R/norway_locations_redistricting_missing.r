@@ -194,5 +194,20 @@ gen_norway_locations_redistricting_missingcounty <- function(
 
 }
 
+gen_norway_locations_redistricting_missingmunicip <- function(
+  x_year_end
+){
+  d <- gen_norway_locations_redistricting_notmainlandmunicip_internal(
+    x_year_end = x_year_end,
+    x_year_start = 1940
+  )
+  setnames(d, c("location_code_current", "location_code_original", "year", "weighting"))
+
+  return(d)
+}
+
+
+
+
 
 

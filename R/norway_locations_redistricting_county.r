@@ -103,3 +103,4 @@ gen_norway_locations_redistricting_county <- function(x_year_end){
   return(d)
 }
 
+
