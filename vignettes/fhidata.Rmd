@@ -1,0 +1,101 @@
+---
+title: "fhidata"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{fhidata}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fhidata)
+library(data.table)
+```
+
+`fhidata` provides both datasets and convenience functions to handle these datasets.
+
+## granularity_geo
+
+The underlying foundation of the `fhidata` package is the strict categorization of `location_code` into `granularity_geo`. The concept is that a person should (generally) have data for all values of `location_code` for each `granularity_geo` that they are interested in.
+
+```{r}
+# All the available values of granularity_geo
+unique(fhidata::norway_locations_names()$granularity_geo)
+```
+
+So if a person is interested in doing analyses for `granularity_geo=="county"` then it is expected that a person has data for all of the following values of `location_code`
+
+```{r}
+# All the available values location_code for granularity_geo=="county"
+fhidata::norway_locations_names()[granularity_geo=="county"]$location_code
+```
+
+This is the reason why there are three "similar" values for
+
+- "county": `county`, `notmainlandcounty`, `missingcounty`.
+- "municip": `municip`, `notmainlandmunicip`, `missingmunicip`.
+
+i.e. A person may want to use county-level data, but not want to include counties/municipalities that are not on mainland Norway.
+
+## Accessing Norwegian data via helper functions
+
+It is recommended to access Norwegian population and location datasets via helper functions.
+
+### Norwegian locations
+
+Redistricting is a common feature of the present Norwegian political climate. It is therefore important that our datasets can handle this. It is therefore recommended that a person set their desired year of redistricting (currently only 2020 is available) before using Norwegian data from this package. It is also possible to customize the desired border on a per-function basis using the `border` argument.
+
+```{r}
+fhidata::set_config(border = 2020)
+```
+
+When using historical data, it is important to map the old/original `location_code` to the current/desired `location_code`.
+
+```{r}
+fhidata::norway_locations_redistricting()
+```
+
+It is also important to understand the hierarchy of Norwegian locations, so that you can aggregate your own data up to different levels of `granularity_geo`.
+
+```{r}
+fhidata::norway_locations_hierarchy(from = "wardoslo", to="municip")
+fhidata::norway_locations_hierarchy(from = "municip", to="baregion")
+fhidata::norway_locations_hierarchy(from = "county", to="faregion")
+```
+
+Finally, for publication purposes it is important to have a) names of the locations, and b) the correct ordering of the locations.
+
+```{r}
+fhidata::norway_locations_names()
+```
+
+
+### Norwegian population
+
+The raw population datasets provide 1-year age groups, however, frequently the user is interested in custom age groups. The helper functions easily facilitate this need.
+
+We provide data by age.
+
+```{r}
+fhidata::norway_population_by_age_cats(cats = list(c(1:10), c(11:20)))
+fhidata::norway_population_by_age_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
+fhidata::norway_population_by_age_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
+```
+
+And also data by age and sex.
+
+```{r}
+fhidata::norway_population_by_age_sex_cats(cats = list(c(1:10), c(11:20)))
+fhidata::norway_population_by_age_sex_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
+fhidata::norway_population_by_age_sex_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
+```
+
