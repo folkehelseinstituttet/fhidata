@@ -1,6 +1,8 @@
 ---
 title: "fhidata"
 output: rmarkdown::html_vignette
+author: "Richard Aubrey White"
+date: "2021-02-18"
 vignette: >
   %\VignetteIndexEntry{fhidata}
   %\VignetteEncoding{UTF-8}
@@ -78,12 +80,17 @@ fhidata::norway_locations_hierarchy(from = "municip", to="baregion")
 fhidata::norway_locations_hierarchy(from = "county", to="faregion")
 ```
 
+When creating a skeleton of a dataset, it is important to know all of the values of `location_code` within your desired `granularity_geo`.
+
+```{r}
+fhidata::norway_locations_names()[granularity_geo %in% c("county", "notmainlandcounty","missingcounty")]$location_code
+```
+
 Finally, for publication purposes it is important to have a) names of the locations, and b) the correct ordering of the locations.
 
 ```{r}
 fhidata::norway_locations_names()
 ```
-
 
 ### Norwegian population
 
