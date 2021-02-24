@@ -4,7 +4,9 @@
 #' \describe{
 #' \item{location_code}{Location code.}
 #' \item{location_name}{Location name.}
-#' \item{location_name_description}{Location name with additional description.}
+#' \item{location_name_description_nb}{Location name with additional description.}
+#' \item{location_name_file_nb_utf}{Location name that should be used in file names, with Norwegian characters.}
+#' \item{location_name_file_nb_ascii}{Location name that should be used in file names, without Norwegian characters.}
 #' \item{location_order}{The preferred presentation order}
 #' \item{granularity_geo}{nation, county, municip, wardoslo, wardbergen, wardstavanger, wardtrondheim, baregion}
 #' }
@@ -40,52 +42,74 @@ gen_norway_locations_names <- function(x_year_end = 2020) {
   d[, location_order := 1:.N]
 
   # attach location name description
-  d[granularity_geo== "nation", location_name_description := location_name]
+  d[granularity_geo== "nation", location_name_description_nb := location_name]
 
-  d[granularity_geo== "county", location_name_description := paste0(location_name, " (fylke)")]
-  d[granularity_geo== "notmainlandcounty", location_name_description := paste0(location_name, " (fylke)")]
-  d[granularity_geo== "missingcounty", location_name_description := paste0(location_name, " (fylke)")]
+  d[granularity_geo== "county", location_name_description_nb := paste0(location_name, " (fylke)")]
+  d[granularity_geo== "notmainlandcounty", location_name_description_nb := paste0(location_name, " (fylke)")]
+  d[granularity_geo== "missingcounty", location_name_description_nb := paste0(location_name, " (fylke)")]
 
   d[norway_locations_hierarchy(from="municip",to="county",include_to_name = T, border = x_year_end),
-    on="location_code==municip_code",
-    location_name_description := paste0(location_name, " (kommune i ", county_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (kommune i ", to_name, ")")
   ]
   d[norway_locations_hierarchy(from="notmainlandmunicip",to="notmainlandcounty",include_to_name = T, border = x_year_end),
-    on="location_code==notmainlandmunicip_code",
-    location_name_description := paste0(location_name, " (kommune i ", notmainlandcounty_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (kommune i ", to_name, ")")
   ]
   d[norway_locations_hierarchy(from="missingmunicip",to="missingcounty",include_to_name = T, border = x_year_end),
-    on="location_code==missingmunicip_code",
-    location_name_description := paste0(location_name, " (kommune i ", missingcounty_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (kommune i ", to_name, ")")
   ]
 
   d[norway_locations_hierarchy(from="wardoslo",to="municip",include_to_name = T, border = x_year_end),
-    on="location_code==wardoslo_code",
-    location_name_description := paste0(location_name, " (bydel i ", municip_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]
   d[norway_locations_hierarchy(from="wardbergen",to="municip",include_to_name = T, border = x_year_end),
-    on="location_code==wardbergen_code",
-    location_name_description := paste0(location_name, " (bydel i ", municip_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]
   d[norway_locations_hierarchy(from="wardtrondheim",to="municip",include_to_name = T, border = x_year_end),
-    on="location_code==wardtrondheim_code",
-    location_name_description := paste0(location_name, " (bydel i ", municip_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]
   d[norway_locations_hierarchy(from="wardstavanger",to="municip",include_to_name = T, border = x_year_end),
-    on="location_code==wardstavanger_code",
-    location_name_description := paste0(location_name, " (bydel i ", municip_name, ")")
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]
 
-  d[granularity_geo== "baregion", location_name_description := paste0(location_name, " (BA-region)")]
-  d[granularity_geo== "faregion", location_name_description := paste0(location_name, " (Mattilsynet-region)")]
-  d[granularity_geo== "region", location_name_description := paste0(location_name, " (region)")]
+  d[granularity_geo== "baregion", location_name_description_nb := paste0(location_name, " (BA-region)")]
+  d[granularity_geo== "faregion", location_name_description_nb := paste0(location_name, " (Mattilsynet-region)")]
+  d[granularity_geo== "region", location_name_description_nb := paste0(location_name, " (region)")]
+
+  # location_name_file_nb_utf
+  d[, location_name_file_nb_utf := location_name_description_nb]
+  d[, location_name_file_nb_utf := stringr::str_replace_all(location_name_file_nb_utf, " ", "_")]
+  d[, location_name_file_nb_utf := stringr::str_replace_all(location_name_file_nb_utf, "/", "_")]
+  d[, location_name_file_nb_utf := stringr::str_remove_all(location_name_file_nb_utf, "\\.")]
+  d[, location_name_file_nb_utf := stringr::str_remove_all(location_name_file_nb_utf, "\\(")]
+  d[, location_name_file_nb_utf := stringr::str_remove_all(location_name_file_nb_utf, "\\)")]
+
+  d[, location_name_file_nb_ascii := location_name_file_nb_utf]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, fhidata::nb$AA, "A")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, fhidata::nb$aa, "a")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, fhidata::nb$AE, "A")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, fhidata::nb$ae, "a")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, fhidata::nb$OE, "O")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, fhidata::nb$oe, "o")]
+  # stringi::stri_escape_unicode(stringi::stri_enc_toutf8())
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, "\\u00e1", "a")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, "\\u0161", "s")]
+  d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, "\\u00fc", "u")]
 
   setcolorder(
     d,
     c(
       "location_code",
       "location_name",
-      "location_name_description",
+      "location_name_description_nb",
+      "location_name_file_nb_utf",
+      "location_name_file_nb_ascii",
       "location_order",
       "granularity_geo"
     )
