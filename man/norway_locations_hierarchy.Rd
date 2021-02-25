@@ -2,7 +2,7 @@
 % Please edit documentation in R/norway_locations_hierarchy.R
 \name{norway_locations_hierarchy}
 \alias{norway_locations_hierarchy}
-\title{Hierarchies in Norway (programable borders).}
+\title{Hierarchies in Norway (programmable borders).}
 \usage{
 norway_locations_hierarchy(
   from,
@@ -21,7 +21,7 @@ norway_locations_hierarchy(
 \item{border}{The border year}
 }
 \description{
-Hierarchies in Norway (programable borders).
+Hierarchies in Norway (programmable borders).
 }
 \examples{
 norway_locations_hierarchy(from="wardoslo", to="county")

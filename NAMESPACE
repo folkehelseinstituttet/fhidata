@@ -2,6 +2,7 @@
 
 export(config)
 export(get_granularity_geo)
+export(make_skeleton)
 export(nb)
 export(norway_locations_hierarchy)
 export(norway_locations_names)
