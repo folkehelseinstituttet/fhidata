@@ -24,6 +24,8 @@ reference:
 - contents:
   - set_config
   - get_granularity_geo
+  - norway_locations_msis_to_fhidata
+  - make_skeleton
 - subtitle: Datasets that can be accessed directly
   desc: >
     These datasets should be accessed directly
