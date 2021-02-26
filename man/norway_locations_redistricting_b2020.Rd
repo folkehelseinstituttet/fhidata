@@ -10,7 +10,7 @@
 \item{location_code_original}{The location code as of 'year'.}
 \item{year}{The year corresponding to 'county_code_original'.}
 \item{weighting}{The weighting that needs to be applied.}
-\item{granularity_geo}{nation/county/municip/wardbergen/wardoslo/wardstavanger/wardtrondheim/notmainlandcounty/notmainlandmunicip/missingcounty}
+\item{granularity_geo}{nation/county/municip/wardbergen/wardoslo/wardstavanger/wardtrondheim/missingwardbergen/missingwardoslo/missingwardstavanger/missingwardtrondheim/notmainlandcounty/notmainlandmunicip/missingcounty}
 }
 }
 \usage{

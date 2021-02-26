@@ -16,6 +16,8 @@
 #' \item{faregion_code}{The location code as of 'year'.}
 #' \item{ward_code}{The location code as of 'year'.}
 #' \item{ward_name}{The location code as of 'year'.}
+#' \item{missingward_code}{The location code as of 'year'.}
+#' \item{missingward_name}{The location code as of 'year'.}
 #' \item{notmainlandmunicip_code}{The location code as of 'year'.}
 #' \item{notmainlandmunicip_name}{The location code as of 'year'.}
 #' \item{notmainlandcounty_code}{The location code as of 'year'.}
@@ -128,6 +130,22 @@ gen_norway_locations_hierarchy_missing <- function(
   return(invisible(d))
 }
 
+gen_norway_locations_hierarchy_missingward <- function(
+  x_year_end,
+  x_year_start = 1940
+){
+
+  d <- gen_norway_locations_redistricting_missingward(
+    x_year_end = x_year_end,
+    x_year_start = 1940,
+    include_extra_vars = T
+  )[year==max(year)]
+  d[, year := NULL]
+  d[, weighting := NULL]
+
+  return(invisible(d))
+}
+
 gen_norway_locations_hierarchy_all <- function(
   x_year_end = 2020,
   x_year_start = 1940
@@ -137,10 +155,15 @@ gen_norway_locations_hierarchy_all <- function(
   municip <- gen_norway_locations_hierarchy_municip(x_year_end = x_year_end, x_year_start = x_year_start)
   notmainland <- gen_norway_locations_hierarchy_notmainland(x_year_end = x_year_end, x_year_start = x_year_start)
   missing <- gen_norway_locations_hierarchy_missing(x_year_end = x_year_end, x_year_start = x_year_start)
+  missing_ward <- gen_norway_locations_hierarchy_missingward(x_year_end = x_year_end, x_year_start = x_year_start)
 
   ward[, municip_name := NULL]
   ward[, ward_code_original := NULL]
   setnames(ward, "ward_code_current", "ward_code")
+
+  missing_ward[, municip_name := NULL]
+  missing_ward[, location_code_original := NULL]
+  setnames(missing_ward, c("location_code_current", "location_name"), c("missingward_code","missingward_name"))
 
   municip[, municip_code_original := NULL]
   setnames(municip, "municip_code_current", "municip_code")
@@ -159,13 +182,26 @@ gen_norway_locations_hierarchy_all <- function(
     c("missingmunicip_code", "missingmunicip_name", "missingcounty_code", "missingcounty_name"),
   )
 
+  d_1 <- merge(
+    municip,
+    missing_ward,
+    by="municip_code",
+    all=T
+  )
 
-  d <- merge(
+  d_2 <- merge(
     municip,
     ward,
     by="municip_code",
     all=T
   )
+
+  d <- rbind(
+    d_1,
+    d_2,
+    fill=T
+  )
+
   d <- rbind(
     d,
     notmainland,
@@ -187,6 +223,10 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "wardbergen",
     "wardtrondheim",
     "wardstavanger",
+    "missingwardoslo",
+    "missingwardbergen",
+    "missingwardtrondheim",
+    "missingwardstavanger",
     "municip",
     "baregion",
     "county",
@@ -202,6 +242,10 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "wardbergen",
     "wardtrondheim",
     "wardstavanger",
+    "missingwardoslo",
+    "missingwardbergen",
+    "missingwardtrondheim",
+    "missingwardstavanger",
     "municip",
     "baregion",
     "county",
@@ -223,6 +267,13 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "wardstavanger"
   )){
     col_from <- "ward_code"
+  } else if(from %in% c(
+    "missingwardoslo",
+    "missingwardbergen",
+    "missingwardtrondheim",
+    "missingwardstavanger"
+  )){
+    col_from <- "missingward_code"
   } else {
     col_from <- paste0(from,"_code")
   }
@@ -235,6 +286,14 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
   )){
     col_to <- "ward_code"
     col_to_name <- "ward_name"
+  } else if(to %in% c(
+    "missingwardoslo",
+    "missingwardbergen",
+    "missingwardtrondheim",
+    "missingwardstavanger"
+  )){
+    col_to <- "missingward_code"
+    col_to_name <- "missingward_name"
   } else {
     col_to <- paste0(to,"_code")
     col_to_name <- paste0(to,"_name")
@@ -251,7 +310,11 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "wardoslo",
     "wardbergen",
     "wardtrondheim",
-    "wardstavanger"
+    "wardstavanger",
+    "missingwardoslo",
+    "missingwardbergen",
+    "missingwardtrondheim",
+    "missingwardstavanger"
   )){
     d <- d[grep(from, get(col_from))]
     setnames(d, col_from, paste0(from,"_code"))
@@ -261,7 +324,11 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "wardoslo",
     "wardbergen",
     "wardtrondheim",
-    "wardstavanger"
+    "wardstavanger",
+    "missingwardoslo",
+    "missingwardbergen",
+    "missingwardtrondheim",
+    "missingwardstavanger"
   )){
     d <- d[grep(to, get(col_to))]
     setnames(d, col_to, paste0(to,"_code"))

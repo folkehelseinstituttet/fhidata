@@ -54,6 +54,7 @@ gen_data_all <- function(base_loc) {
   norway_locations_redistricting_notmainlandmunicip_b2020 <- gen_norway_locations_redistricting_notmainlandmunicip(2020)
   norway_locations_redistricting_missingcounty_b2020 <- gen_norway_locations_redistricting_missingcounty(2020)
   norway_locations_redistricting_missingmunicip_b2020 <- gen_norway_locations_redistricting_missingmunicip(2020)
+  norway_locations_redistricting_missingward_b2020 <- gen_norway_locations_redistricting_missingward(2020)
 
   norway_locations_redistricting_b2020 <- rbind(
     data.table::data.table(
@@ -68,7 +69,8 @@ gen_data_all <- function(base_loc) {
     norway_locations_redistricting_notmainlandcounty_b2020,
     norway_locations_redistricting_notmainlandmunicip_b2020,
     norway_locations_redistricting_missingcounty_b2020,
-    norway_locations_redistricting_missingmunicip_b2020
+    norway_locations_redistricting_missingmunicip_b2020,
+    norway_locations_redistricting_missingward_b2020
   )
   norway_locations_redistricting_b2020[, granularity_geo := get_granularity_geo(location_code_current)]
   save(norway_locations_redistricting_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_b2020",".rda")), compress = "xz")

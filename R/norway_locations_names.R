@@ -29,10 +29,11 @@ gen_norway_locations_names <- function(x_year_end = 2020) {
     all[,.(location_code = missingmunicip_code, location_name = missingmunicip_name, group_order = 7)],
 
     all[,.(location_code = ward_code, location_name = ward_name, group_order = 8)],
+    all[,.(location_code = missingward_code, location_name = missingward_name, group_order = 9)],
 
-    all[,.(location_code = baregion_code, location_name = baregion_name, group_order = 9)],
-    all[,.(location_code = region_code, location_name = region_name, group_order = 10)],
-    all[,.(location_code = faregion_code, location_name = faregion_name, group_order = 11)]
+    all[,.(location_code = baregion_code, location_name = baregion_name, group_order = 10)],
+    all[,.(location_code = region_code, location_name = region_name, group_order = 11)],
+    all[,.(location_code = faregion_code, location_name = faregion_name, group_order = 12)]
   )
   d[, granularity_geo := get_granularity_geo(location_code)]
   d <- na.omit(unique(d))
@@ -74,6 +75,23 @@ gen_norway_locations_names <- function(x_year_end = 2020) {
     location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]
   d[norway_locations_hierarchy(from="wardstavanger",to="municip",include_to_name = T, border = x_year_end),
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
+  ]
+
+  d[norway_locations_hierarchy(from="missingwardoslo",to="municip",include_to_name = T, border = x_year_end),
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
+  ]
+  d[norway_locations_hierarchy(from="missingwardbergen",to="municip",include_to_name = T, border = x_year_end),
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
+  ]
+  d[norway_locations_hierarchy(from="missingwardtrondheim",to="municip",include_to_name = T, border = x_year_end),
+    on="location_code==from_code",
+    location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
+  ]
+  d[norway_locations_hierarchy(from="missingwardstavanger",to="municip",include_to_name = T, border = x_year_end),
     on="location_code==from_code",
     location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]

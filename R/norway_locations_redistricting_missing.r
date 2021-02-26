@@ -206,6 +206,64 @@ gen_norway_locations_redistricting_missingmunicip <- function(
   return(d)
 }
 
+gen_norway_locations_redistricting_missingward <- function(
+  x_year_end,
+  x_year_start = 1940,
+  include_extra_vars = FALSE){
+
+  retval <- list()
+  retval[[length(retval)+1]] <- data.table(
+    location_code_current = "missingwardoslo030199",
+    location_code_original = "missingwardoslo030199",
+    location_name = "Ukjent bydel i Oslo",
+    year = seq(x_year_start, x_year_end, by = 1),
+    weighting = 1,
+    municip_code = "municip0301",
+    municip_name = "Oslo"
+  )
+
+  retval[[length(retval)+1]] <- data.table(
+    location_code_current = "missingwardbergen460199",
+    location_code_original = "missingwardbergen460199",
+    location_name = "Ukjent bydel i Bergen",
+    year = seq(x_year_start, x_year_end, by = 1),
+    weighting = 1,
+    municip_code = "municip4601",
+    municip_name = "Bergen"
+  )
+
+  retval[[length(retval)+1]] <- data.table(
+    location_code_current = "missingwardtrondheim500199",
+    location_code_original = "missingwardtrondheim500199",
+    location_name = "Ukjent bydel i Trondheim",
+    year = seq(x_year_start, x_year_end, by = 1),
+    weighting = 1,
+    municip_code = "municip5001",
+    municip_name = "Trondheim"
+  )
+
+  retval[[length(retval)+1]] <- data.table(
+    location_code_current = "missingwardstavanger110399",
+    location_code_original = "missingwardstavanger110399",
+    location_name = "Ukjent bydel i Stavanger",
+    year = seq(x_year_start, x_year_end, by = 1),
+    weighting = 1,
+    municip_code = "municip1103",
+    municip_name = "Stavanger"
+  )
+
+  retval <- rbindlist(retval)
+
+  if (!include_extra_vars) {
+    retval[, location_name := NULL]
+    retval[, municip_code := NULL]
+    retval[, municip_name := NULL]
+  }
+
+  return(invisible(retval))
+
+}
+
 
 
 

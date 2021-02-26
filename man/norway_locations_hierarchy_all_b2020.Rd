@@ -20,6 +20,8 @@ Last updated 2021-02-15}
 \item{faregion_code}{The location code as of 'year'.}
 \item{ward_code}{The location code as of 'year'.}
 \item{ward_name}{The location code as of 'year'.}
+\item{missingward_code}{The location code as of 'year'.}
+\item{missingward_name}{The location code as of 'year'.}
 \item{notmainlandmunicip_code}{The location code as of 'year'.}
 \item{notmainlandmunicip_name}{The location code as of 'year'.}
 \item{notmainlandcounty_code}{The location code as of 'year'.}
