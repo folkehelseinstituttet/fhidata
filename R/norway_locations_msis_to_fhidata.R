@@ -19,7 +19,7 @@ norway_locations_msis_to_fhidata_internal <- function(x){
   } else if(x %in% c(30101:30115)){
     return(paste0("wardoslo",formatC(x,width=6, flag="0", format="fg")))
   } else if(x %in% c(30116:30117)){
-    return(paste0("extrawardoslo",formatC(x,width=6, flag="0", format="fg")))
+    return(paste0("wardoslo",formatC(x,width=6, flag="0", format="fg")))
   } else if(x %in% c(30199)){
     return(paste0("missingwardoslo",formatC(x,width=6, flag="0", format="fg")))
   } else if(x %in% c(460101:460108)){
