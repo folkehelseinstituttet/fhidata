@@ -190,13 +190,13 @@ d_agg$day_nation <- copy(data$day_nation)
 
 # fixing location codes
 # 3. Replace NAs as appropriate for MSIS location numbers
-data$day_municip[is.na(msis_location_municip), msis_location_municip := 9999]
-data$day_county[is.na(msis_location_county), msis_location_county := 99]
+d_agg$day_municip[is.na(msis_location_municip), msis_location_municip := 9999]
+d_agg$day_county[is.na(msis_location_county), msis_location_county := 99]
 
 # 4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
 # you may also do redistricting (kommunesammenslaaing) at this point
-data$day_municip[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_municip)]
-data$day_county[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_county)]
+d_agg$day_municip[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_municip)]
+d_agg$day_county[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_county)]
 d_agg$day_nation[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_nation)]
 
 d_agg[]
