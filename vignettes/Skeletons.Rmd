@@ -27,15 +27,16 @@ library(data.table)
 
 ## Ordinary zone
 
-1. Clean the data
-2. Replace NAs as appropriate for MSIS location numbers
-3. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
-4. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
-5. Pull out important dates
-6. Create `multiskeleton`
-7. Merge in the information you have at different geographical granularities
-8. Aggregate up to higher geographical granularities
-9. (If desirable) aggregate up to higher time granularities
+1. Create a variable (possibly a list) to hold the data
+2. Clean the data
+3. Replace NAs as appropriate for MSIS location numbers
+4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
+5. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
+6. Pull out important dates
+7. Create `multiskeleton`
+8. Merge in the information you have at different geographical granularities
+9. Aggregate up to higher geographical granularities
+10. (If desirable) aggregate up to higher time granularities
 
 ## Simple example: Only county data is given
 
@@ -176,22 +177,31 @@ d_agg[]
 # ---------------
 # this code occurs in the ordinary zone
 
-# 1. Clean the data
+# the data is loaded in (probably from a .rds file)
+data <- copy(d_agg)
+
+# 1. Create a variable (possibly a list) to hold the data
+d_agg <- list()
+d_agg$day_municip <- copy(data$day_municip)
+d_agg$day_county <- copy(data$day_county)
+d_agg$day_nation <- copy(data$day_nation)
+
+# 2. Clean the data
 
 # fixing location codes
-# 2. Replace NAs as appropriate for MSIS location numbers
-d_agg$day_municip[is.na(msis_location_municip), msis_location_municip := 9999]
-d_agg$day_county[is.na(msis_location_county), msis_location_county := 99]
+# 3. Replace NAs as appropriate for MSIS location numbers
+data$day_municip[is.na(msis_location_municip), msis_location_municip := 9999]
+data$day_county[is.na(msis_location_county), msis_location_county := 99]
 
-# 3. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
+# 4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
 # you may also do redistricting (kommunesammenslaaing) at this point
-d_agg$day_municip[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_municip)]
-d_agg$day_county[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_county)]
+data$day_municip[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_municip)]
+data$day_county[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_county)]
 d_agg$day_nation[, location_code := fhidata::norway_locations_msis_to_fhidata(msis_location_nation)]
 
 d_agg[]
 
-# 4. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
+# 5. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
 # this will also fix the redistricting/kommunesammenslaaing issues
 for(i in seq_along(d_agg)){
   d_agg[[i]] <- d_agg[[i]][,.(
@@ -204,11 +214,11 @@ for(i in seq_along(d_agg)){
 
 d_agg[]
 
-# 5. Pull out important dates
+# 6. Pull out important dates
 date_min <- min(d_agg$day_nation$date)
 date_max <- max(d_agg$day_nation$date)
 
-# 6. Create `multiskeleton`
+# 7. Create `multiskeleton`
 # granularity_geo should have the following groups:
 # - nodata (when no data is available, and there is no 'finer' data available to aggregate up)
 # - all levels of granularity_geo where you have data available
@@ -246,7 +256,7 @@ multiskeleton_day <- fhidata::make_skeleton(
   )
 )
 
-# 7. Merge in the information you have at different geographical granularities
+# 8. Merge in the information you have at different geographical granularities
 # one level at a time
 # municip
 multiskeleton_day$municip[
@@ -278,7 +288,7 @@ multiskeleton_day$nation[is.na(cases_n), cases_n := 0]
 
 multiskeleton_day$nation[]
 
-# 8. Aggregate up to higher geographical granularities
+# 9. Aggregate up to higher geographical granularities
 multiskeleton_day$baregion <- multiskeleton_day$municip[
   fhidata::norway_locations_hierarchy(
     from = "municip",
@@ -306,7 +316,7 @@ skeleton_day <- rbindlist(multiskeleton_day, fill = TRUE)
 
 skeleton_day[]
 
-# 9. (If desirable) aggregate up to higher time granularities
+# 10. (If desirable) aggregate up to higher time granularities
 # if necessary, it is now easy to aggregate up to weekly data from here
 skeleton_week <- copy(skeleton_day)
 # it is better to use fhi::isoyearweek_c function
