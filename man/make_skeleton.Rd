@@ -29,7 +29,7 @@ make_skeleton(
 
 \item{location_code}{The location_code's wanted for the skeleton}
 
-\item{granularity_geo}{The granularity_geo's wanted for the skeleton}
+\item{granularity_geo}{The granularity_geo's wanted for the skeleton. If this is a list, then the returned value will also be in a list (see examples).}
 
 \item{location_reference}{A data.table that contains two columns: location_code and granularity_geo}
 
@@ -42,4 +42,6 @@ The easiest way to make structural data skeletons.
 make_skeleton(date_min="2020-01-01", date_max="2020-01-30", granularity_geo = c("nation", "county"))[]
 make_skeleton(yrwk_min="2020-01", yrwk_max="2020-15", granularity_geo = c("nation", "county"))[]
 make_skeleton(time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
+make_skeleton(time_total = TRUE, granularity_geo = list(c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
+make_skeleton(time_total = TRUE, granularity_geo = list("firstbatch" = c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
 }

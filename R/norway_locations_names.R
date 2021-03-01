@@ -36,7 +36,7 @@ gen_norway_locations_names <- function(x_year_end = 2020) {
     all[,.(location_code = faregion_code, location_name = faregion_name, group_order = 12)]
   )
   d[, granularity_geo := get_granularity_geo(location_code)]
-  d <- na.omit(unique(d))
+  d <- stats::na.omit(unique(d))
 
   setorder(d, group_order, location_code)
   d[, group_order := NULL]

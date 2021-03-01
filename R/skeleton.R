@@ -7,15 +7,67 @@
 #' @param yrwk_max The maximum yrwk for the skeleton
 #' @param time_total Producing a 'total' time for the skeleton
 #' @param location_code The location_code's wanted for the skeleton
-#' @param granularity_geo The granularity_geo's wanted for the skeleton
+#' @param granularity_geo The granularity_geo's wanted for the skeleton. If this is a list, then the returned value will also be in a list (see examples).
 #' @param location_reference A data.table that contains two columns: location_code and granularity_geo
 #' @param ... Other variables to include in the skeleton
 #' @examples
 #' make_skeleton(date_min="2020-01-01", date_max="2020-01-30", granularity_geo = c("nation", "county"))[]
 #' make_skeleton(yrwk_min="2020-01", yrwk_max="2020-15", granularity_geo = c("nation", "county"))[]
 #' make_skeleton(time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
+#' make_skeleton(time_total = TRUE, granularity_geo = list(c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
+#' make_skeleton(time_total = TRUE, granularity_geo = list("firstbatch" = c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
 #' @export
 make_skeleton <- function(
+date_min = NULL,
+date_max = NULL,
+yrwk_min = NULL,
+yrwk_max = NULL,
+time_total = FALSE,
+location_code = NULL,
+granularity_geo = "all",
+location_reference = fhidata::norway_locations_names(),
+...
+) {
+  if(!is.null(location_code) | !is.list(granularity_geo)){
+    return(
+      make_skeleton_single(
+        date_min = date_min,
+        date_max = date_max,
+        yrwk_min = yrwk_min,
+        yrwk_max = yrwk_max,
+        time_total = time_total,
+        location_code = location_code,
+        granularity_geo = granularity_geo,
+        location_reference = location_reference,
+        ...
+      )
+    )
+  } else {
+    retval <- vector("list", length=length(granularity_geo))
+    for(i in seq_along(granularity_geo)){
+      retval[[i]] <- make_skeleton_single(
+        date_min = date_min,
+        date_max = date_max,
+        yrwk_min = yrwk_min,
+        yrwk_max = yrwk_max,
+        time_total = time_total,
+        location_code = location_code,
+        granularity_geo = granularity_geo[[i]],
+        location_reference = location_reference,
+        ...
+      )
+    }
+    names(retval) <- unlist(lapply(granularity_geo, function(x) paste0(x, collapse="+")))
+    if(!is.null(names(granularity_geo))){
+      index <- which(names(granularity_geo) != "")
+      names(retval)[index] <- names(granularity_geo)[index]
+    }
+
+    return(retval)
+  }
+}
+
+make_skeleton_single <- function(
   date_min = NULL,
   date_max = NULL,
   yrwk_min = NULL,
