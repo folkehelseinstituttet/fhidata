@@ -30,7 +30,7 @@ library(data.table)
 1. Create a variable (possibly a list) to hold the data
 2. Clean the data
 3. Replace NAs as appropriate for MSIS location numbers
-4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
+4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata` (you may also do redistricting now)
 5. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
 6. Pull out important dates
 7. Create `multiskeleton`
@@ -60,6 +60,7 @@ d_agg <- copy(data)
 # 3. Replace NAs as appropriate for MSIS location numbers
 d_agg[is.na(location_msis_county), location_msis_county := 99]
 # 4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
+# you may also do redistricting (kommunesammenslaaing) at this point (fhidata::norway_locations_redistricting())
 d_agg[, location_code := fhidata::norway_locations_msis_to_fhidata(location_msis_county)]
 
 # 5. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
@@ -210,7 +211,7 @@ d_agg$day_municip[is.na(location_msis_municip), location_msis_municip := 9999]
 d_agg$day_county[is.na(location_msis_county), location_msis_county := 99]
 
 # 4. Convert MSIS location numbers to location_code's using `fhidata::norway_locations_msis_to_fhidata`
-# you may also do redistricting (kommunesammenslaaing) at this point
+# you may also do redistricting (kommunesammenslaaing) at this point (fhidata::norway_locations_redistricting())
 d_agg$day_municip[, location_code := fhidata::norway_locations_msis_to_fhidata(location_msis_municip)]
 d_agg$day_county[, location_code := fhidata::norway_locations_msis_to_fhidata(location_msis_county)]
 d_agg$day_nation[, location_code := fhidata::norway_locations_msis_to_fhidata(location_msis_nation)]
