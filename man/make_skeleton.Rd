@@ -44,4 +44,5 @@ make_skeleton(yrwk_min="2020-01", yrwk_max="2020-15", granularity_geo = c("natio
 make_skeleton(time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 make_skeleton(time_total = TRUE, granularity_geo = list(c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
 make_skeleton(time_total = TRUE, granularity_geo = list("firstbatch" = c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
+make_skeleton(yrwk_min = "2020-01", yrwk_max = "2020-03", time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 }

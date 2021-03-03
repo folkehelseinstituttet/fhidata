@@ -16,6 +16,7 @@
 #' make_skeleton(time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 #' make_skeleton(time_total = TRUE, granularity_geo = list(c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
 #' make_skeleton(time_total = TRUE, granularity_geo = list("firstbatch" = c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
+#' make_skeleton(yrwk_min = "2020-01", yrwk_max = "2020-03", time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 #' @export
 make_skeleton <- function(
 date_min = NULL,
@@ -78,8 +79,9 @@ make_skeleton_single <- function(
   location_reference = fhidata::norway_locations_names(),
   ...
   ) {
-  if (!is.null(date_min) & !is.null(date_max) & time_total == FALSE) {
-    retval <- make_skeleton_date(
+  retval <- list()
+  if (!is.null(date_min) & !is.null(date_max)) {
+    retval[[length(retval)+1]] <- make_skeleton_date(
       date_min = date_min,
       date_max = date_max,
       location_code = location_code,
@@ -87,8 +89,9 @@ make_skeleton_single <- function(
       location_reference = location_reference,
       ...
     )
-  } else if (!is.null(yrwk_min) & !is.null(yrwk_max) & time_total == FALSE) {
-    retval <- make_skeleton_week(
+  }
+  if (!is.null(yrwk_min) & !is.null(yrwk_max)) {
+    retval[[length(retval)+1]] <- make_skeleton_week(
       yrwk_min = yrwk_min,
       yrwk_max = yrwk_max,
       location_code = location_code,
@@ -96,15 +99,20 @@ make_skeleton_single <- function(
       location_reference = location_reference,
       ...
     )
-  } else if (time_total == TRUE) {
-    retval <- make_skeleton_total(
+  }
+  if (time_total == TRUE) {
+    retval[[length(retval)+1]] <- make_skeleton_total(
       location_code = location_code,
       granularity_geo = granularity_geo,
       location_reference = location_reference,
       ...
     )
-  } else {
+  }
+
+  if(length(retval)==0){
     stop("must provide one of the following: 1) date pair, 2) yrwk pair, 3) time_total=T")
+  } else {
+    retval <- rbindlist(retval)
   }
   return(retval)
 }
@@ -177,7 +185,7 @@ make_skeleton_week <- function(
     stringsAsFactors = FALSE
   )
   setDT(retval)
-  retval[, granularity_time := "day"]
+  retval[, granularity_time := "week"]
   retval[, granularity_geo := fhidata::get_granularity_geo(location_code)]
   setcolorder(retval, c("granularity_time","yrwk", "granularity_geo","location_code"))
   setorderv(retval, names(retval))
