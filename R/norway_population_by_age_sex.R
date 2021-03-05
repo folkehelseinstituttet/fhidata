@@ -108,7 +108,8 @@ gen_norway_population_by_age_sex <- function(x_year_end, norway_locations_hierar
 
   # municip and ward ----
   popFiles <- c(
-    "norway_population_by_age_sex_b2020.csv"
+    "norway_population_by_age_sex_2020.csv",
+    "norway_population_by_age_sex_2021.csv"
   )
   pop <- vector("list", length = length(popFiles))
   for (i in seq_along(pop)) {
