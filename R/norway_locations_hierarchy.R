@@ -321,7 +321,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "missingwardtrondheim",
     "missingwardstavanger"
   )){
-    d <- d[grep(from, get(col_from))]
+    d <- d[grep(paste0("^",from), get(col_from))]
     setnames(d, col_from, paste0(from,"_code"))
   }
 
@@ -336,7 +336,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
     "missingwardtrondheim",
     "missingwardstavanger"
   )){
-    d <- d[grep(to, get(col_to))]
+    d <- d[grep(paste0("^",to), get(col_to))]
     setnames(d, col_to, paste0(to,"_code"))
   }
   d <- unique(d)
