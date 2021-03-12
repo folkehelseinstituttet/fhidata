@@ -4,9 +4,14 @@
 \alias{norway_locations_redistricting}
 \title{All redistricting in Norway (programable borders).}
 \usage{
-norway_locations_redistricting(border = fhidata::config$border)
+norway_locations_redistricting(
+  include_year = TRUE,
+  border = fhidata::config$border
+)
 }
 \arguments{
+\item{include_year}{Do you want to include redistricting by year?}
+
 \item{border}{The border year}
 }
 \description{
