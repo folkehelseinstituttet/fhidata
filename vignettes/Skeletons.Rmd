@@ -92,6 +92,7 @@ multiskeleton_day <- fhidata::make_skeleton(
   granularity_geo = list(
     "nodata" = c(
       "wardoslo",
+      "extrawardoslo",
       "missingwardoslo",
       "wardbergen",
       "missingwardbergen",
@@ -248,6 +249,7 @@ multiskeleton_day <- fhidata::make_skeleton(
   granularity_geo = list(
     "nodata" = c(
       "wardoslo",
+      "extrawardoslo",
       "missingwardoslo",
       "wardbergen",
       "missingwardbergen",
