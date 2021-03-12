@@ -62,7 +62,7 @@ gen_norway_locations_names <- function(x_year_end = 2020) {
     location_name_description_nb := paste0(location_name, " (kommune i ", to_name, ")")
   ]
 
-  d[norway_locations_hierarchy(from="wardoslo",to="municip",include_to_name = T, border = x_year_end),
+  d[norway_locations_hierarchy(from=c("wardoslo","extrawardoslo"),to="municip",include_to_name = T, border = x_year_end),
     on="location_code==from_code",
     location_name_description_nb := paste0(location_name, " (bydel i ", to_name, ")")
   ]
