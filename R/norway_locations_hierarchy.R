@@ -220,6 +220,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
   stopifnot(border==2020)
   stopifnot(from %in% c(
     "wardoslo",
+    "extrawardoslo",
     "wardbergen",
     "wardtrondheim",
     "wardstavanger",
@@ -239,6 +240,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
   ))
   stopifnot(to %in% c(
     "wardoslo",
+    "extrawardoslo",
     "wardbergen",
     "wardtrondheim",
     "wardstavanger",
@@ -262,6 +264,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
 
   if(from %in% c(
     "wardoslo",
+    "extrawardoslo",
     "wardbergen",
     "wardtrondheim",
     "wardstavanger"
@@ -280,6 +283,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
 
   if(to %in% c(
     "wardoslo",
+    "extrawardoslo",
     "wardbergen",
     "wardtrondheim",
     "wardstavanger"
@@ -308,6 +312,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
 
   if(from %in% c(
     "wardoslo",
+    "extrawardoslo",
     "wardbergen",
     "wardtrondheim",
     "wardstavanger",
@@ -322,6 +327,7 @@ norway_locations_hierarchy_internal <- function(from, to, include_to_name = FALS
 
   if(to %in% c(
     "wardoslo",
+    "extrawardoslo",
     "wardbergen",
     "wardtrondheim",
     "wardstavanger",

@@ -118,6 +118,11 @@ gen_norway_locations_redistricting_ward_internal <- function(x_year_end, x_year_
 
   skeleton <- skeleton[!stringr::str_detect(ward_code_current, "ward[0-9]")]
 
+  skeleton[ward_code_current=="wardoslo030116", ward_code_current := "extrawardoslo030116"]
+  skeleton[ward_code_current=="wardoslo030117", ward_code_current := "extrawardoslo030117"]
+  skeleton[ward_code_original=="wardoslo030116", ward_code_original := "extrawardoslo030116"]
+  skeleton[ward_code_original=="wardoslo030117", ward_code_original := "extrawardoslo030117"]
+
   return(invisible(skeleton))
 }
 

@@ -130,10 +130,9 @@ gen_norway_population_by_age <- function(x_year_end, original = FALSE) {
   pop[ward_code!="NA" & municip_code %in% c("municip1201", "municip4601"), ward_prefix := "wardbergen"]
   pop[ward_code!="NA" & municip_code %in% c("municip1103"), ward_prefix := "wardstavanger"]
   pop[ward_code!="NA" & municip_code %in% c("municip1601", "municip5001"), ward_prefix := "wardtrondheim"]
-  popx <- pop[ward_prefix=="wardoslo"]
-  popx[,ward_prefix:="ward"]
-  pop <- rbind(pop,popx)
   pop[,ward_code := paste0(ward_prefix,ward_code)]
+  pop[ward_code=="wardoslo030116", ward_code := "extrawardoslo030116"]
+  pop[ward_code=="wardoslo030117", ward_code := "extrawardoslo030117"]
   pop[ward_code!="NA", municip_code := ward_code]
 
   pop[, year := as.numeric(stringr::str_extract(variable, "[0-9][0-9][0-9][0-9]$"))]
