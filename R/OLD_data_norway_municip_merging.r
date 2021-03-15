@@ -394,6 +394,8 @@ gen_norway_ward_merging <- function(x_year_end, x_year_start = 2005, include_ext
       "text"
     )
   ))
+  masterData[ward_code=="wardoslo030116", ward_code:="extrawardoslo030116"]
+  masterData[ward_code=="wardoslo030117", ward_code:="extrawardoslo030117"]
   masterData[is.na(weighting), weighting := 1]
 
   masterData[year_start <= x_year_start, year_start := x_year_start]
