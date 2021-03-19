@@ -12,7 +12,7 @@
 #'
 #' @format
 #' \describe{
-#' \item{year}{Year.}
+#' \item{calyear}{Calendar Year.}
 #' \item{location_code}{The location code.}
 #' \item{granularity_geo}{National/County/Municipality/BAregion.}
 #' \item{age}{1 year ages from 0 to 105.}
@@ -31,6 +31,35 @@
 #' norway_population_by_age_b2020_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
 #' norway_population_by_age_b2020_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
 #' @export
+norway_population_by_age_b2020_cats <- function(cats=NULL){
+  stopifnot(is.list(cats) | is.null(cats))
+
+  d <- copy(fhidata::norway_population_by_age_b2020)
+  if(is.null(cats)){
+    d[, age_cat := age]
+  } else {
+    for(i in seq_along(cats)){
+      vals <- cats[[i]]
+      name <- names(cats)[[i]]
+      if(is.null(name)){
+        name <- paste0(formatC(vals[1],width=2,flag="0"),"-",formatC(vals[length(vals)],width=2,flag="0"))
+      } else if(name==""){
+        name <- paste0(formatC(vals[1],width=2,flag="0"),"-",formatC(vals[length(vals)],width=2,flag="0"))
+      }
+      d[age %in% vals, age_cat := name]
+    }
+  }
+  d <- d[!is.na(age_cat),.(
+    pop = sum(pop)
+  ),keyby=.(
+    calyear, location_code, age_cat, sex, imputed, granularity_geo
+  )]
+  setnames(d, "age_cat", "age")
+  setcolorder(d, c("calyear", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
+
+  return(d)
+}
+
 norway_population_by_age_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
   stopifnot(is.list(cats))
 
@@ -48,10 +77,10 @@ norway_population_by_age_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
   d <- d[!is.na(age_cat),.(
     pop = sum(pop)
   ),keyby=.(
-    year, location_code, age_cat, sex, imputed, granularity_geo
+    calyear, location_code, age_cat, sex, imputed, granularity_geo
   )]
   setnames(d, "age_cat", "age")
-  setcolorder(d, c("year", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
+  setcolorder(d, c("calyear", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
 
   return(d)
 }
@@ -66,7 +95,7 @@ norway_population_by_age_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
 #' norway_population_by_age_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
 #' norway_population_by_age_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
 #' @export
-norway_population_by_age_cats <- function(cats=list(c(1:10), c(11:20)), border = fhidata::config$border){
+norway_population_by_age_cats <- function(cats = NULL, border = fhidata::config$border){
   stopifnot(border == 2020)
   if(border==2020){
     norway_population_by_age_b2020_cats(cats = cats)
@@ -442,6 +471,7 @@ gen_norway_population_by_age <- function(x_year_end, original = FALSE) {
   pop <- rbind(pop, popx)
   setnames(pop, "municip_code", "location_code")
 
+  setnames(pop, "year", "calyear")
 
   return(invisible(pop))
 }

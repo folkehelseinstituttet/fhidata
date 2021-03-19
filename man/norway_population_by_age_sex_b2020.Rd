@@ -6,7 +6,7 @@
 \title{Population in Norway (2020 borders).}
 \format{
 \describe{
-\item{year}{Year.}
+\item{calyear}{Calendar Year.}
 \item{location_code}{The location code.}
 \item{granularity_geo}{National/County/Municipality/BAregion.}
 \item{age}{1 year ages from 0 to 105.}

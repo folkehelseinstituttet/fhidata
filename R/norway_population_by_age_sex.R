@@ -12,7 +12,7 @@
 #'
 #' @format
 #' \describe{
-#' \item{year}{Year.}
+#' \item{calyear}{Calendar Year.}
 #' \item{location_code}{The location code.}
 #' \item{granularity_geo}{National/County/Municipality/BAregion.}
 #' \item{age}{1 year ages from 0 to 105.}
@@ -23,28 +23,23 @@
 #' @source \url{https://www.ssb.no/en/statbank/table/07459/tableViewLayout1/}
 "norway_population_by_age_sex_b2020"
 
-#' norway_population_by_age_sex_b2020_cats
-#'
-#' A function that easily categorizes the populations for you
-#' @param cats A list containing vectors that you want to categorize
-#' @examples
-#' norway_population_by_age_sex_b2020_cats(cats = list(c(1:10), c(11:20)))
-#' norway_population_by_age_sex_b2020_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
-#' norway_population_by_age_sex_b2020_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
-#' @export
-norway_population_by_age_sex_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
-  stopifnot(is.list(cats))
+norway_population_by_age_sex_b2020_cats <- function(cats=NULL){
+  stopifnot(is.list(cats) | is.null(cats))
 
   d <- copy(fhidata::norway_population_by_age_sex_b2020)
-  for(i in seq_along(cats)){
-    vals <- cats[[i]]
-    name <- names(cats)[[i]]
-    if(is.null(name)){
-      name <- paste0(vals[1],"-",vals[length(vals)])
-    } else if(name==""){
-      name <- paste0(vals[1],"-",vals[length(vals)])
+  if(is.null(cats)){
+    d[, age_cat := age]
+  } else {
+    for(i in seq_along(cats)){
+      vals <- cats[[i]]
+      name <- names(cats)[[i]]
+      if(is.null(name)){
+        name <- paste0(formatC(vals[1],width=2,flag="0"),"-",formatC(vals[length(vals)],width=2,flag="0"))
+      } else if(name==""){
+        name <- paste0(formatC(vals[1],width=2,flag="0"),"-",formatC(vals[length(vals)],width=2,flag="0"))
+      }
+      d[age %in% vals, age_cat := name]
     }
-    d[age %in% vals, age_cat := name]
   }
   d <- d[!is.na(age_cat),.(
     pop = sum(pop)
@@ -67,7 +62,7 @@ norway_population_by_age_sex_b2020_cats <- function(cats=list(c(1:10), c(11:20))
 #' norway_population_by_age_sex_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
 #' norway_population_by_age_sex_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
 #' @export
-norway_population_by_age_sex_cats <- function(cats=list(c(1:10), c(11:20)), border = fhidata::config$border){
+norway_population_by_age_sex_cats <- function(cats=NULL, border = fhidata::config$border){
   stopifnot(border == 2020)
   if(border==2020){
     norway_population_by_age_sex_b2020_cats(cats = cats)
@@ -202,6 +197,7 @@ gen_norway_population_by_age_sex <- function(x_year_end, norway_locations_hierar
   pop[, granularity_geo := stringr::str_extract(location_code, "^[a-z]+")]
   setnames(pop, "value", "pop")
 
+  setnames(pop, "year", "calyear")
 
   return(invisible(pop))
 }

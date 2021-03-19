@@ -8,6 +8,7 @@
 \describe{
 \item{year}{Isoyear.}
 \item{yrwk}{Isoweek-isoyear.}
+\item{isoyearweek}{Isoweek-isoyear.}
 \item{mon}{Date of Monday.}
 \item{tue}{Date of Tuesday.}
 \item{wed}{Date of Wednesday.}

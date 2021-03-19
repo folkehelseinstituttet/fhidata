@@ -4,10 +4,7 @@
 \alias{norway_population_by_age_sex_cats}
 \title{norway_population_by_age_sex_cats}
 \usage{
-norway_population_by_age_sex_cats(
-  cats = list(c(1:10), c(11:20)),
-  border = fhidata::config$border
-)
+norway_population_by_age_sex_cats(cats = NULL, border = fhidata::config$border)
 }
 \arguments{
 \item{cats}{A list containing vectors that you want to categorize}

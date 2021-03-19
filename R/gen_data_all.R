@@ -6,7 +6,7 @@ gen_data_all <- function(base_loc) {
   # base_loc = file.path(getwd(),"data")
 
   # gen_world_dates_isoyearweek ----
-  world_dates_isoyearweek <- gen_days()
+  world_dates_isoyearweek <- gen_world_dates_isoyearweek()
   save(world_dates_isoyearweek, file = file.path(base_loc, paste0("world_dates_isoyearweek",".rda")), compress = "xz")
 
   # norway_dates_holidays ----
@@ -73,6 +73,7 @@ gen_data_all <- function(base_loc) {
     norway_locations_redistricting_missingward_b2020
   )
   norway_locations_redistricting_b2020[, granularity_geo := get_granularity_geo(location_code_current)]
+  setnames(norway_locations_redistricting_b2020, "year", "calyear")
   save(norway_locations_redistricting_b2020, file = file.path(base_loc, paste0("norway_locations_redistricting_b2020",".rda")), compress = "xz")
 
   # norway_locations_hierarchy_all_b2020
