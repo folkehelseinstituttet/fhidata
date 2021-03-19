@@ -47,7 +47,7 @@ norway_population_by_age_sex_b2020_cats <- function(cats=NULL){
     calyear, location_code, age_cat, sex, imputed, granularity_geo
   )]
   setnames(d, "age_cat", "age")
-  setcolorder(d, c("year", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
+  setcolorder(d, c("calyear", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
 
   return(d)
 }
