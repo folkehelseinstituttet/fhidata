@@ -22,15 +22,6 @@
 #' @source \url{https://www.ssb.no/en/statbank/table/07459/tableViewLayout1/}
 "norway_population_by_age_b2020"
 
-#' norway_population_by_age_b2020_cats
-#'
-#' A function that easily categorizes the populations for you
-#' @param cats A list containing vectors that you want to categorize
-#' @examples
-#' norway_population_by_age_b2020_cats(cats = list(c(1:10), c(11:20)))
-#' norway_population_by_age_b2020_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
-#' norway_population_by_age_b2020_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
-#' @export
 norway_population_by_age_b2020_cats <- function(cats=NULL){
   stopifnot(is.list(cats) | is.null(cats))
 
@@ -48,31 +39,6 @@ norway_population_by_age_b2020_cats <- function(cats=NULL){
       }
       d[age %in% vals, age_cat := name]
     }
-  }
-  d <- d[!is.na(age_cat),.(
-    pop = sum(pop)
-  ),keyby=.(
-    calyear, location_code, age_cat, sex, imputed, granularity_geo
-  )]
-  setnames(d, "age_cat", "age")
-  setcolorder(d, c("calyear", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
-
-  return(d)
-}
-
-norway_population_by_age_b2020_cats <- function(cats=list(c(1:10), c(11:20))){
-  stopifnot(is.list(cats))
-
-  d <- copy(fhidata::norway_population_by_age_b2020)
-  for(i in seq_along(cats)){
-    vals <- cats[[i]]
-    name <- names(cats)[[i]]
-    if(is.null(name)){
-      name <- paste0(vals[1],"-",vals[length(vals)])
-    } else if(name==""){
-      name <- paste0(vals[1],"-",vals[length(vals)])
-    }
-    d[age %in% vals, age_cat := name]
   }
   d <- d[!is.na(age_cat),.(
     pop = sum(pop)
