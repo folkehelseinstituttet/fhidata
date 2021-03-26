@@ -195,6 +195,7 @@ gen_norway_population_by_age_sex <- function(x_year_end, norway_locations_hierar
   }
 
   pop[, granularity_geo := stringr::str_extract(location_code, "^[a-z]+")]
+  pop[granularity_geo=="norge", granularity_geo := "nation"]
   setnames(pop, "value", "pop")
 
   setnames(pop, "year", "calyear")

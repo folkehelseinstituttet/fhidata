@@ -191,11 +191,11 @@ gen_norway_notmainlandcounty_merging <- function(
   x_year_start = 2000){
 
   sv <- data.table(county_code_current = "notmainlandcounty21",
-                       county_code_orginal = "motmainlandcounty21",
+                       county_code_orginal = "notmainlandcounty21",
                        year = seq(x_year_start, x_year_end, by = 1),
                        weighting = 1)
   jm <- data.table(county_code_current = "notmainlandcounty22",
-                   county_code_orginal = "motmainlandcounty22",
+                   county_code_orginal = "notmainlandcounty22",
                    year = seq(x_year_start, x_year_end, by = 1),
                    weighting = 1)
 

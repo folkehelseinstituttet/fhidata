@@ -168,11 +168,11 @@ gen_norway_locations_redistricting_notmainlandcounty<- function(
   x_year_start = 1940){
 
   sv <- data.table(location_code_current = "notmainlandcounty21",
-                   location_code_original = "motmainlandcounty21",
+                   location_code_original = "notmainlandcounty21",
                        year = seq(x_year_start, x_year_end, by = 1),
                        weighting = 1)
   jm <- data.table(location_code_current = "notmainlandcounty22",
-                   location_code_original = "motmainlandcounty22",
+                   location_code_original = "notmainlandcounty22",
                    year = seq(x_year_start, x_year_end, by = 1),
                    weighting = 1)
 
