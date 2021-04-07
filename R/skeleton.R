@@ -3,8 +3,10 @@
 #' The easiest way to make structural data skeletons.
 #' @param date_min The minimum date for the skeleton
 #' @param date_max The maximum date for the skeleton
-#' @param yrwk_min The minimum yrwk for the skeleton
-#' @param yrwk_max The maximum yrwk for the skeleton
+#' @param isoyearweek_min The minimum isoyearweek for the skeleton
+#' @param isoyearweek_max The maximum isoyearweek for the skeleton
+#' @param yrwk_min DEPRECIATED. WILL BE REMOVED.
+#' @param yrwk_max DEPRECIATED. WILL BE REMOVED.
 #' @param time_total Producing a 'total' time for the skeleton
 #' @param location_code The location_code's wanted for the skeleton
 #' @param granularity_geo The granularity_geo's wanted for the skeleton. If this is a list, then the returned value will also be in a list (see examples).
@@ -12,17 +14,19 @@
 #' @param ... Other variables to include in the skeleton
 #' @examples
 #' make_skeleton(date_min="2020-01-01", date_max="2020-01-30", granularity_geo = c("nation", "county"))[]
-#' make_skeleton(yrwk_min="2020-01", yrwk_max="2020-15", granularity_geo = c("nation", "county"))[]
+#' make_skeleton(isoyearweek_min="2020-01", isoyearweek_max="2020-15", granularity_geo = c("nation", "county"))[]
 #' make_skeleton(time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 #' make_skeleton(time_total = TRUE, granularity_geo = list(c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
 #' make_skeleton(time_total = TRUE, granularity_geo = list("firstbatch" = c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
-#' make_skeleton(yrwk_min = "2020-01", yrwk_max = "2020-03", time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
+#' make_skeleton(isoyearweek_min = "2020-01", isoyearweek_max = "2020-03", time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 #' @export
 make_skeleton <- function(
 date_min = NULL,
 date_max = NULL,
-yrwk_min = NULL,
-yrwk_max = NULL,
+isoyearweek_min = NULL,
+isoyearweek_max = NULL,
+yrwk_min = isoyearweek_min,
+yrwk_max = isoyearweek_max,
 time_total = FALSE,
 location_code = NULL,
 granularity_geo = "all",

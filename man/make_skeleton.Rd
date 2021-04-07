@@ -7,8 +7,10 @@
 make_skeleton(
   date_min = NULL,
   date_max = NULL,
-  yrwk_min = NULL,
-  yrwk_max = NULL,
+  isoyearweek_min = NULL,
+  isoyearweek_max = NULL,
+  yrwk_min = isoyearweek_min,
+  yrwk_max = isoyearweek_max,
   time_total = FALSE,
   location_code = NULL,
   granularity_geo = "all",
@@ -21,9 +23,13 @@ make_skeleton(
 
 \item{date_max}{The maximum date for the skeleton}
 
-\item{yrwk_min}{The minimum yrwk for the skeleton}
+\item{isoyearweek_min}{The minimum isoyearweek for the skeleton}
 
-\item{yrwk_max}{The maximum yrwk for the skeleton}
+\item{isoyearweek_max}{The maximum isoyearweek for the skeleton}
+
+\item{yrwk_min}{DEPRECIATED. WILL BE REMOVED.}
+
+\item{yrwk_max}{DEPRECIATED. WILL BE REMOVED.}
 
 \item{time_total}{Producing a 'total' time for the skeleton}
 
@@ -40,9 +46,9 @@ The easiest way to make structural data skeletons.
 }
 \examples{
 make_skeleton(date_min="2020-01-01", date_max="2020-01-30", granularity_geo = c("nation", "county"))[]
-make_skeleton(yrwk_min="2020-01", yrwk_max="2020-15", granularity_geo = c("nation", "county"))[]
+make_skeleton(isoyearweek_min="2020-01", isoyearweek_max="2020-15", granularity_geo = c("nation", "county"))[]
 make_skeleton(time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 make_skeleton(time_total = TRUE, granularity_geo = list(c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
 make_skeleton(time_total = TRUE, granularity_geo = list("firstbatch" = c("wardoslo", "missingwardoslo"), c("county", "missingcounty", "notmainlandcounty"), "nation"))[]
-make_skeleton(yrwk_min = "2020-01", yrwk_max = "2020-03", time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
+make_skeleton(isoyearweek_min = "2020-01", isoyearweek_max = "2020-03", time_total = TRUE, granularity_geo = c("nation", "wardoslo"))[]
 }
