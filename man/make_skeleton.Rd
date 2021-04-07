@@ -9,8 +9,6 @@ make_skeleton(
   date_max = NULL,
   isoyearweek_min = NULL,
   isoyearweek_max = NULL,
-  yrwk_min = isoyearweek_min,
-  yrwk_max = isoyearweek_max,
   time_total = FALSE,
   location_code = NULL,
   granularity_geo = "all",
@@ -26,10 +24,6 @@ make_skeleton(
 \item{isoyearweek_min}{The minimum isoyearweek for the skeleton}
 
 \item{isoyearweek_max}{The maximum isoyearweek for the skeleton}
-
-\item{yrwk_min}{DEPRECIATED. WILL BE REMOVED.}
-
-\item{yrwk_max}{DEPRECIATED. WILL BE REMOVED.}
 
 \item{time_total}{Producing a 'total' time for the skeleton}
 
