@@ -5,8 +5,6 @@
 #' @param date_max The maximum date for the skeleton
 #' @param isoyearweek_min The minimum isoyearweek for the skeleton
 #' @param isoyearweek_max The maximum isoyearweek for the skeleton
-#' @param yrwk_min DEPRECIATED. WILL BE REMOVED.
-#' @param yrwk_max DEPRECIATED. WILL BE REMOVED.
 #' @param time_total Producing a 'total' time for the skeleton
 #' @param location_code The location_code's wanted for the skeleton
 #' @param granularity_geo The granularity_geo's wanted for the skeleton. If this is a list, then the returned value will also be in a list (see examples).
@@ -25,8 +23,6 @@ date_min = NULL,
 date_max = NULL,
 isoyearweek_min = NULL,
 isoyearweek_max = NULL,
-yrwk_min = isoyearweek_min,
-yrwk_max = isoyearweek_max,
 time_total = FALSE,
 location_code = NULL,
 granularity_geo = "all",
@@ -38,8 +34,8 @@ location_reference = fhidata::norway_locations_names(),
       make_skeleton_single(
         date_min = date_min,
         date_max = date_max,
-        yrwk_min = yrwk_min,
-        yrwk_max = yrwk_max,
+        yrwk_min = isoyearweek_min,
+        yrwk_max = isoyearweek_max,
         time_total = time_total,
         location_code = location_code,
         granularity_geo = granularity_geo,
@@ -53,8 +49,8 @@ location_reference = fhidata::norway_locations_names(),
       retval[[i]] <- make_skeleton_single(
         date_min = date_min,
         date_max = date_max,
-        yrwk_min = yrwk_min,
-        yrwk_max = yrwk_max,
+        yrwk_min = isoyearweek_min,
+        yrwk_max = isoyearweek_max,
         time_total = time_total,
         location_code = location_code,
         granularity_geo = granularity_geo[[i]],
@@ -184,14 +180,14 @@ make_skeleton_week <- function(
   }
   retval <- expand.grid(
     ...,
-    yrwk = yrwks,
+    isoyearweek = yrwks,
     location_code = locs,
     stringsAsFactors = FALSE
   )
   setDT(retval)
-  retval[, granularity_time := "week"]
+  retval[, granularity_time := "isoweek"]
   retval[, granularity_geo := fhidata::get_granularity_geo(location_code)]
-  setcolorder(retval, c("granularity_time","yrwk", "granularity_geo","location_code"))
+  setcolorder(retval, c("granularity_time","isoyearweek", "granularity_geo","location_code"))
   setorderv(retval, names(retval))
   return(retval)
 }
