@@ -12,12 +12,12 @@
 #'
 #' @format
 #' \describe{
-#' \item{calyear}{Calendar Year.}
+#' \item{year}{Year.}
 #' \item{location_code}{The location code.}
 #' \item{granularity_geo}{National/County/Municipality/BAregion.}
 #' \item{age}{1 year ages from 0 to 105.}
 #' \item{sex}{male/female}
-#' \item{pop}{Number of people.}
+#' \item{pop_jan1}{Number of people as of 1st of January.}
 #' \item{imputed}{FALSE if real data. TRUE if it is the last real data point carried forward.}
 #' }
 #' @source \url{https://www.ssb.no/en/statbank/table/07459/tableViewLayout1/}
@@ -42,12 +42,14 @@ norway_population_by_age_sex_b2020_cats <- function(cats=NULL){
     }
   }
   d <- d[!is.na(age_cat),.(
-    pop = sum(pop)
+    pop_jan1 = sum(pop_jan1)
   ),keyby=.(
-    calyear, location_code, age_cat, sex, imputed, granularity_geo
+    year, location_code, age_cat, sex, imputed, granularity_geo
   )]
   setnames(d, "age_cat", "age")
-  setcolorder(d, c("calyear", "location_code", "granularity_geo", "age", "sex", "pop", "imputed"))
+  d[, pop := pop_jan1]
+  d[, calyear := year]
+  setcolorder(d, c("year", "location_code", "granularity_geo", "age", "sex", "pop_jan1", "imputed", "calyear", "pop"))
 
   return(d)
 }
@@ -196,9 +198,11 @@ gen_norway_population_by_age_sex <- function(x_year_end, norway_locations_hierar
 
   pop[, granularity_geo := stringr::str_extract(location_code, "^[a-z]+")]
   pop[granularity_geo=="norge", granularity_geo := "nation"]
-  setnames(pop, "value", "pop")
 
-  setnames(pop, "year", "calyear")
+  setnames(pop, "value", "pop_jan1")
+
+  pop[, calyear := year]
+  pop[, pop := pop_jan1]
 
   return(invisible(pop))
 }

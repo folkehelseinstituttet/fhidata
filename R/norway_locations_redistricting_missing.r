@@ -158,7 +158,7 @@ gen_norway_missingcounty_merging <- function(
 
   retval <- data.table(county_code_current = "missingcounty99",
                        county_code_orginal = "missingcounty99",
-                       year = seq(x_year_start, x_year_end, by = 1),
+                       year = seq(x_year_start, x_year_end+10, by = 1),
                        weighting = 1)
 
 
@@ -187,7 +187,7 @@ gen_norway_locations_redistricting_missingcounty <- function(
 
   retval <- data.table(location_code_current = "missingcounty99",
                        location_code_original = "missingcounty99",
-                       year = seq(x_year_start, x_year_end, by = 1),
+                       year = seq(x_year_start, x_year_end+10, by = 1),
                        weighting = 1)
 
   return(invisible(retval))
@@ -198,7 +198,7 @@ gen_norway_locations_redistricting_missingmunicip <- function(
   x_year_end
 ){
   d <- gen_norway_locations_redistricting_notmainlandmunicip_internal(
-    x_year_end = x_year_end,
+    x_year_end = x_year_end+10,
     x_year_start = 1940
   )
   setnames(d, c("location_code_current", "location_code_original", "year", "weighting"))
@@ -216,7 +216,7 @@ gen_norway_locations_redistricting_missingward <- function(
     location_code_current = "missingwardoslo030199",
     location_code_original = "missingwardoslo030199",
     location_name = "Ukjent bydel i Oslo",
-    year = seq(x_year_start, x_year_end, by = 1),
+    year = seq(x_year_start, x_year_end+10, by = 1),
     weighting = 1,
     municip_code = "municip0301",
     municip_name = "Oslo"
@@ -226,7 +226,7 @@ gen_norway_locations_redistricting_missingward <- function(
     location_code_current = "missingwardbergen460199",
     location_code_original = "missingwardbergen460199",
     location_name = "Ukjent bydel i Bergen",
-    year = seq(x_year_start, x_year_end, by = 1),
+    year = seq(x_year_start, x_year_end+10, by = 1),
     weighting = 1,
     municip_code = "municip4601",
     municip_name = "Bergen"
@@ -236,7 +236,7 @@ gen_norway_locations_redistricting_missingward <- function(
     location_code_current = "missingwardtrondheim500199",
     location_code_original = "missingwardtrondheim500199",
     location_name = "Ukjent bydel i Trondheim",
-    year = seq(x_year_start, x_year_end, by = 1),
+    year = seq(x_year_start, x_year_end+10, by = 1),
     weighting = 1,
     municip_code = "municip5001",
     municip_name = "Trondheim"
@@ -246,7 +246,7 @@ gen_norway_locations_redistricting_missingward <- function(
     location_code_current = "missingwardstavanger110399",
     location_code_original = "missingwardstavanger110399",
     location_name = "Ukjent bydel i Stavanger",
-    year = seq(x_year_start, x_year_end, by = 1),
+    year = seq(x_year_start, x_year_end+10, by = 1),
     weighting = 1,
     municip_code = "municip1103",
     municip_name = "Stavanger"

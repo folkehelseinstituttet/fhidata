@@ -26,7 +26,27 @@ norway_locations_redistricting <- function(include_year = TRUE, border = fhidata
   if(border==2020){
     d <- copy(fhidata::norway_locations_redistricting_b2020)
   }
-  if(!include_year){
+  if(include_year){
+    d[, original_calyear_max := max(calyear), by=.(location_code_original)]
+    d_original_max <- copy(d[calyear==original_calyear_max])
+    d_original_max[, uncount := 2030-1974]
+    d_original_max <- tidyr::uncount(d_original_max, uncount)
+    d_original_max[, calyear := 1975 + 1:.N, by=.(location_code_original)]
+    d_original_max[, original_calyear_max := NULL]
+
+    d_original_max[
+      d,
+      on = c("location_code_original", "calyear"),
+      already_included := TRUE
+    ]
+    xtabs(~d_original_max$already_included, addNA = T)
+    d_original_max <- d_original_max[is.na(already_included)]
+    d_original_max[, already_included := NULL]
+    d[, original_calyear_max := NULL]
+
+    d <- rbindlist(list(d, d_original_max))
+    setorder(d, location_code_current, location_code_original, calyear)
+  } else {
     d <- unique(d[,.(location_code_current, location_code_original, granularity_geo)])
   }
   return(d)

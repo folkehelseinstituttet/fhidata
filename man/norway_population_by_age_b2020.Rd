@@ -6,11 +6,11 @@
 \title{Population in Norway (2020 borders).}
 \format{
 \describe{
-\item{calyear}{Calendar Year.}
+\item{year}{Year.}
 \item{location_code}{The location code.}
 \item{granularity_geo}{National/County/Municipality/BAregion.}
 \item{age}{1 year ages from 0 to 105.}
-\item{pop}{Number of people.}
+\item{pop_jan1}{Number of people as of 1st of January.}
 \item{imputed}{FALSE if real data. TRUE if it is the last real data point carried forward.}
 }
 }
