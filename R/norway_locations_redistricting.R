@@ -39,7 +39,7 @@ norway_locations_redistricting <- function(include_year = TRUE, border = fhidata
       on = c("location_code_original", "calyear"),
       already_included := TRUE
     ]
-    xtabs(~d_original_max$already_included, addNA = T)
+    stats::xtabs(~d_original_max$already_included, addNA = T)
     d_original_max <- d_original_max[is.na(already_included)]
     d_original_max[, already_included := NULL]
     d[, original_calyear_max := NULL]

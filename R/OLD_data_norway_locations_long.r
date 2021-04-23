@@ -71,7 +71,7 @@ gen_norway_locations_long <- function(x_year_end) {
   retval <- unique(rbind(a, b, c, d, fill = T))
 
   # baregion
-  f <- unique(na.omit(gen_norway_locations(x_year_end = x_year_end)[, c("baregion_code", "baregion_name")]))
+  f <- unique(stats::na.omit(gen_norway_locations(x_year_end = x_year_end)[, c("baregion_code", "baregion_name")]))
   f[, granularity_geo := "baregion"]
 
   setnames(f, c("location_code", "location_name", "granularity_geo"))

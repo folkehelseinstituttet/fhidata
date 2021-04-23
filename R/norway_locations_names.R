@@ -120,6 +120,13 @@ gen_norway_locations_names <- function(x_year_end = 2020) {
   d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, "\\u0161", "s")]
   d[, location_name_file_nb_ascii := stringr::str_replace_all(location_name_file_nb_ascii, "\\u00fc", "u")]
 
+  # d[, location_name := stringi::stri_enc_toascii(location_name)]
+  # d[, location_name := gsub("\032"stringi::stri_enc_toascii(location_name)]
+  #
+  # d[, location_name := iconv(location_name, from="ASCII", to="UTF-8")]
+  # d[, location_name_description_nb := iconv(location_name_description_nb, from="UTF-8", to="ASCII")]
+  # d[, location_name_file_nb_utf := iconv(location_name_file_nb_utf, from="UTF-8", to="ASCII")]
+
   setcolorder(
     d,
     c(
