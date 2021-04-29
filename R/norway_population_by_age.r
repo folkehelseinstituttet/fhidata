@@ -66,8 +66,9 @@ norway_population_by_age_b2020_cats <- function(cats=NULL){
 norway_population_by_age_cats <- function(cats = NULL, border = fhidata::config$border){
   stopifnot(border == 2020)
   if(border==2020){
-    norway_population_by_age_b2020_cats(cats = cats)
+    retval <- norway_population_by_age_b2020_cats(cats = cats)
   }
+  return(retval)
 }
 
 # Creates the population dataset

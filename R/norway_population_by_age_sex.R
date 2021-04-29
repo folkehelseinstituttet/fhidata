@@ -67,8 +67,23 @@ norway_population_by_age_sex_b2020_cats <- function(cats=NULL){
 norway_population_by_age_sex_cats <- function(cats=NULL, border = fhidata::config$border){
   stopifnot(border == 2020)
   if(border==2020){
-    norway_population_by_age_sex_b2020_cats(cats = cats)
+    retval <- norway_population_by_age_sex_b2020_cats(cats = cats)
   }
+  x <- retval[,.(
+    pop_jan1 = sum(pop_jan1),
+    pop = sum(pop),
+    sex = "total"
+  ),
+  keyby=.(
+    year,
+    location_code,
+    granularity_geo,
+    age,
+    imputed,
+    calyear
+  )]
+  retval <- rbindlist(list(retval, x), use.names = T)
+  return(retval)
 }
 
 
