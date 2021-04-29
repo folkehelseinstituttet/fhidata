@@ -58,15 +58,23 @@ norway_population_by_age_b2020_cats <- function(cats=NULL){
 #' A function that easily categorizes the populations for you
 #' @param cats A list containing vectors that you want to categorize
 #' @param border The border year
+#' @param use_current_year_as_1900_pop Replaces the year 1900's population data with the current year's population data
 #' @examples
 #' norway_population_by_age_cats(cats = list(c(1:10), c(11:20)))
 #' norway_population_by_age_cats(cats = list("one to ten" = c(1:10), "eleven to twenty" = c(11:20)))
 #' norway_population_by_age_cats(cats = list(c(1:10), c(11:20), "21+"=c(21:200)))
 #' @export
-norway_population_by_age_cats <- function(cats = NULL, border = fhidata::config$border){
+norway_population_by_age_cats <- function(cats = NULL, border = fhidata::config$border, use_current_year_as_1900_pop = fhidata::config$use_current_year_as_1900_pop){
   stopifnot(border == 2020)
   if(border==2020){
     retval <- norway_population_by_age_b2020_cats(cats = cats)
+  }
+  if(use_current_year_as_1900_pop){
+    retval <- retval[year > 1990]
+    x <- retval[year==format.Date(Sys.time(),"%Y")]
+    x[, year := 1900]
+    x[, calyear := 1900]
+    retval <- rbindlist(list(retval, x), use.names = T)
   }
   return(retval)
 }

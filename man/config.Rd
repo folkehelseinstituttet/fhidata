@@ -5,7 +5,7 @@
 \alias{config}
 \title{Config}
 \format{
-An object of class \code{environment} of length 1.
+An object of class \code{environment} of length 2.
 }
 \usage{
 config

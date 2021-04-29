@@ -4,12 +4,18 @@
 \alias{norway_population_by_age_cats}
 \title{norway_population_by_age_cats}
 \usage{
-norway_population_by_age_cats(cats = NULL, border = fhidata::config$border)
+norway_population_by_age_cats(
+  cats = NULL,
+  border = fhidata::config$border,
+  use_current_year_as_1900_pop = fhidata::config$use_current_year_as_1900_pop
+)
 }
 \arguments{
 \item{cats}{A list containing vectors that you want to categorize}
 
 \item{border}{The border year}
+
+\item{use_current_year_as_1900_pop}{Replaces the year 1900's population data with the current year's population data}
 }
 \description{
 A function that easily categorizes the populations for you
