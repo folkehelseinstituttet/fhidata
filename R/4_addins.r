@@ -1,4 +1,5 @@
 addin_make_skeleton <- function(){
+  require_namespace("rstudioapi")
   rstudioapi::insertText(
     '
 # the data is loaded in
