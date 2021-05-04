@@ -22,6 +22,7 @@
 #' norway_locations_redistricting()
 #' @export
 norway_locations_redistricting <- function(include_year = TRUE, border = fhidata::config$border){
+  require_namespace("tidyr")
   stopifnot(border==2020)
   if(border==2020){
     d <- copy(fhidata::norway_locations_redistricting_b2020)
@@ -30,7 +31,7 @@ norway_locations_redistricting <- function(include_year = TRUE, border = fhidata
     d[, original_calyear_max := max(calyear), by=.(location_code_original)]
     d_original_max <- copy(d[calyear==original_calyear_max])
     d_original_max[, uncount := 2030-1974]
-    d_original_max <- tidyr::uncount(d_original_max, uncount)
+    d_original_max <- copy(tidyr::uncount(d_original_max, uncount))
     d_original_max[, calyear := 1975 + 1:.N, by=.(location_code_original)]
     d_original_max[, original_calyear_max := NULL]
 

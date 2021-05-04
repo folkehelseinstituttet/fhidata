@@ -1,3 +1,7 @@
+# fhidata 2021.5.4
+
+- make_skeleton now has a RStudio addin
+
 # fhidata 2020.11.25
 
 - norway_locations_long_b2020 now includes the column `location_name_description`

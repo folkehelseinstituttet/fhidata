@@ -21,6 +21,8 @@ library(data.table)
 
 ## Checklists
 
+Note that `fhidata` has RStudio addins that help you create skeletons!
+
 ### Secure zone
 
 1. Aggregate the data to multiple geographical granularities
@@ -217,15 +219,23 @@ d_agg$day_municip[, location_code := fhidata::norway_locations_msis_to_fhidata(l
 d_agg$day_county[, location_code := fhidata::norway_locations_msis_to_fhidata(location_msis_county)]
 d_agg$day_nation[, location_code := fhidata::norway_locations_msis_to_fhidata(location_msis_nation)]
 
-d_agg[]
+# redistricting
+for(d_temp in d_agg){
+  d_temp[, calyear := lubridate::year(date)]
+  d_temp[
+    fhidata::norway_locations_redistricting(),
+    on = c("location_code_original", "calyear"),
+    c("location_code_current", "weighting") := .(location_code_current, weighting)
+  ]
+}
 
 # 5. Re-aggregate your data to different geographical levels to ensure that duplicates have now been removed
 # this will also fix the redistricting/kommunesammenslaaing issues
 for(i in seq_along(d_agg)){
   d_agg[[i]] <- d_agg[[i]][,.(
-    cases_n = sum(cases_n)
+    cases_n = round(sum(cases_n*weighting))
   ), keyby=.(
-    location_code,
+    location_code = location_code_current,
     date
   )]
 }
