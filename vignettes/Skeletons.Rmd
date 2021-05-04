@@ -224,7 +224,7 @@ for(d_temp in d_agg){
   d_temp[, calyear := lubridate::year(date)]
   d_temp[
     fhidata::norway_locations_redistricting(),
-    on = c("location_code_original", "calyear"),
+    on = c("location_code==location_code_original", "calyear"),
     c("location_code_current", "weighting") := .(location_code_current, weighting)
   ]
 }
