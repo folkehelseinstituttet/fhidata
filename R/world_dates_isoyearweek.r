@@ -2,8 +2,7 @@
 #'
 #' @format
 #' \describe{
-#' \item{year}{Isoyear.}
-#' \item{yrwk}{Isoweek-isoyear.}
+#' \item{isoyear}{Isoyear.}
 #' \item{isoyearweek}{Isoweek-isoyear.}
 #' \item{mon}{Date of Monday.}
 #' \item{tue}{Date of Tuesday.}
@@ -29,12 +28,12 @@ gen_world_dates_isoyearweek <- function() {
   sat <- NULL
   sun <- NULL
 
-  days <- data.table(day = seq.Date(as.IDate("1990-01-01"), as.IDate("2040-01-01"), by = "days"))
+  days <- data.table(day = seq.Date(as.Date("1990-01-01"), as.Date("2040-01-01"), by = "days"))
   days[, year := as.integer(format.Date(day, format = "%G"))]
   days[, yrwk := format.Date(day, format = "%G-%V")]
   days[, isoyear := as.integer(format.Date(day, format = "%G"))]
   days[, isoyearweek := format.Date(day, format = "%G-%V")]
-  days <- days[, .(mon = as.IDate(min(day))), by = .(year, yrwk)]
+  days <- days[, .(mon = as.Date(min(day))), by = .(isoyear, isoyearweek, year, yrwk)]
   days[, tue := mon + 1]
   days[, wed := mon + 2]
   days[, thu := mon + 3]

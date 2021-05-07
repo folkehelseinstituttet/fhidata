@@ -6,8 +6,7 @@
 \title{Dates of different days within isoweekyears}
 \format{
 \describe{
-\item{year}{Isoyear.}
-\item{yrwk}{Isoweek-isoyear.}
+\item{isoyear}{Isoyear.}
 \item{isoyearweek}{Isoweek-isoyear.}
 \item{mon}{Date of Monday.}
 \item{tue}{Date of Tuesday.}
