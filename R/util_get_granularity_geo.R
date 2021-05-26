@@ -1,5 +1,6 @@
 #' get_granularity_geo
 #' @param x Datatable
+#' @param location_reference A location reference data.table
 #' @export
 get_granularity_geo <- function(x, location_reference = NULL){
   if(is.null(location_reference)){

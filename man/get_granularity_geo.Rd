@@ -8,6 +8,8 @@ get_granularity_geo(x, location_reference = NULL)
 }
 \arguments{
 \item{x}{Datatable}
+
+\item{location_reference}{A location reference data.table}
 }
 \description{
 get_granularity_geo
