@@ -4,7 +4,7 @@
 \alias{get_granularity_geo}
 \title{get_granularity_geo}
 \usage{
-get_granularity_geo(x)
+get_granularity_geo(x, location_reference = NULL)
 }
 \arguments{
 \item{x}{Datatable}

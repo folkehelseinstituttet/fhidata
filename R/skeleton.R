@@ -147,7 +147,7 @@ make_skeleton_date <- function(
   )
   setDT(retval)
   retval[, granularity_time := "day"]
-  retval[, granularity_geo := fhidata::get_granularity_geo(location_code)]
+  retval[, granularity_geo := fhidata::get_granularity_geo(location_code, location_reference = location_reference)]
   setcolorder(retval, c("granularity_time","date","granularity_geo","location_code"))
   setorderv(retval, names(retval))
 
@@ -186,7 +186,7 @@ make_skeleton_week <- function(
   )
   setDT(retval)
   retval[, granularity_time := "isoweek"]
-  retval[, granularity_geo := fhidata::get_granularity_geo(location_code)]
+  retval[, granularity_geo := fhidata::get_granularity_geo(location_code, location_reference = location_reference)]
   setcolorder(retval, c("granularity_time","isoyearweek", "granularity_geo","location_code"))
   setorderv(retval, names(retval))
   return(retval)
@@ -207,5 +207,6 @@ make_skeleton_total <- function(
     ...
   )
   retval[, granularity_time := "total"]
+
   return(retval)
 }
