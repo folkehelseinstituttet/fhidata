@@ -1,0 +1,11 @@
+pandoc: '2.13'
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  Skeletons: Skeletons.html
+  fhidata: fhidata.html
+last_built: 2021-06-21T07:00Z
+urls:
+  reference: https://folkehelseinstituttet.github.io/fhidata/reference
+  article: https://folkehelseinstituttet.github.io/fhidata/articles
+
